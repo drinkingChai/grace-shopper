@@ -2,12 +2,10 @@
   "name": "grace-shopper",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "./node_modules/webpack/bin/webpack.js",
-    "postinstall": "npm run webpack",
-    "start:dev": "npm run webpack -- -w & nodemon --ignore src/ server.js"
+    "postinstall": "webpack",
+    "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper nodemon server --ignore app/ --ignore dist/"
   },
   "keywords": [],
   "author": "",
