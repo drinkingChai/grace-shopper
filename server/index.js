@@ -10,10 +10,11 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/dist', express.static(path.join(__dirname, '..', 'dist')))
+app.use('/public', express.static(path.join(__dirname, '..', 'public')))
 
 app.use('/api', require('./api'))
 app.get('/*', (req, res, next)=> {
-  res.sendFile(path.resolve(__dirname, '..', 'index.html'))
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
 })
 
 const port = process.env.PORT || 3000
