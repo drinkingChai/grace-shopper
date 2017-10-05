@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import loggerMiddleware from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import loggerMiddleware from 'redux-logger';
 // ACTION NAMES
 
 
@@ -13,7 +13,7 @@ import loggerMiddleware from 'redux-logger'
 // INITIAL STATE
 const initialState = {
   products: []
-}
+};
 
 // REDUCER
 const reducer = (state = initialState, action) => {
@@ -21,6 +21,6 @@ const reducer = (state = initialState, action) => {
     default:
       return state
   }
-}
+};
 
-export default createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
+export default createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
