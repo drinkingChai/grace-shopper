@@ -2,14 +2,33 @@
   "name": "grace-shopper",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "./node_modules/webpack/bin/webpack.js",
-    "postinstall": "npm run webpack",
-    "start:dev": "npm run webpack -- -w & nodemon --ignore src/ server.js"
+    "postinstall": "webpack",
+    "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper nodemon server --ignore app/ --ignore dist/",
+    "seed": "DATABASE_URL=postgres://localhost/graceshopper node db/seed.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "morgan": "^1.9.0",
+    "pg": "^7.3.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^4.13.3",
+    "webpack": "^3.6.0"
+  },
+  "devDependencies": {}
 }
