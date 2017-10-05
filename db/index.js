@@ -7,8 +7,7 @@ const Review = require('./Review');
 
 // Associations
 
-Order.belongsTo(User, { as: 'Guest' });
-Order.belongsTo(User, { as: 'User' });
+Order.belongsTo(User);
 Order.hasMany(LineItem);
 
 LineItem.belongsTo(Order);
@@ -22,6 +21,10 @@ const sync = () => conn.sync();
 module.exports = {
   sync,
   models: {
-    Product
+    User,
+    Product,
+    Order,
+    LineItem,
+    Review
   }
 }
