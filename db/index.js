@@ -2,7 +2,7 @@ const conn = require('./conn');
 const Product = require('./Product');
 
 // associations here
-// test
+// tests
 const sync = () => conn.sync();
 
 module.exports = {
