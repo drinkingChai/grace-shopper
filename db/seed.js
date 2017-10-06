@@ -1,6 +1,16 @@
 const conn = require('./conn');
-const { Product } = require('./index').models;
+const { Product, LineItem, Order } = require('./index').models;
 
-const seed = () => ({})
+const seed = () => {
+  return conn.sync({ force: true })
+    .then(() => {
+      return Promise.all([
+        Product.create({ name: 'foooooo' }),
+        Product.create({ name: 'barrrr' })
+      ])
+    })
+}
 
-module.exports = seed;
+seed()
+  .then(() => console.log('database seeded'))
+  .then(() => conn.close())
