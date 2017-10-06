@@ -7,6 +7,9 @@ const Session = conn.define('session', {
     defaultValue: true,
     allowNull: false,
     validate: { notEmpty: true }
+  },
+  data: {
+    type: Sequelize.JSON
   }
 })
 
