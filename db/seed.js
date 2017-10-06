@@ -1,6 +1,15 @@
 const conn = require('./conn');
-const { Product } = require('./index').models;
+const { User } = require('./index').models;
 
-const seed = () => ({})
+const seed = () => {
+  return conn.sync({ force: true })
+    .then(() => {
+      return User.create({ name: 'fooo', email: 'foo@bar.baz', password: 'a' })
+    })
+}
 
-module.exports = seed;
+seed()
+  .then(() => {
+    console.log('database seeded')
+    conn.close()
+  })
