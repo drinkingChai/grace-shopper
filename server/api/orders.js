@@ -16,7 +16,7 @@ orders.get('/:id', (req, res, next) => {
 })
 
 orders.put('/products/:productId', (req, res, next) => {
-  // replace with findCart
+  // for DB team - to be replaced with findCart to reduce logic in api
   Order.findOne({
     where: { isCart: true },
     include: [ LineItem ]
@@ -36,6 +36,7 @@ orders.put('/products/:productId', (req, res, next) => {
 })
 
 orders.delete('/:id/products/:productId', (req, res, next) => {
+  // for DB team - to be replaced to reduce logic in api
   Order.findOne({
     where: { id: req.params.id },
     include: [{
