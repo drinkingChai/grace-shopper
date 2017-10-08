@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import store, { fetchProducts } from './store';
+
+// Components
 import Nav from './Nav';
 import AllProducts from './AllProducts';
+
 
 export default class Root extends Component {
   render() {
@@ -12,7 +16,7 @@ export default class Root extends Component {
 
         <h1>GraceShopper</h1>
         <section className="col-xs-12">
-          <AllProducts />
+          <AllProducts  />
         </section>
       </main>
     )
