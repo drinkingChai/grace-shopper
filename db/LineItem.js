@@ -1,7 +1,7 @@
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
 
-const LineItem = conn.define('lineitem', {
+const LineItem = conn.define('lineItem', {
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 1
