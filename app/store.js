@@ -51,7 +51,8 @@ export const checkOut = () => dispatch =>
 // INITIAL STATE
 const initialState = {
   products: [],
-  orders: []
+  orders: [],
+  currentUser: {}
 };
 
 // REDUCER
