@@ -4,7 +4,11 @@ const Sequelize = conn.Sequelize;
 const Order = conn.define('order', {
   address: {
     type: Sequelize.STRING,
-    allowNull: false
+    validate: { notEmpty: { msg: 'Address is required.' }}
+  },
+  paymentInfo: {
+    type: Sequelize.STRING,
+    validate: { notEmpty: { msg: 'Payment info is required.' }}
   },
   isCart: {
     type: Sequelize.BOOLEAN,
