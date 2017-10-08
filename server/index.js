@@ -29,6 +29,11 @@ app.get('/*', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
 })
 
+app.use((err, req, res, next) => {
+  console.log(err.message)
+  res.status(err.status || 500).send(err)
+})
+
 const port = process.env.PORT || 3000;
 
 db.sync()

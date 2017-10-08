@@ -20,6 +20,11 @@ Review.belongsTo(Product);
 Session.belongsTo(User)
 User.hasMany(Session)
 
+Order.hasMany(LineItem);
+
+LineItem.belongsTo(Order);
+LineItem.belongsTo(Product);
+
 const sync = () => conn.sync();
 
 module.exports = {
