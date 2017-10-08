@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
 const conn = require('./conn');
+const Sequelize = conn.Sequelize;
 
 const User = conn.define('user', {
   name: {
@@ -17,6 +17,10 @@ const User = conn.define('user', {
   password: {
     type: Sequelize.STRING,
     validate: { notEmpty: { msg: 'Password is required.' }}
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 
