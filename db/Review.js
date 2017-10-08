@@ -3,13 +3,14 @@ const Sequelize = conn.Sequelize;
 
 const Review = conn.define('review', {
   rating: {
-    type: Sequelize.INTEGER,
-    validate: {
-      len: [50, 500]
-    }
+    type: Sequelize.INTEGER
   },
   blurb: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    validate: {
+      len: [50, 500],
+      msg: 'Review must be at least 50 characters'
+    }
   }
 });
 
