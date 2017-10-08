@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
 const conn = require('./conn');
+const Sequelize = conn.Sequelize;
 
 const Product = conn.define('product', {
   name: {
@@ -21,7 +21,8 @@ const Product = conn.define('product', {
     defaultValue: 0
   },
   photo: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://placekitten.com/g/450/300'
   }
 });
 
