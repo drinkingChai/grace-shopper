@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
+
 // ACTION NAMES
 
 
@@ -12,7 +13,8 @@ import loggerMiddleware from 'redux-logger';
 
 // INITIAL STATE
 const initialState = {
-  products: []
+  products: [],
+  currentUser: {}
 };
 
 // REDUCER
