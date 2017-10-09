@@ -14,7 +14,7 @@ const getProducts = (products) => {
   }
 };
 
-// THUNK
+// THUNKS
 export const fetchProducts = () => {
   return dispatch => {
     return axios.get('/api/products')
@@ -22,7 +22,6 @@ export const fetchProducts = () => {
       .then(products => dispatch(getProducts(products)))
   }
 };
-
 
 // INITIAL STATE
 const initialState = {
