@@ -13,11 +13,11 @@ export default class Root extends Component {
 
   render () {
     return (
-      <div className="container">
+      <div>
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
-        <main>
-          <h1 style={{ marginBottom: '20px' }}>GraceShopper</h1>
+        <main className="container">
+          <h1 style={{ marginBottom: '30px' }}>Welcome to GraceShopper!</h1>
           <div className="row">
             <Switch>
               <Route exact path="/products" component={ AllProducts } />
