@@ -6,7 +6,6 @@ import store, { fetchProducts } from '../store';
 import Nav from './Nav';
 import AllProducts from './AllProducts';
 
-
 export default class Root extends Component {
   componentDidMount() {
     store.dispatch(fetchProducts());
@@ -21,9 +20,9 @@ export default class Root extends Component {
           <h1>GraceShopper</h1>
           <section className="col-xs-12">
             <Switch>
-              <Route path="/products" component={ AllProducts } />
+              <Route exact path="/products" component={ AllProducts } />
               {/* <Route component={ Cart } /> */}
-              <Redirect to="/products" />
+              <Redirect exact path="/" to="/products" />
             </Switch>
           </section>
         </main>
