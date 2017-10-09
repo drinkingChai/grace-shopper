@@ -28,7 +28,9 @@ orders.put('/products/:productId', (req, res, next) => {
     .then(order => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
         LineItem.build({ orderId: order.id, productId: req.params.productId })
-      Object.assign(lineItem, req.body)
+
+      const { price, quantity } = req.body
+      Object.assign(lineItem, { price }, { quantity: lineItem.quantity + quantity })
       return lineItem.save()
     })
     .then(() => res.sendStatus(201))

@@ -15,7 +15,7 @@ const Cart = (props) => {
       <div className="panel-body">
       {/* enter Order Lines Here */}
       { order.lineitems.map(lineitem => (
-        <p key={ lineitem.id }>{ lineitem.product.name } { lineitem.quantity }</p> ))}
+        <p key={ lineitem.id }>{ lineitem.product.name } x { lineitem.quantity }</p> ))}
       </div>
     </div>
 
