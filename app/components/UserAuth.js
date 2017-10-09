@@ -38,20 +38,22 @@ class UserAuth extends Component {
 
     return (
       <div>
-        <form onSubmit={ onLoginHandlher }>
-          <label htmlFor='email'>Email</label>
-          <input name='email' type='email' value={ email } onChange={ onChangeHandler }/>
+        { !currentUser.userId ?
+          <form onSubmit={ onLoginHandlher }>
+            <label htmlFor='email'>Email</label>
+            <input name='email' type='email' value={ email } onChange={ onChangeHandler }/>
 
-          <label htmlFor='password'>Password</label>
-          <input name='password' type='password' value={ password } onChange={ onChangeHandler }/>
+            <label htmlFor='password'>Password</label>
+            <input name='password' type='password' value={ password } onChange={ onChangeHandler }/>
 
-          <button>Login</button>
-        </form>
+            <button>Login</button>
+          </form> :
 
-        <form onSubmit={ onLogoutHandler }>
-          <h4>{ currentUser.name }</h4>
-          <button>Logout</button>
-        </form>
+          <form onSubmit={ onLogoutHandler }>
+            <h4>{ currentUser.name }</h4>
+            <button>Logout</button>
+          </form>
+        }
       </div>
     )
   }
