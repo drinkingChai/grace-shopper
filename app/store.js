@@ -1,18 +1,37 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
-import axios from 'axios'
+import axios from 'axios';
+
+// INITIAL STATE
+const initialState = {
+  products: [],
+  currentUser: {}
+};
 
 // ACTION NAMES
+const GET_PRODUCTS = 'GET_PRODUCTS';
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 
 // ACTION CREATORS
+const getProducts = (products) => {
+  return {
+    type: GET_PRODUCTS,
+    products
+  }
+};
 const login = user => ({ type: LOGIN, user })
 const logout = () => ({ type: LOGOUT })
 
+// THUNKS
+export const fetchProducts = () => dispatch => {
+  axios.get('/api/products')
+    .then(res => res.data)
+    .then(products => dispatch(getProducts(products)))
+    .catch(err => console.error('Fetching products unsuccessful', err));
+}
 
-// THUNK
 export const checkSession = () => dispatch =>
   axios.get('/api/sessions')
     .then(res => dispatch(login(res.data)))
@@ -28,12 +47,6 @@ export const logoutUser = () => dispatch =>
     .then(() => dispatch(logout()))
     .catch(err => console.log(err.message))
 
-// INITIAL STATE
-const initialState = {
-  products: [],
-  currentUser: {}
-};
-
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -41,9 +54,12 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentUser: action.user })
     case LOGOUT:
       return Object.assign({}, state, { currentUser: {} })
+    case GET_PRODUCTS:
+      return Object.assign({}, state, { products: action.products });
     default:
-      return state
+      return state;
   }
 };
 
-export default createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+const store = createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+export default store;
