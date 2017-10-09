@@ -2,3 +2,4 @@ node_modules/
 dist/
 env.js
 env.json
+.DS_Store

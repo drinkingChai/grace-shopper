@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('client-sessions')
 const db = require('../db');
-const env = require('./env')
+// const env = require('./env')
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use('/', express.static(path.join(__dirname, '../node_modules')));
 
 app.use(session({
   cookieName: 'session',
-  secret: env.sessionSecret,
+  secret: 'woopwoob',
   maxAge: 30 * 60 * 1000
 }))
 app.use((req, res, next) => {

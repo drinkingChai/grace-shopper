@@ -12,7 +12,7 @@ const AllProductsList = (props) => {
         {
           products.map(product => {
             return (
-              <li key={ product.key }>{ product.name }</li>
+              <li key={ product.id }>{ product.name }</li>
             )
           })
         }
