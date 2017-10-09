@@ -7,6 +7,7 @@ sessions.get('/', (req, res, next) => {
       .then(session => {
         if (!session) {
           delete req.session.id
+          // can change sendStatus to status(200).send('session not found')?
           return res.sendStatus(401)
         }
         res.send(session.data)
