@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts } from '../store';
 
-const AllProductsList = (props) => {
-  const { products } = props;
-
+const AllProducts = ({ products }) => {
   return (
     <section className="col-xs-12 col-sm-8">
       <h2>All Products</h2>
@@ -12,26 +9,13 @@ const AllProductsList = (props) => {
         {
           products.map(product => {
             return (
-              <li key={ product.key }>{ product.name }</li>
+              <li key={ product.id }>{ product.name }</li>
             )
           })
         }
       </ul>
-
     </section>
   )
-}
-
-class AllProducts extends Component {
-  componentDidMount() {
-    this.props.fetchProducts();
-  }
-
-  render() {
-    return (
-      <AllProductsList { ...this.props } />
-    )
-  }
 }
 
 const mapStateToProps = (state) => {
@@ -40,12 +24,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProducts() {
-      dispatch(fetchProducts());
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default connect(mapStateToProps)(AllProducts);

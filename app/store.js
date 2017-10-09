@@ -3,6 +3,11 @@ import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
 import axios from 'axios';
 
+// INITIAL STATE
+const initialState = {
+  products: []
+};
+
 // ACTION NAMES
 const GET_PRODUCTS = 'GET_PRODUCTS';
 
@@ -22,16 +27,11 @@ export const fetchProducts = () => dispatch => {
     .catch(err => console.error('Fetching products unsuccessful', err));
 }
 
-// INITIAL STATE
-const initialState = {
-  products: []
-};
-
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
-      return Object.assign({}, state, { products: state.products });
+      return Object.assign({}, state, { products: action.products });
 
     default:
       return state;

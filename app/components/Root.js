@@ -7,11 +7,11 @@ import Nav from './Nav';
 import AllProducts from './AllProducts';
 
 export default class Root extends Component {
-  componentDidMount() {
+  componentDidMount () {
     store.dispatch(fetchProducts());
   }
 
-  render() {
+  render () {
     return (
       <div className="container">
         {/* Nav wrapped in route so it can get histor, location etc.. */}
