@@ -6,6 +6,7 @@ import axios from 'axios';
 // ACTION NAMES
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_ORDERS = 'GET_ORDERS';
+const ADD_TO_CART = 'ADD_TO_CART';
 
 // ACTION CREATORS
 const getProducts = (products) => {
@@ -39,6 +40,10 @@ export const fetchOrders = () => {
   }
 };
 
+export const addToCart = product => dispatch =>
+  axios.put(`/api/orders/products/${product.id}`, { quantity: 1, price: product.price })
+    .then(() => dispatch(fetchOrders()))
+
 // INITIAL STATE
 const initialState = {
   products: [],
@@ -52,7 +57,6 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { products: action.products });
     case GET_ORDERS:
       return Object.assign({}, state, {orders: action.orders})
-
     default:
       return state;
   }
