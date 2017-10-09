@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 const Cart = (props) => {
   const {order} = props;
 
+  if (!order) return <div></div>
+
   return (
 
     <div className="panel panel-default">
@@ -12,6 +14,8 @@ const Cart = (props) => {
       </div>
       <div className="panel-body">
       {/* enter Order Lines Here */}
+      { order.lineitems.map(lineitem => (
+        <p key={ lineitem.id }>{ lineitem.product.name } { lineitem.quantity }</p> ))}
       </div>
     </div>
 
