@@ -6,8 +6,6 @@ const seed = () => {
     .then(() => {
       return Promise.all([
         User.create({ name: 'fooo', email: 'foo@bar.baz', password: 'a' }),
-        Product.create({ name: 'foooooo' }),
-        Product.create({ name: 'barrrr' })
       ])
     })
 }
