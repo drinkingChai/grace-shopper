@@ -47,13 +47,12 @@ class UserAuth extends Component {
             <input name='password' type='password' value={ password } onChange={ onChangeHandler }/>
 
             <button>Login</button>
-          </form> :
-
+          </form> 
+          :
           <form onSubmit={ onLogoutHandler }>
             <h4>{ currentUser.name }</h4>
             <button>Logout</button>
-          </form>
-        }
+          </form> }
       </div>
     )
   }
