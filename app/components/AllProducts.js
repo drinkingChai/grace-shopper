@@ -13,11 +13,12 @@ const AllProducts = ({ products }) => {
                   <h3 className="panel-heading">{ product.name }</h3>
                   <div className="panel-body">
                     <img src={ product.photo } width="100%" />
-                    <h4><label>Price:</label> ${ product.price }</h4>
+                    <p>{ product.description }</p>
+                    <h5><label>Price:</label> ${ product.price }</h5>
                     {
                       product.inventoryQuantity === 0 ?
-                      (<p className="label label-default">Sold Out</p>) :
-                      <button className="btn btn-sm btn-primary">Add to Cart</button>
+                      <p className="label label-default">Sold Out</p> :
+                      <button className="btn btn-sm btn-primary">Add to Cart <span className="glyphicon glyphicon-shopping-cart" /></button>
                     }
                   </div>
                 </div>
