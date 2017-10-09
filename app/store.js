@@ -15,13 +15,12 @@ const getProducts = (products) => {
 };
 
 // THUNKS
-export const fetchProducts = () => {
-  return dispatch => {
-    return axios.get('/api/products')
-      .then(res => res.data)
-      .then(products => dispatch(getProducts(products)))
-  }
-};
+export const fetchProducts = () => dispatch => {
+  axios.get('/api/products')
+    .then(res => res.data)
+    .then(products => dispatch(getProducts(products)))
+    .catch(err => console.error('Fetching products unsuccessful', err));
+}
 
 // INITIAL STATE
 const initialState = {
