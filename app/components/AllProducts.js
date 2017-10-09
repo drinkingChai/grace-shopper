@@ -3,18 +3,30 @@ import { connect } from 'react-redux';
 
 const AllProducts = ({ products }) => {
   return (
-    <section className="col-xs-12 col-sm-8">
-      <h2>All Products</h2>
-      <ul>
+    <div className="col-xs-12 col-sm-10">
+      <ul className="list-unstyled">
         {
           products.map(product => {
             return (
-              <li key={ product.id }>{ product.name }</li>
+              <li key={ product.id }>
+                <div className="col-xs-12 col-sm-6 col-md-3 panel panel-default" style={{ marginRight: '10px' }}>
+                  <h3 className="panel-heading">{ product.name }</h3>
+                  <div className="panel-body">
+                    <img src={ product.photo } width="100%" />
+                    <h4><label>Price:</label> ${ product.price }</h4>
+                    {
+                      product.inventoryQuantity === 0 ?
+                      (<p className="label label-default">Sold Out</p>) :
+                      <button className="btn btn-sm btn-primary">Add to Cart</button>
+                    }
+                  </div>
+                </div>
+              </li>
             )
           })
         }
       </ul>
-    </section>
+    </div>
   )
 }
 

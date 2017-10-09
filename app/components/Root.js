@@ -17,14 +17,14 @@ export default class Root extends Component {
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
         <main>
-          <h1>GraceShopper</h1>
-          <section className="col-xs-12">
+          <h1 style={{ marginBottom: '20px' }}>GraceShopper</h1>
+          <div className="row">
             <Switch>
               <Route exact path="/products" component={ AllProducts } />
               {/* <Route component={ Cart } /> */}
               <Redirect exact path="/" to="/products" />
             </Switch>
-          </section>
+          </div>
         </main>
       </div>
     )
