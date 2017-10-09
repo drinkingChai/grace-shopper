@@ -1,51 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts } from '../store';
+import { addToCart } from '../store'
 
-const AllProductsList = (props) => {
-  const { products } = props;
-
+const AllProducts = ({ products, addToCart }) => {
   return (
-    <section className="col-xs-12 col-sm-8">
-      <h2>All Products</h2>
-      <ul>
+    <div className="col-xs-12 col-sm-10">
+      <ul className="list-unstyled">
         {
           products.map(product => {
             return (
-              <li key={ product.id }>{ product.name }</li>
+              <li key={ product.id } className="col-xs-12 col-sm-6 col-md-4">
+                <div className="panel panel-default">
+                  <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
+                  <div className="panel-body">
+                    <img src={ product.photo } width="100%" />
+                    <p>{ product.description }</p>
+                    <h5><label>Price:</label> ${ product.price }</h5>
+                    {
+                      product.inventoryQuantity === 0 ?
+                      <p className="label label-default">Sold Out</p> :
+                        <button className="btn btn-sm btn-primary" onClick={ ()=> addToCart(product) }>Add to Cart <span className="glyphicon glyphicon-shopping-cart" /></button>
+                    }
+                  </div>
+                </div>
+              </li>
             )
           })
         }
       </ul>
-
-    </section>
+    </div>
   )
-}
-
-class AllProducts extends Component {
-  componentDidMount() {
-    this.props.fetchProducts();
-  }
-
-  render() {
-    return (
-      <AllProductsList { ...this.props } />
-    )
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    products: state.products
+    products: state.products,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProducts() {
-      dispatch(fetchProducts());
-    }
-  }
-}
+const mapDispatch = { addToCart }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default connect(mapStateToProps, mapDispatch)(AllProducts);
