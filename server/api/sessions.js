@@ -7,11 +7,12 @@ sessions.get('/', (req, res, next) => {
       .then(session => {
         if (!session) {
           delete req.session.id
-          return next()
+          // can change sendStatus to status(200).send('session not found')?
+          return res.sendStatus(401)
         }
         res.send(session.data)
       })
-  } else next()
+  } else res.sendStatus(401)
 })
 
 sessions.put('/', (req, res, next) => {
@@ -49,7 +50,7 @@ sessions.delete('/', (req, res, next) => {
           .then(() => {
             delete req.session.id
             delete req.session.data
-            next()
+            res.sendStatus(200)
           })
       })
   } else next()

@@ -4,6 +4,7 @@ import store, { fetchProducts } from '../store';
 
 // Components
 import Nav from './Nav';
+import UserAuth from './UserAuth'
 import AllProducts from './AllProducts';
 
 export default class Root extends Component {
@@ -16,6 +17,10 @@ export default class Root extends Component {
       <div>
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
+      
+        {/* can be moved to different component, here for testing */}
+        <Route component={ UserAuth }/>
+      
         <main className="container">
           <h1 style={{ marginBottom: '30px' }}>Welcome to GraceShopper!</h1>
           <div className="row">
