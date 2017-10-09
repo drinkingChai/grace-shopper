@@ -8,10 +8,10 @@ const User = conn.define('user', {
   },
   email: {
     type: Sequelize.STRING,
+    isUnique: true,
     validate: {
       isEmail: true,
-      unique: true,
-      validate: { notEmpty: { msg: 'Email is required.' }}
+      notEmpty: { msg: 'Email is required.' }
     }
   },
   password: {
