@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import store, { fetchProducts } from '../store';
+import store, { fetchProducts, fetchOrders } from '../store';
 
 // Components
 import Nav from './Nav';
@@ -10,6 +10,7 @@ import Cart from './Cart'
 export default class Root extends Component {
   componentDidMount() {
     store.dispatch(fetchProducts());
+    store.dispatch(fetchOrders());
   }
 
   render() {
