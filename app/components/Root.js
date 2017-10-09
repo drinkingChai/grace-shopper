@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { fetchProducts } from '../store';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import store, { fetchProducts } from '../store';
 
 // Components
 import Nav from './Nav';
@@ -21,9 +21,11 @@ export default class Root extends Component {
         <main className="container">
           <h1>GraceShopper</h1>
           <section className="col-xs-12">
-            <Route path="/products" component={ AllProducts } />
-            {/* <Route component={ Cart } /> */}
-            <Redirect to="/products" />
+            <Switch>
+              <Route path="/products" component={ AllProducts } />
+              {/* <Route component={ Cart } /> */}
+              <Redirect to="/products" />
+            </Switch>
           </section>
         </main>
       </div>
