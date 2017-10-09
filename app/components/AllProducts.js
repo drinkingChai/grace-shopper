@@ -8,9 +8,9 @@ const AllProducts = ({ products }) => {
         {
           products.map(product => {
             return (
-              <li key={ product.id }>
-                <div className="col-xs-12 col-sm-6 col-md-3 panel panel-default" style={{ marginRight: '10px' }}>
-                  <h3 className="panel-heading">{ product.name }</h3>
+              <li key={ product.id } className="col-xs-12 col-sm-6 col-md-4">
+                <div className="panel panel-default">
+                  <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
                   <div className="panel-body">
                     <img src={ product.photo } width="100%" />
                     <p>{ product.description }</p>
