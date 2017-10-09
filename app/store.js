@@ -1,26 +1,42 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
-// ACTION NAMES
-
-
-// ACTION CREATORS
-
-
-// THUNK
-
+import axios from 'axios';
 
 // INITIAL STATE
 const initialState = {
   products: []
 };
 
-// REDUCER
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state
+// ACTION NAMES
+const GET_PRODUCTS = 'GET_PRODUCTS';
+
+// ACTION CREATORS
+const getProducts = (products) => {
+  return {
+    type: GET_PRODUCTS,
+    products
   }
 };
 
-export default createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+// THUNKS
+export const fetchProducts = () => dispatch => {
+  axios.get('/api/products')
+    .then(res => res.data)
+    .then(products => dispatch(getProducts(products)))
+    .catch(err => console.error('Fetching products unsuccessful', err));
+}
+
+// REDUCER
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return Object.assign({}, state, { products: action.products });
+
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+export default store;
