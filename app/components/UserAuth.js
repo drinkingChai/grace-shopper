@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { checkSession, loginUser, logoutUser } from '../store'
 
 class UserAuth extends Component {
   constructor() {
@@ -10,6 +11,10 @@ class UserAuth extends Component {
     this.onLogoutHandler = this.onLogoutHandler.bind(this)
   }
 
+  componentDidMount() {
+    this.props.checkSession()
+  }
+
   onChangeHandler(ev) {
     const { name, value } = ev.target
     this.setState(Object.assign(this.state, { [name]: value }))
@@ -17,10 +22,13 @@ class UserAuth extends Component {
 
   onLoginHandlher(ev) {
     ev.preventDefault()
+    const { email, password } = this.state
+    this.props.loginUser(email, password)
   }
 
   onLogoutHandler(ev) {
     ev.preventDefault()
+    this.props.logoutUser()
   }
 
   render() {
@@ -30,7 +38,6 @@ class UserAuth extends Component {
 
     return (
       <div>
-
         <form onSubmit={ onLoginHandlher }>
           <label htmlFor='email'>Email</label>
           <input name='email' type='email' value={ email } onChange={ onChangeHandler }/>
@@ -45,12 +52,12 @@ class UserAuth extends Component {
           <h4>{ currentUser.name }</h4>
           <button>Logout</button>
         </form>
-
       </div>
     )
   }
 }
 
 const mapState = ({ currentUser }) => ({ currentUser })
+const mapDispatch = { checkSession, loginUser, logoutUser }
 
-export default connect(mapState)(UserAuth)
+export default connect(mapState, mapDispatch)(UserAuth)

@@ -7,6 +7,8 @@ import axios from 'axios';
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_ORDERS = 'GET_ORDERS';
 const ADD_TO_CART = 'ADD_TO_CART';
+const LOGIN = 'LOGIN'
+const LOGOUT = 'LOGOUT'
 
 // ACTION CREATORS
 const getProducts = (products) => {
@@ -22,6 +24,9 @@ const getOrders = (orders) => {
     orders
   }
 };
+
+const login = user => ({ type: LOGIN, user })
+const logout = () => ({ type: LOGOUT })
 
 // THUNKS
 export const fetchProducts = () => {
@@ -48,6 +53,21 @@ export const checkOut = () => dispatch =>
   axios.put('/api/orders/check-out')
     .then(() => dispatch(fetchOrders()))
 
+export const checkSession = () => dispatch =>
+  axios.get('/api/sessions')
+    .then(res => dispatch(login(res.data)))
+    .catch(err => console.log(err.message))
+
+export const loginUser = (email, password) => dispatch =>
+  axios.put('/api/sessions', { email, password })
+    .then(() => dispatch(checkSession()))
+    .catch(err => console.log(err.message))
+
+export const logoutUser = () => dispatch =>
+  axios.delete('/api/sessions')
+    .then(() => dispatch(logout()))
+    .catch(err => console.log(err.message))
+
 // INITIAL STATE
 const initialState = {
   products: [],
@@ -62,6 +82,10 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { products: action.products });
     case GET_ORDERS:
       return Object.assign({}, state, {orders: action.orders})
+    case LOGIN:
+      return Object.assign({}, state, { currentUser: action.user })
+    case LOGOUT:
+      return Object.assign({}, state, { currentUser: {} })
     default:
       return state;
   }
