@@ -14,11 +14,10 @@ export default class Root extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
-
-        <main className="container">
+        <main>
           <h1>GraceShopper</h1>
           <section className="col-xs-12">
             <Switch>
