@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import CartUpdateForm from './CartUpdateForm'
 
 const Cart = (props) => {
   const {order} = props;
@@ -14,19 +15,10 @@ const Cart = (props) => {
       </div>
       <div className="panel-body">
       {/* enter Order Lines Here */}
-      { order.lineitems.map(lineitem => (
-        <p key={ lineitem.id }>{ lineitem.product.name } x { lineitem.quantity }</p> ))}
+      { order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.id } lineitem={ lineitem }/>) }
       </div>
     </div>
-
-
-
-
-
-
   )
-
-
 }
 
 const mapStateToProps = (state) => {
