@@ -33,6 +33,7 @@ class CartUpdateForm extends Component {
     return (
       <form onSubmit={ onSubmitHandler }>
         { lineitem.product.name } x <input type='number' value={ lineitem.quantity } onChange={ onChangeHandler }/>
+        { lineitem.product.price * lineitem.quantity }
         <button>Update</button>
         <button onClick={ () => this.props.updateCartItem(lineitem.product, 0) }><span className='glyphicon glyphicon-trash'></span></button>
       </form>
