@@ -34,6 +34,7 @@ export const fetchProducts = () => {
     return axios.get('/api/products')
       .then(res => res.data)
       .then(products => dispatch(getProducts(products)))
+      .catch(err => console.log(err.message))
   }
 };
 
@@ -42,20 +43,24 @@ export const fetchOrders = () => {
     return axios.get('/api/orders')
       .then(res => res.data)
       .then(orders => dispatch(getOrders(orders)))
+      .catch(err => console.log(err.message))
   }
 };
 
 export const updateCartItem = (product, quantity) => dispatch =>
   axios.put(`/api/orders/products/${product.id}`, { quantity, price: product.price })
     .then(() => dispatch(fetchOrders()))
+    .catch(err => console.log(err.message))
 
 export const checkOut = () => dispatch =>
   axios.put('/api/orders/check-out')
     .then(() => dispatch(fetchOrders()))
+    .catch(err => console.log(err.message))
 
 export const checkSession = () => dispatch =>
   axios.get('/api/sessions')
     .then(res => dispatch(login(res.data)))
+    .then(() => dispatch(fetchOrders()))
     .catch(err => console.log(err.message))
 
 export const loginUser = (email, password) => dispatch =>
