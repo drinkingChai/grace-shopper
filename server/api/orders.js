@@ -1,9 +1,12 @@
 const orders = require('express').Router();
-const { Order, LineItem } = require('../../db').models
+const { Order, LineItem, Product } = require('../../db').models;
 
 orders.get('/', (req, res, next) => {
   Order.findAll({
-    include: [{ model: LineItem, include: [ Product ] }]
+    include: [{ model: LineItem, include: [ Product ] }],
+    order: [
+      [ LineItem, 'createdAt', 'ASC' ]
+    ]
   })
     .then(orders => res.send(orders))
     .catch(next)
@@ -13,6 +16,19 @@ orders.get('/:id', (req, res, next) => {
   Order.findById(req.params.id, { include: [{ model: LineItem, include: [ Product ] }] })
     .then(order => res.send(order))
     .catch(next)
+})
+
+orders.put('/check-out', (req, res, next) => {
+  Order.findOne({
+    where: { isCart: true }
+  })
+    .then(order => {
+      if (!order) return res.sendStatus(404)
+      Object.assign(order, { isCart: false });
+      return order.save()
+        .then(() => res.sendStatus(200));
+    })
+    .catch(next);
 })
 
 orders.put('/products/:productId', (req, res, next) => {
@@ -27,12 +43,14 @@ orders.put('/products/:productId', (req, res, next) => {
     })
     .then(order => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
-        LineItem.build({ orderId: order.id, productId: req.params.productId })
-      Object.assign(lineItem, req.body)
-      return lineItem.save()
+        LineItem.build({ orderId: order.id, productId: req.params.productId });
+
+      if (req.body.quantity <= 0) return lineItem.destroy()
+      Object.assign(lineItem, req.body);
+      return lineItem.save();
     })
     .then(() => res.sendStatus(201))
-    .catch(next)
+    .catch(next);
 })
 
 orders.delete('/:id/products/:productId', (req, res, next) => {
@@ -46,12 +64,12 @@ orders.delete('/:id/products/:productId', (req, res, next) => {
   })
     .then(order => {
       if (order) {
-        order.lineitems[0].destroy()
-        return res.sendStatus(200)
+        order.lineitems[0].destroy();
+        return res.sendStatus(200);
       }
-      res.sendStatus(404)
+      res.sendStatus(404);
     })
-    .catch(next)
+    .catch(next);
 })
 
 module.exports = orders

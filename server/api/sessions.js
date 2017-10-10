@@ -1,17 +1,17 @@
-const sessions = require('express').Router()
-const { Session, User } = require('../../db').models
+const sessions = require('express').Router();
+const { Session, User } = require('../../db').models;
 
 sessions.get('/', (req, res, next) => {
   if (req.session && req.session.id) {
     Session.findById(req.session.id)
       .then(session => {
         if (!session) {
-          delete req.session.id
-          return next()
+          delete req.session.id;
+          return next();
         }
-        res.send(session.data)
+        res.send(session.data);
       })
-  } else next()
+  } else next();
 })
 
 sessions.put('/', (req, res, next) => {
@@ -26,17 +26,17 @@ sessions.put('/', (req, res, next) => {
           email: user.email
         }
         
-        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id })
-        Object.assign(sessionData, { data: req.session.data })
+        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id });
+        Object.assign(sessionData, { data: req.session.data });
 
         return sessionData.save()
           .then(session => {
             req.session.id = session.id
             res.sendStatus(202)
           })
-      } else next()
+      } else next();
     })
-    .catch(next)
+    .catch(next);
 })
 
 sessions.delete('/', (req, res, next) => {
@@ -47,12 +47,12 @@ sessions.delete('/', (req, res, next) => {
         else return next()
         session.save()
           .then(() => {
-            delete req.session.id
-            delete req.session.data
-            next()
+            delete req.session.id;
+            delete req.session.data;
+            next();
           })
       })
-  } else next()
+  } else next();
 })
 
 module.exports = sessions
