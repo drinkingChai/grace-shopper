@@ -3,14 +3,10 @@ import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
 import axios from 'axios';
 
-// INITIAL STATE
-const initialState = {
-  products: [],
-  currentUser: {}
-};
-
 // ACTION NAMES
 const GET_PRODUCTS = 'GET_PRODUCTS';
+const GET_ORDERS = 'GET_ORDERS';
+const ADD_TO_CART = 'ADD_TO_CART';
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 
@@ -21,16 +17,41 @@ const getProducts = (products) => {
     products
   }
 };
+
+const getOrders = (orders) => {
+  return {
+    type: GET_ORDERS,
+    orders
+  }
+};
+
 const login = user => ({ type: LOGIN, user })
 const logout = () => ({ type: LOGOUT })
 
 // THUNKS
-export const fetchProducts = () => dispatch => {
-  axios.get('/api/products')
-    .then(res => res.data)
-    .then(products => dispatch(getProducts(products)))
-    .catch(err => console.error('Fetching products unsuccessful', err));
-}
+export const fetchProducts = () => {
+  return dispatch => {
+    return axios.get('/api/products')
+      .then(res => res.data)
+      .then(products => dispatch(getProducts(products)))
+  }
+};
+
+export const fetchOrders = () => {
+  return dispatch => {
+    return axios.get('/api/orders')
+      .then(res => res.data)
+      .then(orders => dispatch(getOrders(orders)))
+  }
+};
+
+export const updateCartItem = (product, quantity) => dispatch =>
+  axios.put(`/api/orders/products/${product.id}`, { quantity, price: product.price })
+    .then(() => dispatch(fetchOrders()))
+
+export const checkOut = () => dispatch =>
+  axios.put('/api/orders/check-out')
+    .then(() => dispatch(fetchOrders()))
 
 export const checkSession = () => dispatch =>
   axios.get('/api/sessions')
@@ -47,6 +68,18 @@ export const logoutUser = () => dispatch =>
     .then(() => dispatch(logout()))
     .catch(err => console.log(err.message))
 
+export const registerUser = userData => dispatch =>
+  axios.post('/api/users', userData)
+    .then(res => dispatch(loginUser(res.data)))
+    .catch(err => console.log(err.message))
+
+// INITIAL STATE
+const initialState = {
+  products: [],
+  orders: [],
+  currentUser: {}
+};
+
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -56,6 +89,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentUser: {} })
     case GET_PRODUCTS:
       return Object.assign({}, state, { products: action.products });
+    case GET_ORDERS:
+      return Object.assign({}, state, {orders: action.orders})
     default:
       return state;
   }
