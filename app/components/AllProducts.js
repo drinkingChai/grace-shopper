@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addToCart } from '../store'
+import { updateCartItem } from '../store'
 
-const AllProducts = ({ products, addToCart }) => {
+const AllProducts = ({ products, updateCartItem }) => {
   return (
     <div className="col-xs-12 col-sm-10">
       <ul className="list-unstyled">
@@ -19,7 +19,7 @@ const AllProducts = ({ products, addToCart }) => {
                     {
                       product.inventoryQuantity === 0 ?
                       <p className="label label-default">Sold Out</p> :
-                        <button className="btn btn-sm btn-primary" onClick={ ()=> addToCart(product) }>Add to Cart <span className="glyphicon glyphicon-shopping-cart" /></button>
+                        <button className="btn btn-sm btn-primary" onClick={ ()=> updateCartItem(product, 1) }>Add to Cart <span className="glyphicon glyphicon-shopping-cart" /></button>
                     }
                   </div>
                 </div>
@@ -38,6 +38,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatch = { addToCart }
+const mapDispatch = { updateCartItem }
 
 export default connect(mapStateToProps, mapDispatch)(AllProducts);
