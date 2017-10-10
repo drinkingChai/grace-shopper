@@ -13,7 +13,7 @@ class UserAuth extends Component {
   }
 
   componentDidMount() {
-    this.props.checkSession()
+    //this.props.checkSession()
   }
 
   onChangeHandler(ev) {
