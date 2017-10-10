@@ -68,6 +68,11 @@ export const logoutUser = () => dispatch =>
     .then(() => dispatch(logout()))
     .catch(err => console.log(err.message))
 
+export const registerUser = userData => dispatch =>
+  axios.post('/api/users', userData)
+    .then(res => dispatch(loginUser(res.data)))
+    .catch(err => console.log(err.message))
+
 // INITIAL STATE
 const initialState = {
   products: [],
