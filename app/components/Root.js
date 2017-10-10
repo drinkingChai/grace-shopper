@@ -5,6 +5,7 @@ import store, { checkSession, fetchProducts, fetchOrders } from '../store';
 // Components
 import Nav from './Nav';
 import Products from './Products';
+import Account from './Account';
 import Cart from './Cart';
 import UserAuth from './UserAuth'
 
@@ -29,6 +30,7 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-8">
             <Switch>
               <Route exact path="/products" component={ Products } />
+              <Route exact path="/account" component={ Account } />
               <Redirect exact path="/" to="/products" />
             </Switch>
           </div>
