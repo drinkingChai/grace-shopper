@@ -44,6 +44,10 @@ export const updateCartItem = (product, quantity) => dispatch =>
   axios.put(`/api/orders/products/${product.id}`, { quantity, price: product.price })
     .then(() => dispatch(fetchOrders()))
 
+export const checkOut = () => dispatch =>
+  axios.put('/api/orders/check-out')
+    .then(() => dispatch(fetchOrders()))
+
 // INITIAL STATE
 const initialState = {
   products: [],
