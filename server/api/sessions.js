@@ -6,16 +6,16 @@ sessions.get('/', (req, res, next) => {
     Session.findById(req.session.id)
       .then(session => {
         if (!session) {
-          delete req.session.id
-          return next()
+          delete req.session.id;
+          return next();
         }
-        res.send(session.data)
+        res.send(session.data);
       })
-  } else next()
-})
+  } else next();
+});
 
 sessions.put('/', (req, res, next) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
   User.findOne({ where: { email, password }, include: [ Session ]})
     .then(user => {
       if (user) {
@@ -25,34 +25,34 @@ sessions.put('/', (req, res, next) => {
           name: user.name,
           email: user.email
         }
-        
-        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id })
-        Object.assign(sessionData, { data: req.session.data })
+
+        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id });
+        Object.assign(sessionData, { data: req.session.data });
 
         return sessionData.save()
           .then(session => {
-            req.session.id = session.id
-            res.sendStatus(202)
+            req.session.id = session.id;
+            res.sendStatus(202);
           })
-      } else next()
+      } else next();
     })
     .catch(next)
-})
+});
 
 sessions.delete('/', (req, res, next) => {
   if (req.session && req.session.id) {
     Session.findById(req.session.id)
       .then(session => {
-        if (session) Object.assign(session, { isActive: false })
-        else return next()
+        if (session) Object.assign(session, { isActive: false });
+        else return next();
         session.save()
           .then(() => {
-            delete req.session.id
-            delete req.session.data
-            next()
+            delete req.session.id;
+            delete req.session.data;
+            next();
           })
       })
-  } else next()
-})
+  } else next();
+});
 
-module.exports = sessions
+module.exports = sessions;
