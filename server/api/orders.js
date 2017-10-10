@@ -2,8 +2,9 @@ const orders = require('express').Router();
 const sessions = require('./middlewares').sessions
 const { Order, LineItem, Product } = require('../../db').models;
 
-orders.get('/', (req, res, next) => {
+orders.get('/', sessions.checkSession, (req, res, next) => {
   Order.findAll({
+    where: { userId: req.session.data.userId },
     include: [{ model: LineItem, include: [ Product ] }],
     order: [
       [ LineItem, 'createdAt', 'ASC' ]
@@ -19,9 +20,9 @@ orders.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
-orders.put('/check-out', (req, res, next) => {
+orders.put('/check-out', sessions.checkSession, (req, res, next) => {
   Order.findOne({
-    where: { isCart: true }
+    where: { isCart: true, userId: req.session.data.userId }
   })
     .then(order => {
       if (!order) return res.sendStatus(404)
@@ -54,10 +55,10 @@ orders.put('/products/:productId', sessions.checkSession, (req, res, next) => {
     .catch(next);
 })
 
-orders.delete('/:id/products/:productId', (req, res, next) => {
+orders.delete('/:id/products/:productId', sessions.checkSession, (req, res, next) => {
   // for DB team - to be replaced to reduce logic in api
   Order.findOne({
-    where: { id: req.params.id },
+    where: { id: req.params.id, userId: req.session.data.userId },
     include: [{
       model: LineItem,
       where: { productId: req.params.productId }
