@@ -17,6 +17,8 @@ const getProducts = (products) => {
     products
   }
 };
+const login = user => ({ type: LOGIN, user })
+const logout = () => ({ type: LOGOUT })
 
 const getOrders = (orders) => {
   return {
@@ -75,17 +77,32 @@ const initialState = {
   currentUser: {}
 };
 
+export const checkSession = () => dispatch =>
+  axios.get('/api/sessions')
+    .then(res => dispatch(login(res.data)))
+    .catch(err => console.log(err.message))
+
+export const loginUser = (email, password) => dispatch =>
+  axios.put('/api/sessions', { email, password })
+    .then(() => dispatch(checkSession()))
+    .catch(err => console.log(err.message))
+
+export const logoutUser = () => dispatch =>
+  axios.delete('/api/sessions')
+    .then(() => dispatch(logout()))
+    .catch(err => console.log(err.message))
+
 // REDUCER
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PRODUCTS:
-      return Object.assign({}, state, { products: action.products });
-    case GET_ORDERS:
-      return Object.assign({}, state, {orders: action.orders})
     case LOGIN:
       return Object.assign({}, state, { currentUser: action.user })
     case LOGOUT:
       return Object.assign({}, state, { currentUser: {} })
+    case GET_PRODUCTS:
+      return Object.assign({}, state, { products: action.products });
+    case GET_ORDERS:
+      return Object.assign({}, state, {orders: action.orders})
     default:
       return state;
   }
