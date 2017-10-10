@@ -1,5 +1,5 @@
-const sessions = require('express').Router()
-const { Session, User } = require('../../db').models
+const sessions = require('express').Router();
+const { Session, User } = require('../../db').models;
 
 sessions.get('/', (req, res, next) => {
   if (req.session && req.session.id) {
@@ -10,7 +10,7 @@ sessions.get('/', (req, res, next) => {
           // can change sendStatus to status(200).send('session not found')?
           return res.sendStatus(401)
         }
-        res.send(session.data)
+        res.send(session.data);
       })
   } else res.sendStatus(401)
 })
@@ -27,17 +27,17 @@ sessions.put('/', (req, res, next) => {
           email: user.email
         }
         
-        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id })
-        Object.assign(sessionData, { data: req.session.data })
+        const sessionData = user.sessions.find(sess => sess.isActive) || Session.build({ userId: user.id });
+        Object.assign(sessionData, { data: req.session.data });
 
         return sessionData.save()
           .then(session => {
             req.session.id = session.id
             res.sendStatus(202)
           })
-      } else next()
+      } else next();
     })
-    .catch(next)
+    .catch(next);
 })
 
 sessions.delete('/', (req, res, next) => {
@@ -53,7 +53,7 @@ sessions.delete('/', (req, res, next) => {
             res.sendStatus(200)
           })
       })
-  } else next()
+  } else next();
 })
 
 module.exports = sessions
