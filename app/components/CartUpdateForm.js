@@ -6,17 +6,17 @@ class CartUpdateForm extends Component {
   constructor(props) {
     super(props);
     this.state = props;
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandler = this.onSubmitHandler.bind(this);
   }
 
-  onChange(ev) {
+  onChangeHandler(ev) {
     const { lineitem } = this.state;
     Object.assign(lineitem, { quantity: ev.target.value });
     this.setState({ lineitem });
   }
 
-  onSubmit(ev) {
+  onSubmitHandler(ev) {
     ev.preventDefault();
     const { lineitem } = this.state;
     this.props.updateCartItem(lineitem.product, lineitem.quantity);
@@ -28,20 +28,19 @@ class CartUpdateForm extends Component {
 
   render() {
     const { lineitem } = this.state;
-    const { onChange, onSubmit } = this;
+    const { onChangeHandler, onSubmitHandler } = this;
 
     return (
-      <form onSubmit={ onSubmit }>
-        { lineitem.product.name } x <input type="number" value={ lineitem.quantity } onChange={ onChange } />
+      <form onSubmit={ onSubmitHandler }>
+        { lineitem.product.name } x <input type='number' value={ lineitem.quantity } onChange={ onChangeHandler }/>
+        { lineitem.product.price * lineitem.quantity }
         <button>Update</button>
-        <button onClick={ () => this.props.updateCartItem(lineitem.product, 0) }>
-          <span className="glyphicon glyphicon-trash" />
-        </button>
+        <button onClick={ () => this.props.updateCartItem(lineitem.product, 0) }><span className='glyphicon glyphicon-trash'></span></button>
       </form>
     )
   }
 }
 
-const mapDispatch = { updateCartItem };
+const mapDispatch = { updateCartItem }
 
-export default connect(null, mapDispatch)(CartUpdateForm);
+export default connect(null, mapDispatch)(CartUpdateForm)
