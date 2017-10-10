@@ -1,5 +1,5 @@
 const orders = require('express').Router();
-const { Order, LineItem } = require('../../db').models
+const { Order, LineItem, Product } = require('../../db').models
 
 orders.get('/', (req, res, next) => {
   Order.findAll({
