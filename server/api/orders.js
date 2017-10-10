@@ -3,7 +3,10 @@ const { Order, LineItem, Product } = require('../../db').models
 
 orders.get('/', (req, res, next) => {
   Order.findAll({
-    include: [{ model: LineItem, include: [ Product ] }]
+    include: [{ model: LineItem, include: [ Product ] }],
+    order: [
+      [ LineItem, 'createdAt', 'ASC' ]
+    ]
   })
     .then(orders => res.send(orders))
     .catch(next)
@@ -29,8 +32,8 @@ orders.put('/products/:productId', (req, res, next) => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
         LineItem.build({ orderId: order.id, productId: req.params.productId })
 
-      const { price, quantity } = req.body
-      Object.assign(lineItem, { price }, { quantity: lineItem.quantity + quantity })
+      if (req.body.quantity == 0) return lineItem.destroy()
+      Object.assign(lineItem, req.body)
       return lineItem.save()
     })
     .then(() => res.sendStatus(201))
