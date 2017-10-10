@@ -4,7 +4,7 @@ import store, { fetchProducts, fetchOrders } from '../store';
 
 // Components
 import Nav from './Nav';
-import AllProducts from './AllProducts';
+import Products from './Products';
 import Cart from './Cart';
 
 export default class Root extends Component {
@@ -22,7 +22,7 @@ export default class Root extends Component {
           <h1 style={{ marginBottom: '30px' }}>Welcome to GraceShopper!</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
-              <Route exact path="/products" component={ AllProducts } />
+              <Route exact path="/products" component={ Products } />
               <Redirect exact path="/" to="/products" />
             </Switch>
           </div>

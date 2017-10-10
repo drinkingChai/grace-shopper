@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateCartItem } from '../store'
+import { updateCartItem } from '../store';
 
-const AllProducts = ({ products }) => {
+const Products = ({ products }) => {
   return (
     <ul className="list-unstyled">
       {
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatch = { updateCartItem };
 
-export default connect(mapStateToProps, mapDispatch)(AllProducts);
+export default connect(mapStateToProps, mapDispatch)(Products);
