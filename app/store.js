@@ -40,7 +40,7 @@ export const fetchOrders = () => {
   }
 };
 
-export const addToCart = (product, quantity) => dispatch =>
+export const updateCartItem = (product, quantity) => dispatch =>
   axios.put(`/api/orders/products/${product.id}`, { quantity, price: product.price })
     .then(() => dispatch(fetchOrders()))
 
