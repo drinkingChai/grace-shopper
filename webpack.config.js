@@ -10,10 +10,10 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /node_module/,
+      exclude: /node_modules/,
       loader: 'babel-loader',
       query: {
-        presets: [ 'env', 'react' ]
+        presets: [ 'env', 'react', 'stage-2' ]
       }
     }]
   }
