@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const conn = require('./conn')
+const conn = require('./conn');
+const Sequelize = conn.Sequelize;
 
 const Session = conn.define('session', {
   isActive: {
@@ -13,4 +13,4 @@ const Session = conn.define('session', {
   }
 })
 
-module.exports = Session
+module.exports = Session;
