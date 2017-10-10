@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { updateCartItem } from '../store'
 
 const AllProducts = ({ products }) => {
   return (
@@ -17,7 +18,11 @@ const AllProducts = ({ products }) => {
                   {
                     product.inventoryQuantity === 0 ?
                     <p className="label label-default">Sold Out</p> :
-                    <button className="btn btn-sm btn-primary">Add to Cart <span className="glyphicon glyphicon-shopping-cart" /></button>
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() => updateCartItem(product, 1)}>
+                      Add to Cart <span className="glyphicon glyphicon-shopping-cart" />
+                    </button>
                   }
                 </div>
               </div>
@@ -33,6 +38,8 @@ const mapStateToProps = (state) => {
   return {
     products: state.products
   }
-}
+};
 
-export default connect(mapStateToProps)(AllProducts);
+const mapDispatch = { updateCartItem };
+
+export default connect(mapStateToProps, mapDispatch)(AllProducts);
