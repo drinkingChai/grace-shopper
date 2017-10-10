@@ -4,7 +4,7 @@ const Sequelize = conn.Sequelize;
 const LineItem = conn.define('lineitem', {
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 1
   },
   price: {
     type: Sequelize.FLOAT,

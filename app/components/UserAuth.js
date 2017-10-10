@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { checkSession, loginUser, logoutUser } from '../store'
+import { checkSession, loginUser, registerUser, logoutUser } from '../store'
 
 class UserAuth extends Component {
   constructor() {
     super()
-    this.state = { email: '', password: '' }
+    this.state = { email: '', password: '', name: '' }
     this.onChangeHandler = this.onChangeHandler.bind(this)
     this.onLoginHandlher = this.onLoginHandlher.bind(this)
+    this.onRegisterHandler = this.onRegisterHandler.bind(this)
     this.onLogoutHandler = this.onLogoutHandler.bind(this)
   }
 
   componentDidMount() {
-    this.props.checkSession()
+    //this.props.checkSession()
   }
 
   onChangeHandler(ev) {
@@ -26,6 +27,13 @@ class UserAuth extends Component {
     this.props.loginUser(email, password)
   }
 
+  onRegisterHandler(ev) {
+    ev.preventDefault()
+    const { name, email, password } = this.state
+    this.props.registerUser({ name, email, password })
+      .then(() => this.props.loginUser(email, password))
+  }
+
   onLogoutHandler(ev) {
     ev.preventDefault()
     this.props.logoutUser()
@@ -33,8 +41,8 @@ class UserAuth extends Component {
 
   render() {
     const { currentUser } = this.props
-    const { email, password } = this.state
-    const { onChangeHandler, onLoginHandlher, onLogoutHandler } = this
+    const { email, password, name } = this.state
+    const { onChangeHandler, onLoginHandlher, onRegisterHandler, onLogoutHandler } = this
 
     return (
       <div>
@@ -47,6 +55,12 @@ class UserAuth extends Component {
             <input name='password' type='password' value={ password } onChange={ onChangeHandler }/>
 
             <button>Login</button>
+
+            <div>
+              <label htmlFor='name'>Name</label>
+              <input name='name' value={ name } onChange={ onChangeHandler }/>
+              <button onClick={ onRegisterHandler }>Register</button>
+            </div>
           </form> 
           :
           <form onSubmit={ onLogoutHandler }>
@@ -59,6 +73,6 @@ class UserAuth extends Component {
 }
 
 const mapState = ({ currentUser }) => ({ currentUser })
-const mapDispatch = { checkSession, loginUser, logoutUser }
+const mapDispatch = { checkSession, loginUser, registerUser, logoutUser }
 
 export default connect(mapState, mapDispatch)(UserAuth)
