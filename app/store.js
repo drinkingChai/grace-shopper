@@ -17,8 +17,6 @@ const getProducts = (products) => {
     products
   }
 };
-const login = user => ({ type: LOGIN, user })
-const logout = () => ({ type: LOGOUT })
 
 const getOrders = (orders) => {
   return {
@@ -76,21 +74,6 @@ const initialState = {
   orders: [],
   currentUser: {}
 };
-
-export const checkSession = () => dispatch =>
-  axios.get('/api/sessions')
-    .then(res => dispatch(login(res.data)))
-    .catch(err => console.log(err.message))
-
-export const loginUser = (email, password) => dispatch =>
-  axios.put('/api/sessions', { email, password })
-    .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message))
-
-export const logoutUser = () => dispatch =>
-  axios.delete('/api/sessions')
-    .then(() => dispatch(logout()))
-    .catch(err => console.log(err.message))
 
 // REDUCER
 const reducer = (state = initialState, action) => {
