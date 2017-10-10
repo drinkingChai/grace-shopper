@@ -18,6 +18,19 @@ orders.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
+orders.put('/check-out', (req, res, next) => {
+  Order.findOne({
+    where: { isCart: true }
+  })
+    .then(order => {
+      if (!order) return res.sendStatus(404)
+      Object.assign(order, { isCart: false })
+      return order.save()
+        .then(() => res.sendStatus(200))
+    })
+    .catch(next)
+})
+
 orders.put('/products/:productId', (req, res, next) => {
   // for DB team - to be replaced with findCart to reduce logic in api
   Order.findOne({
