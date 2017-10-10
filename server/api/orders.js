@@ -1,4 +1,5 @@
 const orders = require('express').Router();
+const sessions = require('./middlewares').sessions
 const { Order, LineItem, Product } = require('../../db').models;
 
 orders.get('/', (req, res, next) => {
@@ -31,15 +32,15 @@ orders.put('/check-out', (req, res, next) => {
     .catch(next);
 })
 
-orders.put('/products/:productId', (req, res, next) => {
+orders.put('/products/:productId', sessions.checkSession, (req, res, next) => {
   // for DB team - to be replaced with findCart to reduce logic in api
   Order.findOne({
-    where: { isCart: true },
+    where: { isCart: true, userId: req.session.data.userId },
     include: [ LineItem ]
   })
     .then(order => {
       if (order) return order
-      return Order.create()
+      return Order.create({ userId: req.session.data.userId })
     })
     .then(order => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
