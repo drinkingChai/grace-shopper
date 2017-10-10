@@ -32,7 +32,7 @@ orders.put('/products/:productId', (req, res, next) => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
         LineItem.build({ orderId: order.id, productId: req.params.productId })
 
-      if (req.body.quantity == 0) return lineItem.destroy()
+      if (req.body.quantity <= 0) return lineItem.destroy()
       Object.assign(lineItem, req.body)
       return lineItem.save()
     })
