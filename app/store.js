@@ -37,6 +37,11 @@ export const fetchOrders = () => dispatch => {
     .catch(err => console.error('Fetching orders unsuccessful.', err));
 };
 
+export const updateCartItem = (product, quantity) => dispatch => {
+  axios.put(`/api/orders/products/${product.id}`, { quantity, price: product.price })
+    .then(() => dispatch(fetchOrders()))
+    .catch(err => console.error('updateCartItem unsuccessful.', err));
+};
 
 // INITIAL STATE
 const initialState = {
