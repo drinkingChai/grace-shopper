@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default function Nav () {
+const Nav = ({ currentUser }) => {
   return (
     <nav className="navbar navbar-default">
       <div className="navbar-header">
@@ -9,8 +10,14 @@ export default function Nav () {
       </div>
       <ul className="nav navbar-nav pull-right">
         <li><Link to="#">Search <span className="glyphicon glyphicon-search" /></Link></li>
-        <li><Link to="#">Log In</Link></li>
+        { currentUser.userId ?
+          <li><Link to="/account">Account</Link></li> :
+          <li><Link to="#">Log In</Link></li> }
       </ul>
     </nav>
   )
 }
+
+const mapState = ({ currentUser }) => ({ currentUser })
+
+export default connect(mapState)(Nav);
