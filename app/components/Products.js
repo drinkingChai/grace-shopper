@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { updateCartItem } from '../store';
 
-const Products = ({ products }) => {
+const Products = ({ products, updateCartItem }) => {
   return (
     <ul className="list-unstyled">
       {
@@ -20,7 +20,7 @@ const Products = ({ products }) => {
                     <p className="label label-default">Sold Out</p> :
                     <button
                       className="btn btn-sm btn-primary"
-                      onClick={() => updateCartItem(product, 1)}>
+                      onClick={ () => updateCartItem(product, 1) }>
                       Add to Cart <span className="glyphicon glyphicon-shopping-cart" />
                     </button>
                   }
