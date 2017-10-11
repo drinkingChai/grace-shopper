@@ -13,8 +13,10 @@ const Order = conn.define('order', {
   isCart: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
+  },
+  status: {
+    type: Sequelize.STRING
   }
-  // add a type later (CART, ORDER, CANCELLED)
 });
 
 module.exports = Order;
