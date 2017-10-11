@@ -1,7 +1,7 @@
-const orders = require('express').Router();
+const router = require('express').Router();
 const { Order, LineItem, Product } = require('../../db').models;
 
-orders.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Order.findAll({
     where: { userId: req.session.data.userId },
     include: [{ model: LineItem, include: [ Product ] }],
@@ -13,7 +13,7 @@ orders.get('/', (req, res, next) => {
     .catch(next)
 })
 
-orders.get('/filter', (req, res, next) => {
+router.get('/filter', (req, res, next) => {
   Order.findAll({
     where: { userId: req.session.data.userId, status: req.query.status }
   })
@@ -22,13 +22,13 @@ orders.get('/filter', (req, res, next) => {
     })
 })
 
-orders.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   Order.findById(req.params.id, { include: [{ model: LineItem, include: [ Product ] }] })
     .then(order => res.send(order))
     .catch(next)
 })
 
-orders.put('/check-out', (req, res, next) => {
+router.put('/check-out', (req, res, next) => {
   Order.findOne({
     where: { isCart: true, userId: req.session.data.userId }
   })
@@ -41,12 +41,12 @@ orders.put('/check-out', (req, res, next) => {
     .catch(next);
 })
 
-orders.put('/products/:productId', (req, res, next) => {
+router.put('/products/:productId', (req, res, next) => {
   const { userId } = req.session.data;
-
-  Order.findCart(userId, req.params.productId, req.body)
-
-
+    Order.addToCart(userId, req.params.productId * 1, req.body)
+      .then(() => res.sendStatus(201))
+      .catch(next);
+});
   // Order.findOne({
   //   where: { isCart: true, userId: req.session.data.userId },
   //   include: [ LineItem ]
@@ -63,11 +63,8 @@ orders.put('/products/:productId', (req, res, next) => {
   //     Object.assign(lineItem, req.body);
   //     return lineItem.save();
   //   })
-    .then(() => res.sendStatus(201))
-    .catch(next);
-})
 
-orders.delete('/:id/products/:productId', (req, res, next) => {
+router.delete('/:id/products/:productId', (req, res, next) => {
   // for DB team - to be replaced to reduce logic in api
   Order.findOne({
     where: { id: req.params.id, userId: req.session.data.userId },
@@ -86,4 +83,4 @@ orders.delete('/:id/products/:productId', (req, res, next) => {
     .catch(next);
 })
 
-module.exports = orders
+module.exports = router;

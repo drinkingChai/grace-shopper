@@ -19,24 +19,48 @@ const Order = conn.define('order', {
   }
 });
 
-Order.findCart = function(userId, productId, reqBody) {
+Order.addToCart = function(userId, productId, reqBody) {
   return Order.findOne({
     where: { isCart: true, userId },
     include: [ conn.models.lineitem ]
   })
     .then(order => {
-      if (order) return order
-      return Order.create({ userId })
+      if (order) return order;
+      return Order.create({ userId });
     })
     .then(order => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId === productId) ||
         conn.models.lineitem.build({ orderId: order.id, productId });
 
-      if (reqBody.quantity <= 0) return lineItem.destroy()
+      if (reqBody.quantity < 1) return lineItem.destroy()
       Object.assign(lineItem, reqBody);
       return lineItem.save();
     })
 }
+
+// Order.findCart = function (userId) {
+//   return Order.findOne({
+//     where: { isCart: true, userId },
+//     include: [ conn.models.LineItem ]
+//   })
+//     .then(order => {
+//       if (order) return order;
+//       return Order.create({ userId })
+//     })
+// };
+
+// Order.addToCart = function (userId, productId) {
+//   return this.findCart(userId)
+//     .then(cart => {
+//       let lineItem = cart.lineitems && cart.lineitems.find(item => item.productId === productId);
+//       if (lineItem) {
+//         lineItem.quantity++;
+//         return lineItem.save();
+//       }
+
+//       return conn.models.LineItem.create({ orderId: cart.id, productId });
+//     })
+// };
 
 
 module.exports = Order;
