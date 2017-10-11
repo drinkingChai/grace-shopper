@@ -13,6 +13,15 @@ orders.get('/', (req, res, next) => {
     .catch(next)
 })
 
+orders.get('/filter', (req, res, next) => {
+  Order.findAll({
+    where: { userId: req.session.data.userId, status: req.query.status }
+  })
+    .then(orders => {
+      res.send(orders)
+    })
+})
+
 orders.get('/:id', (req, res, next) => {
   Order.findById(req.params.id, { include: [{ model: LineItem, include: [ Product ] }] })
     .then(order => res.send(order))
@@ -25,7 +34,7 @@ orders.put('/check-out', (req, res, next) => {
   })
     .then(order => {
       if (!order) return res.sendStatus(404)
-      Object.assign(order, { isCart: false });
+      Object.assign(order, { isCart: false, status: 'CREATED' });
       return order.save()
         .then(() => res.sendStatus(200));
     })

@@ -6,7 +6,7 @@ const checkSession = (req, res, next) => {
       if (!session) {
         delete req.session.id;
         delete req.session.data;
-        return next()
+        res.sendStatus(401)
       }
       req.session.data = session.data;
       next()
