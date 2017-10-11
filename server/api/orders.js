@@ -42,23 +42,27 @@ orders.put('/check-out', (req, res, next) => {
 })
 
 orders.put('/products/:productId', (req, res, next) => {
-  // for DB team - to be replaced with findCart to reduce logic in api
-  Order.findOne({
-    where: { isCart: true, userId: req.session.data.userId },
-    include: [ LineItem ]
-  })
-    .then(order => {
-      if (order) return order
-      return Order.create({ userId: req.session.data.userId })
-    })
-    .then(order => {
-      let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
-        LineItem.build({ orderId: order.id, productId: req.params.productId });
+  const { userId } = req.session.data;
 
-      if (req.body.quantity <= 0) return lineItem.destroy()
-      Object.assign(lineItem, req.body);
-      return lineItem.save();
-    })
+  Order.findCart(userId, req.params.productId, req.body)
+
+
+  // Order.findOne({
+  //   where: { isCart: true, userId: req.session.data.userId },
+  //   include: [ LineItem ]
+  // })
+  //   .then(order => {
+  //     if (order) return order
+  //     return Order.create({ userId: req.session.data.userId })
+  //   })
+  //   .then(order => {
+  //     let lineItem = order.lineitems && order.lineitems.find(li => li.productId == req.params.productId) ||
+  //       LineItem.build({ orderId: order.id, productId: req.params.productId });
+
+  //     if (req.body.quantity <= 0) return lineItem.destroy()
+  //     Object.assign(lineItem, req.body);
+  //     return lineItem.save();
+  //   })
     .then(() => res.sendStatus(201))
     .catch(next);
 })
