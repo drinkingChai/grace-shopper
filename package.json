@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "postinstall": "webpack & npm run seed",
+    "postinstall": "webpack & node ./db/seed.js",
     "start": "node server",
     "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore app/ --ignore dist/",
     "seed": "DATABASE_URL=postgres://localhost/graceshopper node ./db/seed.js"
