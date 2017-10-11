@@ -13,6 +13,16 @@ orders.get('/', (req, res, next) => {
     .catch(next)
 })
 
+orders.get('/filter', (req, res, next) => {
+  // change isCart to type later
+  Order.findAll({
+    where: { userId: req.session.data.userId, isCart: req.query.isCart }
+  })
+    .then(orders => {
+      res.send(orders)
+    })
+})
+
 orders.get('/:id', (req, res, next) => {
   Order.findById(req.params.id, { include: [{ model: LineItem, include: [ Product ] }] })
     .then(order => res.send(order))
