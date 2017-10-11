@@ -14,6 +14,7 @@ const Order = conn.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   }
+  // add a type later (CART, ORDER, CANCELLED)
 });
 
 module.exports = Order;
