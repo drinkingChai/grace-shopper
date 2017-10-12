@@ -10,13 +10,12 @@ const seed = () => {
         User.create({ name: 'BarUser', email: 'bar@bar.com', password: 'bar1' }),
         User.create({ name: 'BazzUser', email: 'bazz@bazz.com', password: 'bazz1' }),
         User.create({ name: 'QugUser', email: 'qug@qug.com', password: 'qug1' }),
-        Product.create({ name: 'Foo 1', description: 'A great foo product.', price: '10', inventoryQuantity: '5' }),
-        Product.create({ name: 'Foo 2', description: 'A great foo product.', price: '5', inventoryQuantity: '20' }),
-        Product.create({ name: 'Bar 1', description: 'A great bar product.', price: '5', inventoryQuantity: '10' }),
-        Product.create({ name: 'Bar 2', description: 'A great bar product.', price: '7', inventoryQuantity: '4' }),
-        Product.create({ name: 'Bazz 1', description: 'A great bazz product.', price: '20', inventoryQuantity: '2' }),
-        Product.create({ name: 'Bazz 2', description: 'A great bazz product.', price: '10', inventoryQuantity: '20' }),
-        Product.create({ name: 'Qug', description: 'A great qug product.', price: '15', inventoryQuantity: '5' })
+        Product.create({ name: 'Headphones', description: 'Very hip.', price: '300', inventoryQuantity: '50', photo: 'https://static.pexels.com/photos/373918/pexels-photo-373918.jpeg' }),
+        Product.create({ name: 'Skateboard', description: 'On fleek.', price: '90', inventoryQuantity: '30', photo: 'https://static.pexels.com/photos/4787/feet-hipster-longboard-skateboard.jpg' }),
+        Product.create({ name: 'MacBook', description: 'Laptop.', price: '1000', inventoryQuantity: '100', photo: 'https://static.pexels.com/photos/434346/pexels-photo-434346.jpeg' }),
+        Product.create({ name: 'Green Bike', description: 'Bike.', price: '200', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/2242/wall-sport-green-bike.jpg' }),
+        Product.create({ name: 'Camera', description: 'Photos.', price: '250', inventoryQuantity: '20', photo: 'https://static.pexels.com/photos/6103/woman-hand-legs-camera.jpg' }),
+        Product.create({ name: 'Banjo', description: 'Be that guy!', price: '70', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/387/man-person-wall-music.jpg' })
       ])
     })
 }

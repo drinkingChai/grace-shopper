@@ -45,27 +45,35 @@ class UserAuth extends Component {
     const { onChangeHandler, onLoginHandlher, onRegisterHandler, onLogoutHandler } = this
 
     return (
-      <div>
+      <div className="well">
         { !currentUser.userId ?
-          <form onSubmit={ onLoginHandlher }>
-            <label htmlFor='email'>Email</label>
-            <input name='email' type='email' value={ email } onChange={ onChangeHandler }/>
+          <form onSubmit={ onLoginHandlher } className="form form-horizontal">
+            <h4>Account</h4>
+            <div className="form-group">
+              <label className="control-label col-sm-2" htmlFor='email'>Email</label>
+              <div className="col-sm-10">
+                <input name='email' type='email' value={ email } onChange={ onChangeHandler } className="form-control" />
+              </div>
 
-            <label htmlFor='password'>Password</label>
-            <input name='password' type='password' value={ password } onChange={ onChangeHandler }/>
-
-            <button>Login</button>
-
-            <div>
-              <label htmlFor='name'>Name</label>
-              <input name='name' value={ name } onChange={ onChangeHandler }/>
-              <button onClick={ onRegisterHandler }>Register</button>
+              <label className="control-label col-sm-3" htmlFor='password'>Password</label>
+              <div className="col-sm-6">
+                <input name='password' type='password' value={ password } onChange={ onChangeHandler } className="form-control" />
+              </div>
+              <button className="btn btn-default">Login</button>
             </div>
-          </form> 
+
+            <div className="form-group">
+              <label className="control-label col-sm-2" htmlFor='name'>Name</label>
+              <div className="col-sm-8 pull-right">
+                <input name='name' value={ name } onChange={ onChangeHandler } className="form-control" />
+              </div>
+            </div>
+            <button onClick={ onRegisterHandler } className="btn btn-default">Register</button>
+          </form>
           :
           <form onSubmit={ onLogoutHandler }>
-            <h4>{ currentUser.name }</h4>
-            <button>Logout</button>
+            <h4>Welcome, { currentUser.name }!</h4>
+            <button className="btn btn-default">Logout</button>
           </form> }
       </div>
     )

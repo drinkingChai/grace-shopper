@@ -8,8 +8,8 @@ const Products = ({ products, updateCartItem }) => {
       {
         products.map(product => {
           return (
-            <li key={ product.id } className="col-xs-12 col-sm-6 col-md-4">
-              <div className="panel panel-default">
+            <li key={ product.id } className="col-xs-12 col-sm-6">
+              <div className="panel panel-default product-panel">
                 <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
                 <div className="panel-body">
                   <img src={ product.photo } width="100%" />
