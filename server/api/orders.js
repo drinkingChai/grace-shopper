@@ -25,17 +25,13 @@ router.get('/filter', (req, res, next) => {
 });
 
 router.put('/check-out', (req, res, next) => {
-  Order.findOne({
-    where: { isCart: true, userId: req.session.data.userId }
-  })
+  Order.checkOut(req.session.data.userId)
     .then(order => {
-      if (!order) return res.sendStatus(404)
-      Object.assign(order, { isCart: false, status: 'CREATED' });
-      return order.save()
-        .then(() => res.sendStatus(200));
+      if (!order) return res.sendStatus(404);
+      res.sendStatus(201);
     })
     .catch(next);
-})
+});
 
 router.put('/products/:productId', (req, res, next) => {
     Order.updateCart(req.session.data.userId, req.params.productId * 1, req.body)

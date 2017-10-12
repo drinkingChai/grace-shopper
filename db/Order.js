@@ -19,7 +19,7 @@ const Order = conn.define('order', {
   }
 });
 
-Order.findCart = function (userId) {
+Order.findCart = function(userId) {
   return Order.findOne({
     where: { isCart: true, userId },
     include: [ conn.models.lineitem ]
@@ -27,6 +27,15 @@ Order.findCart = function (userId) {
     .then(order => {
       if (order) return order;
       return Order.create({ userId });
+    })
+};
+
+Order.checkOut = function(userId) {
+  return this.findCart(userId)
+    .then(order => {
+      if (!order.lineitems.length) return null;
+      Object.assign(order, { isCart: false, status: 'CREATED' });
+      return order.save();
     })
 };
 
