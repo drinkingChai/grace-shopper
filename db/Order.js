@@ -19,6 +19,17 @@ const Order = conn.define('order', {
   }
 });
 
+Order.findCart = function (userId) {
+  return Order.findOne({
+    where: { isCart: true, userId },
+    include: [ conn.models.lineitem ]
+  })
+    .then(order => {
+      if (order) return order;
+      return Order.create({ userId });
+    })
+};
+
 Order.updateCart = function(userId, productId, reqBody) {
   return this.findCart(userId)
     .then(order => {
@@ -31,15 +42,9 @@ Order.updateCart = function(userId, productId, reqBody) {
     })
 };
 
-Order.findCart = function (userId) {
-  return Order.findOne({
-    where: { isCart: true, userId },
-    include: [ conn.models.lineitem ]
-  })
-    .then(order => {
-      if (order) return order;
-      return Order.create({ userId })
-    })
+Order.removeLineItem = function(orderId, id) {
+  console.log('here')
+  return conn.models.lineitem.destroy({ where: { id, orderId }});
 };
 
 module.exports = Order;
