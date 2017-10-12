@@ -36,19 +36,9 @@ sessions.put('/', (req, res, next) => {
 })
 
 sessions.delete('/', (req, res, next) => {
-  if (req.session && req.session.id) {
-    Session.findById(req.session.id)
-      .then(session => {
-        if (session) Object.assign(session, { isActive: false })
-        else return next()
-        session.save()
-          .then(() => {
-            delete req.session.id
-            delete req.session.data
-            res.sendStatus(200)
-          })
-      })
-  } else next();
-})
+  return Session.deleteSession(req.session.id)
+    .then(() => res.sendStatus(201))
+    .catch(next)
+});
 
 module.exports = sessions

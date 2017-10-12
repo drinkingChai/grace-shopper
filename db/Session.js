@@ -21,4 +21,13 @@ Session.findSession = function(id) {
     })
 };
 
+Session.deleteSession = function(id) {
+  return Session.findById(id)
+    .then(session => {
+      if (session) Object.assign(session, { isActive: false });
+      else return;
+    })
+};
+
+
 module.exports = Session;
