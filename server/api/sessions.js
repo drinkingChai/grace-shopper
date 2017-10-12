@@ -8,7 +8,7 @@ sessions.get('/', (req, res, next) => {
       res.send(session.data);
     })
     .catch(next)
-})
+});
 
 sessions.put('/', (req, res, next) => {
   const { email, password } = req.body
