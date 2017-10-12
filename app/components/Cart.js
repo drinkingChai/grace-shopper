@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { checkOut } from '../store';
 import CartUpdateForm from './CartUpdateForm';
@@ -6,12 +6,11 @@ import CartUpdateForm from './CartUpdateForm';
 const Cart = (props) => {
   const {order} = props;
 
-  if (!order) return <div></div>
+  if (!order) return <div />
 
   const total = order.lineitems.reduce((total, item)=> (total += item.product.price * item.quantity), 0);
 
   return (
-
     <div className="panel panel-default">
       <div className="panel-heading">
         Your Cart
@@ -33,13 +32,13 @@ const mapStateToProps = (state) => {
   return {
     order: state.orders.find(order => order.isCart === true)
   }
-}
+};
 
 const mapDispatch = dispatch => ({
   placeOrder(ev) {
     ev.preventDefault();
     dispatch(checkOut());
   }
-})
+});
 
 export default connect(mapStateToProps, mapDispatch)(Cart);

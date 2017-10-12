@@ -25,7 +25,7 @@ Order.updateCart = function(userId, productId, reqBody) {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId === productId) ||
         conn.models.lineitem.build({ orderId: order.id, productId });
 
-      if (reqBody.quantity < 1) return lineItem.destroy()
+      if (reqBody.quantity < 1) return lineItem.destroy();
       Object.assign(lineItem, reqBody);
       return lineItem.save();
     })
