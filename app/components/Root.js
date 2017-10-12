@@ -22,19 +22,17 @@ export default class Root extends Component {
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
 
-        {/* can be moved to different component, here for testing */}
-        <Route component={ UserAuth }/>
-
         <main className="container">
-          <h1 style={{ marginBottom: '30px' }}>Welcome to GraceShopper!</h1>
+          <h1 className="headline">GRACESHOPPER</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
-              <Route exact path="/products" component={ Products } />
+              <Route exact path="/" component={ Products } />
               <Route exact path="/account" component={ Account } />
-              <Redirect exact path="/" to="/products" />
+              <Redirect path="/" to="/" />
             </Switch>
           </div>
           <div className="col-xs-12 col-sm-4">
+            <Route component={ UserAuth } />
             <Cart />
           </div>
         </main>

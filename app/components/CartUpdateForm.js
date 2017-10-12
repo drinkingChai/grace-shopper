@@ -6,17 +6,17 @@ class CartUpdateForm extends Component {
   constructor(props) {
     super(props);
     this.state = props;
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChangeHandler(ev) {
+  onChange(ev) {
     const { lineitem } = this.state;
-    Object.assign(lineitem, { quantity: ev.target.value });
+    Object.assign(lineitem, { quantity: ev.target.value * 1 });
     this.setState({ lineitem });
   }
 
-  onSubmitHandler(ev) {
+  onSubmit(ev) {
     ev.preventDefault();
     const { lineitem } = this.state;
     this.props.updateCartItem(lineitem.product, lineitem.quantity);
@@ -28,19 +28,39 @@ class CartUpdateForm extends Component {
 
   render() {
     const { lineitem } = this.state;
-    const { onChangeHandler, onSubmitHandler } = this;
+    const { onChange, onSubmit } = this;
+    // const total = lineitem.product.price * lineitem.quantity;
+    const quantity = [...Array(10).keys()];
 
     return (
-      <form onSubmit={ onSubmitHandler }>
-        { lineitem.product.name } x <input type='number' value={ lineitem.quantity } onChange={ onChangeHandler }/>
-        { lineitem.product.price * lineitem.quantity }
-        <button>Update</button>
-        <button onClick={ () => this.props.updateCartItem(lineitem.product, 0) }><span className='glyphicon glyphicon-trash'></span></button>
-      </form>
+      <li className="list-group-item">
+        <form onSubmit={ onSubmit } className="form form-inline">
+          <label>Item: </label> { lineitem.product.name }<br />
+          <label>Price: </label> ${ lineitem.product.price }<br />
+          <label>Quantity: </label> <select className="form-control" onChange={ onChange } name="quantity">
+            {
+              quantity.map(item => <option key={ `${item}x` } value={ item + 1 } attribute={ item + 1 === lineitem.quantity ? 'selected' : 'false' }>{ item + 1 }</option>)
+            }
+          </select>
+
+
+          <button onClick={() => this.props.updateCartItem(lineitem.product, 0)} className="btn btn-danger btn-sm pull-right"><span className="glyphicon glyphicon-trash" /></button>
+          <button className="btn btn-info btn-sm pull-right">Update</button>
+        </form>
+      </li>
     )
   }
 }
 
-const mapDispatch = { updateCartItem }
+const mapDispatch = { updateCartItem };
 
-export default connect(null, mapDispatch)(CartUpdateForm)
+export default connect(null, mapDispatch)(CartUpdateForm);
+
+/*
+TODO:
+- maintain selected option after refresh
+- have only 1 update button on the cart
+*/
+
+// quantity input field:
+// <input type="number" value={ lineitem.quantity } onChange={ onChangeHandler } />
