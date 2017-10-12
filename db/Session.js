@@ -14,14 +14,11 @@ const Session = conn.define('session', {
 });
 
 Session.findSession = function(id) {
-    return Session.findById(id)
-      .then(session => {
-        console.log('found: ', session)
-        if (!session) return Session.destroy({ where: { id }});
-        return session;
-      })
+  return Session.findById(id)
+    .then(session => {
+      if (!session) return Session.destroy({ where: { id }});
+      return session;
+    })
 };
-
-
 
 module.exports = Session;
