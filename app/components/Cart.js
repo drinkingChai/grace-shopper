@@ -13,15 +13,17 @@ const Cart = (props) => {
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
-        Your Cart
+        <strong>Your Cart</strong>
       </div>
       <div className="panel-body">
       {/* enter Order Lines Here */}
-      { order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.id } lineitem={ lineitem }/>) }
-      <hr/>
+      {
+        order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.id } lineitem={ lineitem } />)
+      }
+      <hr />
       <form onSubmit={ props.placeOrder }>
-        Total: { total }
-        <button className='pull-right'>Checkout</button>
+        <label>Subtotal:</label> ${ total }
+        <button className="btn btn-primary btn-sm pull-right">Proceed to Checkout</button>
       </form>
       </div>
     </div>
