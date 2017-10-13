@@ -40,21 +40,29 @@ Order.findFiltered = function(userId, status) {
 Order.findCart = function(userId) {
   return Order.findOne({
     where: { isCart: true, userId },
-    include: [ conn.models.lineitem ]
+    include: [{
+      model: conn.models.lineitem,
+      include: [ conn.models.product ]
+    }]
   })
     .then(order => {
       if (order) return order;
-      return Order.create({ userId });
+      //return Order.create({ userId });
     })
 };
 
-Order.checkOut = function(userId) {
+Order.checkOut = function(userId, body) {
   return this.findCart(userId)
     .then(order => {
-      if (!order.lineitems.length) return null;
-      Object.assign(order, { isCart: false, status: 'CREATED' });
-      return order.save();
+      const { address, paymentInfo } = body
+      return order.changeCartToOrder(address, paymentInfo)
     })
+    .then(() => Order.create({ userId }))
+    //.then(order => {
+      //if (!order.lineitems.length) return null;
+      //Object.assign(order, { isCart: false, status: 'CREATED' });
+      //return order.save();
+    //})
 };
 
 Order.updateCart = function(userId, productId, reqBody) {
@@ -73,5 +81,18 @@ Order.removeLineItem = function(orderId, id) {
   console.log('here')
   return conn.models.lineitem.destroy({ where: { id, orderId }});
 };
+
+Order.prototype.changeCartToOrder = function(address, paymentInfo) {
+  // if number of items in cart is empty, return error
+  if (!this.lineitems.length) return Promise.reject('Cart is empty')
+
+  // if falsy, set to empty string to use Sequelize validation error
+  Object.assign(this, {
+    address: address || '',
+    paymentInfo: paymentInfo || '',
+    isCart: false,
+    status: 'CREATED' })
+  return this.save()
+}
 
 module.exports = Order;
