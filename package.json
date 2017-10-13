@@ -4,10 +4,10 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "postinstall": "webpack & node ./db/seed.js",
+    "postinstall": "webpack & node ./server/db/seed.js",
     "start": "node server",
     "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore app/ --ignore dist/",
-    "seed": "DATABASE_URL=postgres://localhost/graceshopper node ./db/seed.js"
+    "seed": "DATABASE_URL=postgres://localhost/graceshopper node ./server/db/seed.js"
   },
   "keywords": [],
   "author": "",
