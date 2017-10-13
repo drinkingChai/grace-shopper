@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { checkSession, loginUser, registerUser, logoutUser } from '../store'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { checkSession, loginUser, registerUser, logoutUser } from '../store';
 
 class UserAuth extends Component {
   constructor() {
     super()
-    this.state = { email: '', password: '', name: '' }
-    this.onChangeHandler = this.onChangeHandler.bind(this)
-    this.onLoginHandlher = this.onLoginHandlher.bind(this)
-    this.onRegisterHandler = this.onRegisterHandler.bind(this)
-    this.onLogoutHandler = this.onLogoutHandler.bind(this)
+    this.state = { email: '', password: '', name: '' };
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onLoginHandlher = this.onLoginHandlher.bind(this);
+    this.onRegisterHandler = this.onRegisterHandler.bind(this);
+    this.onLogoutHandler = this.onLogoutHandler.bind(this);
   }
 
   componentDidMount() {
