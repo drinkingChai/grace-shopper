@@ -1,29 +1,28 @@
 const { Product, LineItem } = require('../../db').models
 
-const updateSessionCart = (cart, productId, reqBody) => {
+const updateSessionCart = (cart, productId, updateData) => {
+  if (updateData.quantity <= 0) return Promise.resolve(cart.lineitems.filter(li => li.productId != productId))
+
   return Product.findById(productId)
     .then(product => {
-      // doing a product query to add product data to lineItem
-      if (!product) Promise.reject(new Error('Product not found'))
+      if (!product) return res.sendStatus(404)
 
-      // build lineItem object //
-      let lineItem = LineItem.build({ productId });
-      Object.assign(lineItem, reqBody);
+      // build lineitem object //
+      let lineItem = LineItem.build({ productId: product.id });
+      Object.assign(lineItem, updateData);
 
       /* can't add properties to lineItem because it's constructed by Sequelize
-      without serialization and deserialization */
+        without serialization and deserialization */
       lineItem = JSON.parse(JSON.stringify(lineItem))
       lineItem.product = product
       // ==== //
 
       // find or push
-      const liIndex = cart.lineitems.findIndex(li => li.productId == productId)
+      const liIndex = cart.lineitems.findIndex(li => li.productId == product.id)
       liIndex < 0 ? cart.lineitems.push(lineItem) : cart.lineitems[liIndex] = lineItem
-      
-      // update session
+
       return cart
     })
-    .catch(err => err)
 }
 
 module.exports = {
