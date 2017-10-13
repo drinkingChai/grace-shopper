@@ -20,17 +20,21 @@ router.get('/filter', (req, res, next) => {
 });
 
 router.put('/check-out', (req, res, next) => {
-  Order.checkOut(req.session.data.userId)
-    .then(order => {
-      if (!order) return res.sendStatus(404);
+  Order.checkOut(req.session.userId, req.body)
+    .then(newCart => {
+      req.session.cart = newCart
       res.sendStatus(201);
     })
     .catch(next);
 });
 
 router.put('/products/:productId', (req, res, next) => {
-  Order.updateCart(req.session.data.userId, req.params.productId * 1, req.body)
-    .then(() => res.sendStatus(201))
+  Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
+    .then(() => Order.findCart(req.session.userId))
+    .then(cart => {
+      req.session.cart = cart
+      res.sendStatus(201)
+    })
     .catch(next);
 });
 
