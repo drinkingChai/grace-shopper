@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User, Order } = require('../db').models
+const { User, Order, LineItem } = require('../db').models
 
 router.get('/', (req, res, next) => {
   res.send(req.session)
@@ -10,12 +10,24 @@ router.put('/', (req, res, next) => {
   User.findOne({ where: { email, password } })
     .then(user => {
       if (!user) return res.sendStatus(401)
-      Order.findCart(user.id)
-        .then(cart => {
-          req.session.userId = user.id
-          req.session.cart = cart 
-          res.sendStatus(202)
-        })
+
+      req.session.userId = user.id
+      return Order.findCart(user.id)
+    })
+    .then(cart => {
+      /* if there are items in session
+        and user cart is empty,
+        create those line items and delete them from session */
+      if (!cart.lineitems.length) {
+        return Promise.all(
+          req.session.cart.lineitems.map(lineItem => (
+            LineItem.create({ orderId: cart.id, ...lineItem })
+          )))
+      }
+    })
+    .then(() => {
+      delete req.session.cart
+      res.sendStatus(200)
     })
 })
 
