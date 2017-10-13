@@ -1,6 +1,7 @@
 const { Product, LineItem } = require('../../db').models
 
 const updateSessionCart = (cart, productId, updateData) => {
+  // Promise resolve to make it thenable
   if (updateData.quantity <= 0) return Promise.resolve(cart.lineitems.filter(li => li.productId != productId))
 
   return Product.findById(productId)
