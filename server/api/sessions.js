@@ -1,28 +1,28 @@
-const router = require('express').Router();
-const { Session } = require('../db').models;
+const router = require('express').Router()
+const { User, Order, LineItem } = require('../db').models
 
 router.get('/', (req, res, next) => {
-  Session.findSession(req.session.id)
-    .then(session => {
-      if (!session) return res.sendStatus(401);
-      res.send(session.data);
-    })
-    .catch(next);
-});
+  res.send(req.session)
+})
 
 router.put('/', (req, res, next) => {
-  Session.updateSession(req.body, req.session)
-    .then(session => {
-      if (!session) return res.sendStatus(404);
-      return res.sendStatus(202);
+  const { email, password } = req.body
+  User.findOne({ where: { email, password } })
+    .then(user => {
+      if (!user) return res.sendStatus(401)
+      Order.findCart(user.id)
+        .then(cart => {
+          req.session.userId = user.id
+          req.session.cart = cart 
+          res.sendStatus(202)
+        })
     })
-    .catch(next);
-});
+})
 
 router.delete('/', (req, res, next) => {
-  return Session.deleteSession(req.session.id)
-    .then(() => res.sendStatus(201))
-    .catch(next);
-});
+  delete req.session.userId
+  req.session.cart = Order.build()
+  res.sendStatus(200)
+})
 
-module.exports = router;
+module.exports = router
