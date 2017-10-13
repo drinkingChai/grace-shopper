@@ -18,7 +18,7 @@ const Cart = (props) => {
       <div className="panel-body">
       {/* enter Order Lines Here */}
       {
-        order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.id } lineitem={ lineitem } />)
+        order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.product.id } lineitem={ lineitem } />)
       }
       <hr />
       <form onSubmit={ props.placeOrder }>
