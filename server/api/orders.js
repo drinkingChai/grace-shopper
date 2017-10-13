@@ -3,6 +3,9 @@ const { Order, LineItem, Product } = require('../db').models;
 const options = [{ model: LineItem, include: [ Product ] }];
 
 router.get('/', (req, res, next) => {
+  if (!req.session.userId) {
+    return res.send([req.session.cart])
+  }
   Order.findAll({
     where: { userId: req.session.userId },
     include: options,
@@ -48,15 +51,15 @@ router.put('/products/:productId', (req, res, next) => {
         req.session.cart = cart
         return res.sendStatus(201)
       })
+  } else {
+    Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
+      .then(() => Order.findCart(req.session.userId))
+      .then(cart => {
+        req.session.cart = cart
+        res.sendStatus(201)
+      })
+      .catch(next);
   }
-
-  Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
-    .then(() => Order.findCart(req.session.userId))
-    .then(cart => {
-      req.session.cart = cart
-      res.sendStatus(201)
-    })
-    .catch(next);
 });
 
 router.delete('/:id/products/:productId', (req, res, next) => {
