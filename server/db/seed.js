@@ -5,11 +5,11 @@ const seed = () => {
   return conn.sync({ force: true })
     .then(() => {
       return Promise.all([
-        User.create({ name: 'FooUser1', email: 'foo1@foo.com', password: 'foo1' }),
-        User.create({ name: 'FooUser2', email: 'foo2@foo.com', password: 'foo2' }),
-        User.create({ name: 'BarUser', email: 'bar@bar.com', password: 'bar1' }),
-        User.create({ name: 'BazzUser', email: 'bazz@bazz.com', password: 'bazz1' }),
-        User.create({ name: 'QugUser', email: 'qug@qug.com', password: 'qug1' }),
+        User.createUser({ name: 'FooUser1', email: 'foo1@foo.com', password: 'foo1' }),
+        User.createUser({ name: 'FooUser2', email: 'foo2@foo.com', password: 'foo2' }),
+        User.createUser({ name: 'BarUser', email: 'bar@bar.com', password: 'bar1' }),
+        User.createUser({ name: 'BazzUser', email: 'bazz@bazz.com', password: 'bazz1' }),
+        User.createUser({ name: 'QugUser', email: 'qug@qug.com', password: 'qug1' }),
         Product.create({ name: 'Headphones', description: 'Very hip.', price: '300', inventoryQuantity: '50', photo: 'https://static.pexels.com/photos/373918/pexels-photo-373918.jpeg' }),
         Product.create({ name: 'Skateboard', description: 'On fleek.', price: '90', inventoryQuantity: '30', photo: 'https://static.pexels.com/photos/4787/feet-hipster-longboard-skateboard.jpg' }),
         Product.create({ name: 'MacBook', description: 'Laptop.', price: '1000', inventoryQuantity: '100', photo: 'https://static.pexels.com/photos/434346/pexels-photo-434346.jpeg' }),
