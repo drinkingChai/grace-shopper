@@ -58,11 +58,6 @@ Order.checkOut = function(userId, body) {
       return order.changeCartToOrder(address, paymentInfo)
     })
     .then(() => Order.create({ userId }))
-    //.then(order => {
-      //if (!order.lineitems.length) return null;
-      //Object.assign(order, { isCart: false, status: 'CREATED' });
-      //return order.save();
-    //})
 };
 
 Order.updateCart = function(userId, productId, reqBody) {
