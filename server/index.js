@@ -10,7 +10,6 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use('/dist', express.static(path.join(__dirname, '..', 'dist')));
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use('/', express.static(path.join(__dirname, '..', 'node_modules')));
 
@@ -18,7 +17,7 @@ app.use(session({
   cookieName: 'session',
   secret: process.env.SESSIONSECRET,
   maxAge: 30 * 60 * 1000
-}))
+}));
 
 // app.use((req, res, next) => {
 //   // session logger 
