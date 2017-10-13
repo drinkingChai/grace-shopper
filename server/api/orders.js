@@ -32,16 +32,17 @@ router.put('/check-out', (req, res, next) => {
 
 router.put('/products/:productId', (req, res, next) => {
   if (!req.session.userId) {
-    return updateSessionCart(req.session.cart, req.params.productId, req.body)
+    updateSessionCart(req.session.cart, req.params.productId, req.body)
       .then(cart => {
         req.session.cart = cart
-        return res.sendStatus(201)
+        res.sendStatus(201)
       })
+      .catch(next)
+  } else {
+    Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
+      .then(() => res.sendStatus(201))
+      .catch(next);
   }
-
-  Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
-    .then(() => res.sendStatus(201))
-    .catch(next);
 });
 
 router.delete('/:id/products/:productId', (req, res, next) => {
