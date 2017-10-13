@@ -5,7 +5,7 @@ const updateSessionCart = (cart, productId, updateData) => {
     .then(product => {
       if (!product) return Promise.reject('Product not found')
 
-      if (updateData.quantity <= 0) return cart.lineitems.filter(li => li.productId != productId)
+      if (updateData.quantity <= 0) return cart.lineitems.filter(li => li.productId != product.id)
 
       // ==== build lineitem object ==== //
       let lineItem = LineItem.build({ productId: product.id });
