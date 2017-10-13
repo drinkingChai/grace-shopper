@@ -34,6 +34,22 @@ router.put('/check-out', (req, res, next) => {
 });
 
 router.put('/products/:productId', (req, res, next) => {
+  if (!req.session.userId) {
+    let { cart } = req.session
+    const { productId } = req.params
+    Product.findById(productId)
+      .then(product => {
+        let lineItem = cart.lineitems.find(li => li.productId === productId) ||
+          LineItem.build({ productId });
+        Object.assign(lineItem, req.body);
+        lineItem.product = product
+
+        if (cart.lineitems.findIndex(li => li.productId == productId) < 0) cart.lineitems.push(lineItem)
+        req.session.cart = cart
+        return res.sendStatus(201)
+      })
+  }
+
   Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
     .then(() => Order.findCart(req.session.userId))
     .then(cart => {
