@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User, Order, LineItem } = require('../db').models
+const { User, Order } = require('../db').models
 
 router.get('/', (req, res, next) => {
   res.send(req.session)
