@@ -1,5 +1,5 @@
 const users = require('express').Router()
-const { User } = require('../../db').models
+const { User } = require('../db').models
 
 users.post('/', (req, res, next) => {
   User.create(req.body)

@@ -4,7 +4,7 @@ import { checkOut } from '../store';
 import CartUpdateForm from './CartUpdateForm';
 
 const Cart = (props) => {
-  const {order} = props;
+  const {order} = props; // { order } above
 
   if (!order) return <div />
 

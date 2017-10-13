@@ -15,7 +15,9 @@ const seed = () => {
         Product.create({ name: 'MacBook', description: 'Laptop.', price: '1000', inventoryQuantity: '100', photo: 'https://static.pexels.com/photos/434346/pexels-photo-434346.jpeg' }),
         Product.create({ name: 'Green Bike', description: 'Bike.', price: '200', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/2242/wall-sport-green-bike.jpg' }),
         Product.create({ name: 'Camera', description: 'Photos.', price: '250', inventoryQuantity: '20', photo: 'https://static.pexels.com/photos/6103/woman-hand-legs-camera.jpg' }),
-        Product.create({ name: 'Banjo', description: 'Be that guy!', price: '70', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/387/man-person-wall-music.jpg' })
+        Product.create({ name: 'Banjo', description: 'Be that guy!', price: '70', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/387/man-person-wall-music.jpg' }),
+        Product.create({ name: 'Scratch N Sniff T-Shirt', description: 'Don\'t be that guy!', price: '1000', inventoryQuantity: '100', photo: 'https://cdna.lystit.com/photos/f79e-2014/07/28/selected-white-t-shirt-in-long-length-short-sleeve-t-shirts-product-1-22068398-2-460728901-normal.jpeg' })
+
       ])
     })
 }
@@ -23,3 +25,5 @@ const seed = () => {
 seed()
   .then(() => console.log('database seeded'))
   .then(() => conn.close())
+
+

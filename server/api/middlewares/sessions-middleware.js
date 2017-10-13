@@ -1,4 +1,4 @@
-const { Session } = require('../../../db').models
+const { Session } = require('../../db').models
 
 const checkSession = (req, res, next) => {
   Session.findById(req.session.id)

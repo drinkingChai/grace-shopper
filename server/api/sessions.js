@@ -1,5 +1,5 @@
 const sessions = require('express').Router();
-const { Session, User } = require('../../db').models;
+const { Session, User } = require('../db').models;
 
 sessions.get('/', (req, res, next) => {
   Session.findSession(req.session.id)

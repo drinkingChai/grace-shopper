@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order, LineItem, Product } = require('../../db').models;
+const { Order, LineItem, Product } = require('../db').models;
 const options = [{ model: LineItem, include: [ Product ] }];
 
 router.get('/', (req, res, next) => {

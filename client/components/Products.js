@@ -12,7 +12,7 @@ const Products = ({ products, updateCartItem }) => {
               <div className="panel panel-default product-panel">
                 <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
                 <div className="panel-body">
-                  <img src={ product.photo } width="100%" />
+                  <img src={ product.photo } width="100%" height="225px"/>
                   <p>{ product.description }</p>
                   <h5><label>Price:</label> ${ product.price }</h5>
                   {
