@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { checkSession } = require('./middlewares').sessions
 
 router.use('/products', require('./products'));
 router.use('/orders', require('./orders'));
