@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Order } = require('../db').models;
+const { Order, LineItem, Product } = require('../db').models;
+//const { updateSessionCart } = require('./helpers/session-helper')
+const options = [{ model: LineItem, include: [ Product ] }];
 
 router.get('/', (req, res, next) => {
   Order.findOrders(req.session.data.userId)
@@ -32,24 +34,50 @@ router.put('/products/:productId', (req, res, next) => {
   if (!req.session.userId) {
     let { cart } = req.session
     const { productId } = req.params
+
+    if (req.body.quantity <= 0) {
+      // remove escape hatch
+      cart.lineitems = cart.lineitems.filter(li => li.productId != productId)
+      req.session.cart = cart
+      return res.sendStatus(200)
+    }
+
+    // attempted this but it a got a little messy with error handling
+    //updateSessionCart(cart, productId, req.body)
+      //.then(cart => {
+        //req.session.cart = cart
+        //return res.sendStatus(201)
+      //})
+      //.catch(next)
+
     Product.findById(productId)
       .then(product => {
-        let lineItem = cart.lineitems.find(li => li.productId === productId) ||
-          LineItem.build({ productId });
-        Object.assign(lineItem, req.body);
-        lineItem.product = product
+        // doing a product query to add product data to lineItem
+        if (!product) return res.sendStatus(404)
 
-        if (cart.lineitems.findIndex(li => li.productId == productId) < 0) cart.lineitems.push(lineItem)
+        // build lineItem object //
+        let lineItem = LineItem.build({ productId });
+        Object.assign(lineItem, req.body);
+
+        /* can't add properties to lineItem because it's constructed by Sequelize
+          without serialization and deserialization */
+        lineItem = JSON.parse(JSON.stringify(lineItem))
+        lineItem.product = product
+        // ==== //
+
+        // find or push
+        const liIndex = cart.lineitems.findIndex(li => li.productId == productId)
+        liIndex < 0 ? cart.lineitems.push(lineItem) : cart.lineitems[liIndex] = lineItem
+        
+        // update session
         req.session.cart = cart
         return res.sendStatus(201)
       })
+
   } else {
+
     Order.updateCart(req.session.userId, req.params.productId * 1, req.body)
-      .then(() => Order.findCart(req.session.userId))
-      .then(cart => {
-        req.session.cart = cart
-        res.sendStatus(201)
-      })
+      .then(() => res.sendStatus(201))
       .catch(next);
   }
 });
