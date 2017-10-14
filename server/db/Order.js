@@ -19,7 +19,26 @@ const Order = conn.define('order', {
   }
 });
 
-// methods
+// Class methods
+
+Order.findOrders = function(userId) {
+  return Order.findAll({
+    where: { userId },
+    include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }],
+    order: [[ conn.models.lineitem, 'createdAt', 'ASC' ]]
+  })
+};
+
+Order.findOrder = function(id) {
+  return Order.findById(id, {
+    include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }]
+  });
+};
+
+Order.findFiltered = function(userId, status) {
+  return Order.findAll({ where: { userId, status }});
+};
+
 Order.findCart = function(userId) {
   return Order.findOne({
     where: { isCart: true, userId },
@@ -30,16 +49,14 @@ Order.findCart = function(userId) {
   })
     .then(order => {
       if (order) return order;
-      //return Order.create({ userId });
     })
 };
 
 Order.checkOut = function(userId, body) {
   return this.findCart(userId)
     .then(order => {
-      console.log(order)
-      const { address, paymentInfo } = body
-      return order.changeCartToOrder(address, paymentInfo)
+      const { address, paymentInfo } = body;
+      return order.changeCartToOrder(address, paymentInfo);
     })
     .then(() => Order.create({ userId }))
 };
@@ -50,20 +67,19 @@ Order.updateCart = function(userId, productId, updateData) {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId === productId) ||
         conn.models.lineitem.build({ orderId: order.id, productId });
 
-      if (reqBody.quantity < 1) return lineItem.destroy();
+      if (updateData.quantity < 1) return lineItem.destroy();
       Object.assign(lineItem, updateData);
       return lineItem.save();
     })
 };
 
 Order.removeLineItem = function(orderId, id) {
-  console.log('here')
   return conn.models.lineitem.destroy({ where: { id, orderId }});
 };
 
 Order.prototype.changeCartToOrder = function(address, paymentInfo) {
   // if number of items in cart is empty, return error
-  if (!this.lineitems.length) return Promise.reject('Cart is empty')
+  if (!this.lineitems.length) return Promise.reject('Cart is empty');
 
   // REMOVE THE HARDCODED ADDRESS AND CC INFO BELOW!!
   // if falsy, set to empty string to use Sequelize validation error
@@ -71,8 +87,8 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
     address: address || 'New York',
     paymentInfo: paymentInfo || 'Credit Cart',
     isCart: false,
-    status: 'CREATED' })
-  return this.save()
+    status: 'CREATED' });
+  return this.save();
 }
 
 module.exports = Order;
