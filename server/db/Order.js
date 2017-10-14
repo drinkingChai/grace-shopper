@@ -60,14 +60,14 @@ Order.checkOut = function(userId, body) {
     .then(() => Order.create({ userId }))
 };
 
-Order.updateCart = function(userId, productId, reqBody) {
+Order.updateCart = function(userId, productId, updateData) {
   return this.findCart(userId)
     .then(order => {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId === productId) ||
         conn.models.lineitem.build({ orderId: order.id, productId });
 
       if (reqBody.quantity < 1) return lineItem.destroy();
-      Object.assign(lineItem, reqBody);
+      Object.assign(lineItem, updateData);
       return lineItem.save();
     })
 };
