@@ -37,11 +37,12 @@ User.logIn = function(email, password, sessionCartItems) {
           /* if there are items in session
               and user cart is empty,
               create those line items and delete them from session */
-          console.log(conn.models.lineitem)
-          return Promise.all(
-            sessionCartItems.map(lineitem => (
-              conn.models.lineitem.create({ orderId: cart.id, ...lineitem })))
-          )
+          if (!cart.lineitems.length) {
+            return Promise.all(
+              sessionCartItems.map(lineitem => (
+                conn.models.lineitem.create({ orderId: cart.id, ...lineitem })))
+            )
+          }
         })
         .then(() => user.id)
     })
