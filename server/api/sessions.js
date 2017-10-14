@@ -13,11 +13,8 @@ router.get('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
   Session.updateSession(req.body, req.session)
     .then(session => {
-      if (session) {
-        req.session.id = session.id;
-        return res.sendStatus(202);
-      }
-      return res.sendStatus(404);
+      if (!session) return res.sendStatus(404);
+      return res.sendStatus(202);
     })
     .catch(next);
 });
