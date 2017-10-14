@@ -19,12 +19,6 @@ Review.belongsTo(Product);
 
 const sync = () => conn.sync();
 
-// shared functions
-User.createUser = function(params) {
-  return User.create(params)
-    .then(user => Order.create({ userId: user.id }))
-}
-
 module.exports = {
   sync,
   models: {
