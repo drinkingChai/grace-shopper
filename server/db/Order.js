@@ -19,6 +19,24 @@ const Order = conn.define('order', {
   }
 });
 
+Order.findOrders = function(userId) {
+  return Order.findAll({
+    where: { userId },
+    include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }],
+    order: [[ conn.models.lineitem, 'createdAt', 'ASC' ]]
+  })
+};
+
+Order.findOrder = function(id) {
+  return Order.findById(id, {
+    include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }]
+  });
+};
+
+Order.findFiltered = function(userId, status) {
+  return Order.findAll({ where: { userId, status }});
+};
+
 Order.findCart = function(userId) {
   return Order.findOne({
     where: { isCart: true, userId },
