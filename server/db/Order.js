@@ -54,6 +54,7 @@ Order.findCart = function(userId) {
 Order.checkOut = function(userId, body) {
   return this.findCart(userId)
     .then(order => {
+      console.log(order)
       const { address, paymentInfo } = body
       return order.changeCartToOrder(address, paymentInfo)
     })
@@ -81,10 +82,11 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
   // if number of items in cart is empty, return error
   if (!this.lineitems.length) return Promise.reject('Cart is empty')
 
+  // REMOVE THE HARDCODED ADDRESS AND CC INFO BELOW!!
   // if falsy, set to empty string to use Sequelize validation error
   Object.assign(this, {
-    address: address || '',
-    paymentInfo: paymentInfo || '',
+    address: address || 'New York',
+    paymentInfo: paymentInfo || 'Credit Cart',
     isCart: false,
     status: 'CREATED' })
   return this.save()
