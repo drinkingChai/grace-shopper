@@ -7,28 +7,13 @@ router.get('/', (req, res, next) => {
 
 router.put('/', (req, res, next) => {
   const { email, password } = req.body
-  User.findOne({ where: { email, password } })
-    .then(user => {
-      if (!user) return res.sendStatus(401)
-
-      req.session.userId = user.id
-      return Order.findCart(user.id)
-    })
-    .then(cart => {
-      /* if there are items in session
-        and user cart is empty,
-        create those line items and delete them from session */
-      if (!cart.lineitems.length) {
-        return Promise.all(
-          req.session.cart.lineitems.map(lineItem => (
-            LineItem.create({ orderId: cart.id, ...lineItem })
-          )))
-      }
-    })
-    .then(() => {
+  User.logIn(email, password, req.session.cart.lineitems)
+    .then(userId => {
+      req.session.userId = userId
       delete req.session.cart
       res.sendStatus(200)
     })
+    .catch(() => res.sendStatus(401))
 })
 
 router.delete('/', (req, res, next) => {
