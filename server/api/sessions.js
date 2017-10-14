@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
       if (!session) return res.sendStatus(401);
       res.send(session.data);
     })
-    .catch(next)
+    .catch(next);
 });
 
 router.put('/', (req, res, next) => {
@@ -17,15 +17,15 @@ router.put('/', (req, res, next) => {
         req.session.id = session.id;
         return res.sendStatus(202);
       }
-      else next();
+      return res.sendStatus(404);
     })
     .catch(next);
-})
+});
 
 router.delete('/', (req, res, next) => {
   return Session.deleteSession(req.session.id)
     .then(() => res.sendStatus(201))
-    .catch(next)
+    .catch(next);
 });
 
 module.exports = router;
