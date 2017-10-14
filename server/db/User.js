@@ -24,4 +24,28 @@ const User = conn.define('user', {
   }
 });
 
+User.createUser = function(params) {
+  return User.create(params)
+    .then(user => conn.models.order.create({ userId: user.id }))
+}
+
+User.logIn = function(email, password, sessionCartItems) {
+  return this.findOne({ where: { email, password } })
+    .then(user => {
+      return conn.models.order.findCart(user.id)
+        .then(cart => {
+          /* if there are items in session
+              and user cart is empty,
+              create those line items and delete them from session */
+          if (!cart.lineitems.length) {
+            return Promise.all(
+              sessionCartItems.map(lineitem => (
+                conn.models.lineitem.create({ orderId: cart.id, ...lineitem })))
+            )
+          }
+        })
+        .then(() => user.id)
+    })
+}
+
 module.exports = User;
