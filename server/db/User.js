@@ -24,4 +24,23 @@ const User = conn.define('user', {
   }
 });
 
+User.logIn = function(email, password, sessionCartItems) {
+  return this.findOne({ where: { email, password } })
+    .then(user => {
+      return conn.models.order.findCart(user.id)
+        .then(cart => {
+          /* if there are items in session
+              and user cart is empty,
+              create those line items and delete them from session */
+          if (!sessionCartItems.length) {
+            return Promise.all(
+              sessionCartItems.map(lineitem => (
+                lineitem.create({ orderid: cart.id, ...lineitem })))
+            )
+          }
+        })
+        .then(() => user.id)
+    })
+}
+
 module.exports = User;
