@@ -21,7 +21,7 @@ export const loginUser = (email, password) => dispatch =>
 export const logoutUser = () => dispatch =>
   axios.delete('/api/sessions')
     .then(() => dispatch(logout()))
-    .then(() => dispatch(getOrders([])))
+    .then(() => dispatch(fetchOrders()))
     .catch(err => console.log(err.message))
 
 export const registerUser = userData => dispatch =>
