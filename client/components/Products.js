@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { updateCartItem } from '../store';
 import { Link } from 'react-router-dom';
 
-
 const Products = ({ products, updateCartItem }) => {
   return (
     <ul className="list-unstyled">
@@ -15,8 +14,6 @@ const Products = ({ products, updateCartItem }) => {
                 <Link to ={`/products/${product.id}`}>
                 <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
                 </Link>
-
-                <h3 className="panel-heading">{ product.name }</h3>
                 <h3 className="panel-heading">{ product.name }</h3>
                 <div className="panel-body">
                   <img src={ product.photo } width="100%" height="225px"/>
