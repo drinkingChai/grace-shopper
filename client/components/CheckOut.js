@@ -31,7 +31,6 @@ class CheckOut extends Component {
     const { order } = this.props
     const { address, paymentInfo } = this.state
     const { onChangeHandler, onSubmitHandler } = this
-    console.log(this.props)
 
     return (
       <div>
