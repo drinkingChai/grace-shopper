@@ -10,11 +10,8 @@ const Cart = ({ order, location }) => {
 
   return (
     <div className="panel panel-default">
-      <div className="panel-heading">
-        <h2>Your Cart</h2>
-      </div>
+      <h4 className="panel-heading">Your Cart</h4>
       <div className="panel-body">
-        {/* enter Order Lines Here */}
         {
           order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.product.id } lineitem={ lineitem } />)
         }
@@ -23,8 +20,8 @@ const Cart = ({ order, location }) => {
           <div>
             <label>Subtotal:</label> ${ total }
           </div>
-          { location && location.pathname != '/checkout' && order.lineitems.length ?
-            <Link to='/checkout' className="btn btn-primary btn-sm">Proceed to Checkout</Link> : null }
+          { location && location.pathname !== '/checkout' && order.lineitems.length ?
+            <Link to="/checkout" className="btn btn-primary btn-sm">Proceed to Checkout</Link> : null }
         </div>
       </div>
     </div>
