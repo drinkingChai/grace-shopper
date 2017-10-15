@@ -33,6 +33,7 @@ class UserAuth extends Component {
   onLogoutHandler(ev) {
     ev.preventDefault()
     this.props.logoutUser()
+      .then(() => this.props.history.push('/'))
   }
 
   render() {
