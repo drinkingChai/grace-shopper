@@ -12,10 +12,6 @@ class UserAuth extends Component {
     this.onLogoutHandler = this.onLogoutHandler.bind(this);
   }
 
-  componentDidMount() {
-    //this.props.checkSession()
-  }
-
   onChangeHandler(ev) {
     const { name, value } = ev.target
     this.setState(Object.assign(this.state, { [name]: value }))
