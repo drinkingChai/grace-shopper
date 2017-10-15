@@ -38,7 +38,7 @@ class CheckOut extends Component {
 
         { order && order.lineitems.length ?
           <form onSubmit={ onSubmitHandler } className='panel panel-primary'>
-            <div className='panel-heading'>Check out</div>
+            <div className='panel-heading'><h2>Check out</h2></div>
             <div className='panel-body'>
               <div className='form-group'>
                 <label htmlFor='address'>Address</label>

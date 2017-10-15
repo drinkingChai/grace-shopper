@@ -11,7 +11,7 @@ const Cart = ({ order, location }) => {
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
-        <strong>Your Cart</strong>
+        <h2>Your Cart</h2>
       </div>
       <div className="panel-body">
         {/* enter Order Lines Here */}
