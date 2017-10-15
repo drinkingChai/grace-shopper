@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import CartUpdateForm from './CartUpdateForm';
 
-const Cart = ({ order }) => {
+const Cart = ({ order, location }) => {
   if (!order) return <div />
 
   const total = order.lineitems.reduce((total, item)=> (total += item.product.price * item.quantity), 0);
@@ -18,10 +18,13 @@ const Cart = ({ order }) => {
         {
           order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.product.id } lineitem={ lineitem } />)
         }
+        <hr/>
         <div>
-          <hr/>
-          <label>Subtotal:</label> ${ total }
-          <Link to='/checkout' className="btn btn-primary btn-sm pull-right">Proceed to Checkout</Link>
+          <div>
+            <label>Subtotal:</label> ${ total }
+          </div>
+          { location && location.pathname != '/checkout' ?
+            <Link to='/checkout' className="btn btn-primary btn-sm">Proceed to Checkout</Link> : null }
         </div>
       </div>
     </div>

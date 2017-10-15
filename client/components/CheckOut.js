@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { checkOut } from '../store';
+import Cart from './Cart'
 
 class CheckOut extends Component {
   constructor() {
@@ -28,15 +29,25 @@ class CheckOut extends Component {
     const { onChangeHandler, onSubmitHandler } = this
 
     return (
-      <form onSubmit={ onSubmitHandler }>
-        <label htmlFor='address'>Address</label>
-        <input name='address' value={ address } onChange={ onChangeHandler }/>
+      <div>
+        <Cart />
+        <form onSubmit={ onSubmitHandler } class='panel panel-primary'>
+          <div class='panel-heading'>Check out</div>
+          <div class='panel-body'>
+            <div className='form-group'>
+              <label htmlFor='address'>Address</label>
+              <input name='address' value={ address } onChange={ onChangeHandler } className='form-control'/>
+            </div>
 
-        <label htmlFor='paymentInfo'>Payment Info</label>
-        <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler }/>
+            <div className='form-group'>
+              <label htmlFor='paymentInfo'>Payment Info</label>
+              <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler } className='form-control'/>
+            </div>
 
-        <button>Submit</button>
-      </form>
+            <button className='btn btn-success'>Submit</button>
+          </div>
+        </form>
+      </div>
     )
   }
 }
