@@ -8,6 +8,7 @@ import Products from './Products';
 import Account from './Account';
 import Cart from './Cart';
 import UserAuth from './UserAuth'
+import CheckOut from './CheckOut'
 
 export default class Root extends Component {
   componentDidMount () {
@@ -22,18 +23,19 @@ export default class Root extends Component {
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
 
-        <main className="container">
+        <main className="container-fluid">
           <h1 className="headline">GRACESHOPPER</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
               <Route exact path="/" component={ Products } />
               <Route exact path="/account" component={ Account } />
+              <Route exact path="/checkout" component={ CheckOut } />
               <Redirect path="/" to="/" />
             </Switch>
           </div>
           <div className="col-xs-12 col-sm-4">
             <Route component={ UserAuth } />
-            <Cart />
+            <Route exact path='/' component={ Cart } />
           </div>
         </main>
       </div>
