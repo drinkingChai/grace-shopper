@@ -26,4 +26,11 @@ const Product = conn.define('product', {
   }
 });
 
+Product.findAllProducts = function() {
+  return Product.findAll({
+    // include users that wrote the review but only include their names
+    include: [ conn.models.review ]
+  })
+}
+
 module.exports = Product;
