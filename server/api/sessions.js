@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { User, Order, LineItem } = require('../db').models
+const { createSessionCart } = require('./helpers/session-helper')
 
 router.get('/', (req, res, next) => {
   res.send(req.session)
@@ -18,7 +19,7 @@ router.put('/', (req, res, next) => {
 
 router.delete('/', (req, res, next) => {
   delete req.session.userId
-  req.session.cart = Order.build()
+  req.session.cart = createSessionCart()
   res.sendStatus(200)
 })
 
