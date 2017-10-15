@@ -17,6 +17,7 @@ app.use(session({
   cookieName: 'session',
   secret: process.env.SESSIONSECRET,
   maxAge: 30 * 60 * 1000
+}))
 app.use((req, res, next) => {
   req.session.cart = req.session.cart || db.models.Order.build()
   req.session.cart.lineitems = req.session.cart.lineitems || []
@@ -35,4 +36,4 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000;
 
 db.sync()
-  .then(() => app.listen(port, () => console.log(`DarknessCouch shopper! listening on port ${port}`)));
+  .then(() => app.listen(port, () => console.log(`DJ shopper! listening on port ${port}`)));

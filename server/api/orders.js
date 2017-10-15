@@ -6,7 +6,7 @@ router.get('/', (req, res, next) => {
   if (!req.session.userId) {
     return res.send([req.session.cart]);
   }
-  Order.findOrders(req.session.data.userId)
+  Order.findOrders(req.session.userId)
     .then(orders => res.send(orders))
     .catch(next);
 });
@@ -18,7 +18,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/filter', (req, res, next) => {
-  Order.findFiltered(req.session.data.userId, req.query.status)
+  Order.findFiltered(req.session.userId, req.query.status)
     .then(orders => res.send(orders))
     .catch(next);
 });
