@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateCartItem } from '../store';
+import { Link } from 'react-router-dom';
 
 const Products = ({ products, updateCartItem }) => {
   return (
@@ -10,7 +11,9 @@ const Products = ({ products, updateCartItem }) => {
           return (
             <li key={ product.id } className="col-xs-12 col-sm-6">
               <div className="panel panel-default product-panel">
-                <h3 className="panel-heading">{ product.name }</h3>
+                <Link to ={`/products/${product.id}`}>
+                <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
+                </Link>
                 <div className="panel-body">
                   <img src={ product.photo } width="100%" height="225px"/>
                   <p>{ product.description }</p>

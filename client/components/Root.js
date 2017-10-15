@@ -8,6 +8,7 @@ import Products from './Products';
 import Account from './Account';
 import Cart from './Cart';
 import UserAuth from './UserAuth'
+import Product from './Product'
 import CheckOut from './CheckOut'
 
 export default class Root extends Component {
@@ -29,6 +30,7 @@ export default class Root extends Component {
             <Switch>
               <Route exact path="/" component={ Products } />
               <Route exact path="/account" component={ Account } />
+              <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Redirect path="/" to="/" />
             </Switch>
