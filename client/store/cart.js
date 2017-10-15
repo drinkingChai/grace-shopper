@@ -11,7 +11,7 @@ export const updateCartItem = (product, quantity) => dispatch =>
 export const checkOut = (checkoutData) => dispatch =>
   axios.put('/api/orders/check-out', checkoutData)
     .then(() => dispatch(fetchOrders()))
-    .catch(err => console.log(err.message))
+    //.catch(err => console.log(err.message))
 
 const initialState = {}
 

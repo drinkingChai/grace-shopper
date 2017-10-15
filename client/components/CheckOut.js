@@ -24,6 +24,7 @@ class CheckOut extends Component {
     this.props.checkOut(this.state)
     // change this confirmation page
       .then(() => this.props.history.push('/account'))
+      .catch(err => console.log(err.message))
   }
 
   render() {
