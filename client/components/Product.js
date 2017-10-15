@@ -5,6 +5,8 @@ const Product = ({product, currentUser}) => {
 
   // const product = products.filter(product => product)
   console.log(product);
+  if (!product) return <div>No product here!</div>
+
   return (
     <div className="col-sm-6">
       <h2> {product.name} </h2>
