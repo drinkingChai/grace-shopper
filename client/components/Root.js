@@ -32,12 +32,8 @@ export default class Root extends Component {
               <Route exact path="/" component={ Products } />
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
-=======
               <Route exact path="/checkout" component={ CheckOut } />
->>>>>>> refs/remotes/origin/master
-=======
               <Route exact path="/checkout" component={ CheckOut } />
->>>>>>> 7be42f11d3d97ef2b58bbf485f6f6ed93814a1f6
               <Redirect path="/" to="/" />
             </Switch>
           </div>
