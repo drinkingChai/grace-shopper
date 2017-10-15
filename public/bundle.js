@@ -29890,7 +29890,7 @@ var Products = function Products(_ref) {
           _react2.default.createElement(
             'div',
             { className: 'panel-body' },
-            _react2.default.createElement('img', { src: product.photo, width: '50%', height: '225px' }),
+            _react2.default.createElement('img', { src: product.photo, width: '100%', height: '225px' }),
             _react2.default.createElement(
               'p',
               null,
@@ -30468,12 +30468,12 @@ var _reactRedux = __webpack_require__(7);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Product = function Product(_ref) {
-  var products = _ref.products;
+  var product = _ref.product,
+      currentUser = _ref.currentUser;
 
 
   // const product = products.filter(product => product)
-  var prod = products.products[0];
-  var currentUser = products.currentUser;
+  console.log(product);
   return _react2.default.createElement(
     'div',
     { className: 'col-sm-6' },
@@ -30481,29 +30481,29 @@ var Product = function Product(_ref) {
       'h2',
       null,
       ' ',
-      prod.name,
+      product.name,
       ' '
     ),
     _react2.default.createElement(
       'h3',
       null,
       ' ',
-      prod.description,
+      product.description,
       ' '
     ),
-    _react2.default.createElement('img', { src: prod.photo, width: '100%', height: '225px' }),
+    _react2.default.createElement('img', { src: product.photo, width: '100%', height: '225px' }),
     _react2.default.createElement(
       'p',
       null,
       'Price: ',
-      prod.price,
+      product.price,
       ' '
     ),
     _react2.default.createElement(
       'p',
       null,
       'Quantity Left: ',
-      prod.inventoryQuantity,
+      product.inventoryQuantity,
       ' '
     ),
     _react2.default.createElement(
@@ -30515,10 +30515,15 @@ var Product = function Product(_ref) {
   );
 };
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  console.log(ownProps);
+  var match = ownProps.match;
 
   return {
-    products: state
+    product: state.products.find(function (prod) {
+      return prod.id == match.params.id;
+    }),
+    currentUser: state.currentUser
   };
 };
 

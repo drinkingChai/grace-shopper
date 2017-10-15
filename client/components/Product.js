@@ -1,18 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Product = ({products}) => {
+const Product = ({product, currentUser}) => {
 
   // const product = products.filter(product => product)
-  const prod = products.products[0];
-  const currentUser = products.currentUser;
+  console.log(product);
   return (
     <div className="col-sm-6">
-      <h2> {prod.name} </h2>
-      <h3> {prod.description} </h3>
-      <img src = {prod.photo} width="100%" height="225px"/>
-      <p>Price: {prod.price} </p>
-      <p>Quantity Left: {prod.inventoryQuantity} </p>
+      <h2> {product.name} </h2>
+      <h3> {product.description} </h3>
+      <img src = {product.photo} width="100%" height="225px"/>
+      <p>Price: {product.price} </p>
+      <p>Quantity Left: {product.inventoryQuantity} </p>
       <p> Reviews will be here! </p>
       { currentUser.userId ?
         'Add Reviews' :
@@ -25,10 +24,12 @@ const Product = ({products}) => {
 
 
 
-const mapStateToProps = (state) => {
-
+const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps);
+  const { match } = ownProps;
   return {
-    products: state
+    product: state.products.find(prod => prod.id == match.params.id),
+    currentUser: state.currentUser
   }
 }
 
