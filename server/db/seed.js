@@ -1,29 +1,36 @@
 const conn = require('./conn');
 const { User, Product, LineItem, Order } = require('./index').models;
 
+const products = [
+  { name: 'Headphones I', description: 'Very hip.', price: '300', inventoryQuantity: '50', photo: '../../public/images/headphones-1.jpg' },
+  { name: 'Headphones II', description: 'Coolest.', price: '500', inventoryQuantity: '50', photo: '../../public/images/headphones-2.jpg' },
+  { name: 'Skateboard', description: 'On fleek.', price: '90', inventoryQuantity: '30', photo: '../../public/images/skateboard.jpg' },
+  { name: 'MacBook Air', description: '13-inch Apple laptop.', price: '1000', inventoryQuantity: '100', photo: '../../public/images/macbook-air.jpg' },
+  { name: 'Bike I', description: 'Color: Green', price: '200', inventoryQuantity: '5', photo: '../../public/images/green-bike.jpg' },
+  { name: 'Bike II', description: 'Color: Blue', price: '300', inventoryQuantity: '15', photo: '../../public/images/blue-bike.jpg' },
+  { name: 'Bike III', description: 'Color: Black', price: '350', inventoryQuantity: '10', photo: '../../public/images/black-bike.jpg' },
+  { name: 'Camera I', description: 'Type: Vintage', price: '250', inventoryQuantity: '20', photo: '../../public/images/camera-1.jpg' },
+  { name: 'Camera II', description: 'Type: Vintage', price: '150', inventoryQuantity: '10', photo: '../../public/images/camera-2.jpg' },
+  { name: 'Banjo', description: 'Be that guy!', price: '70', inventoryQuantity: '5', photo: '../../public/images/banjo.jpg' },
+  { name: 'Guitar', description: 'Classic.', price: '100', inventoryQuantity: '30', photo: '../../public/images/guitar.jpg' },
+  { name: 'iPhone', description: 'Apple iPhone 6s.', price: '600', inventoryQuantity: '25', photo: '../../public/images/iphone.jpg' }
+];
+
+const users = [
+  { name: 'Wasif', email: 'wasif@gs.com', password: 'foo' },
+  { name: 'Dan', email: 'dan@gs.com', password: 'foo' },
+  { name: 'Anthony', email: 'anthony@gs.com', password: 'foo' },
+  { name: 'Burcu', email: 'burcu@gs.com', password: 'foo' },
+  { name: 'Prof', email: 'prof@gs.com', password: 'foo' }
+];
+
 const seed = () => {
   return conn.sync({ force: true })
-    .then(() => {
-      return Promise.all([
-        User.create({ name: 'FooUser1', email: 'foo1@foo.com', password: 'foo1' }),
-        User.create({ name: 'FooUser2', email: 'foo2@foo.com', password: 'foo2' }),
-        User.create({ name: 'BarUser', email: 'bar@bar.com', password: 'bar1' }),
-        User.create({ name: 'BazzUser', email: 'bazz@bazz.com', password: 'bazz1' }),
-        User.create({ name: 'QugUser', email: 'qug@qug.com', password: 'qug1' }),
-        Product.create({ name: 'Headphones', description: 'Very hip.', price: '300', inventoryQuantity: '50', photo: 'https://static.pexels.com/photos/373918/pexels-photo-373918.jpeg' }),
-        Product.create({ name: 'Skateboard', description: 'On fleek.', price: '90', inventoryQuantity: '30', photo: 'https://static.pexels.com/photos/4787/feet-hipster-longboard-skateboard.jpg' }),
-        Product.create({ name: 'MacBook', description: 'Laptop.', price: '1000', inventoryQuantity: '100', photo: 'https://static.pexels.com/photos/434346/pexels-photo-434346.jpeg' }),
-        Product.create({ name: 'Green Bike', description: 'Bike.', price: '200', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/2242/wall-sport-green-bike.jpg' }),
-        Product.create({ name: 'Camera', description: 'Photos.', price: '250', inventoryQuantity: '20', photo: 'https://static.pexels.com/photos/6103/woman-hand-legs-camera.jpg' }),
-        Product.create({ name: 'Banjo', description: 'Be that guy!', price: '70', inventoryQuantity: '5', photo: 'https://static.pexels.com/photos/387/man-person-wall-music.jpg' }),
-        Product.create({ name: 'SNS T-Shirt', description: 'Don\'t be that guy!', price: '1000', inventoryQuantity: '100', photo: 'https://cdna.lystit.com/photos/f79e-2014/07/28/selected-white-t-shirt-in-long-length-short-sleeve-t-shirts-product-1-22068398-2-460728901-normal.jpeg'})
-
-      ])
-    })
-}
+    .then(() => Promise.all(products.map(product => Product.create(product))))
+    .then(() => Promise.all(users.map(user => User.create(user))))
+    .then(([ ..._users ]) => Promise.all(_users.map(user => Order.create({ userId: user.id}))))
+};
 
 seed()
   .then(() => console.log('database seeded'))
-  .then(() => conn.close())
-
-
+  .then(() => conn.close());

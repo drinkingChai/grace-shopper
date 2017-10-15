@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "webpack & node ./server/db/seed.js",
     "start": "node server",
-    "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore client/ --public/",
+    "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore client/ --ignore public/",
     "seed": "DATABASE_URL=postgres://localhost/graceshopper node ./server/db/seed.js"
   },
   "keywords": [],

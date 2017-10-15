@@ -12,10 +12,6 @@ class UserAuth extends Component {
     this.onLogoutHandler = this.onLogoutHandler.bind(this);
   }
 
-  componentDidMount() {
-    //this.props.checkSession()
-  }
-
   onChangeHandler(ev) {
     const { name, value } = ev.target
     this.setState(Object.assign(this.state, { [name]: value }))
@@ -37,6 +33,7 @@ class UserAuth extends Component {
   onLogoutHandler(ev) {
     ev.preventDefault()
     this.props.logoutUser()
+      .then(() => this.props.history.push('/'))
   }
 
   render() {
@@ -47,26 +44,23 @@ class UserAuth extends Component {
     return (
       <div className="well">
         { !currentUser.userId ?
-          <form onSubmit={ onLoginHandlher } className="form form-horizontal">
+          <form onSubmit={ onLoginHandlher }>
             <h4>Account</h4>
             <div className="form-group">
-              <label className="control-label col-sm-2" htmlFor='email'>Email</label>
-              <div className="col-sm-10">
-                <input name='email' type='email' value={ email } onChange={ onChangeHandler } className="form-control" />
-              </div>
-
-              <label className="control-label col-sm-3" htmlFor='password'>Password</label>
-              <div className="col-sm-6">
-                <input name='password' type='password' value={ password } onChange={ onChangeHandler } className="form-control" />
-              </div>
-              <button className="btn btn-default">Login</button>
+              <label htmlFor='email'>Email</label>
+              <input name='email' type='email' value={ email } onChange={ onChangeHandler } className="form-control" />
             </div>
 
             <div className="form-group">
-              <label className="control-label col-sm-2" htmlFor='name'>Name</label>
-              <div className="col-sm-8 pull-right">
-                <input name='name' value={ name } onChange={ onChangeHandler } className="form-control" />
-              </div>
+              <label htmlFor='password'>Password</label>
+              <input name='password' type='password' value={ password } onChange={ onChangeHandler } className="form-control" />
+            </div>
+            <button className="btn btn-default">Login</button>
+            <hr/>
+
+            <div className="form-group">
+              <label htmlFor='name'>Name</label>
+              <input name='name' value={ name } onChange={ onChangeHandler } className="form-control" />
             </div>
             <button onClick={ onRegisterHandler } className="btn btn-default">Register</button>
           </form>
