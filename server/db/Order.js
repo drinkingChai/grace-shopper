@@ -19,7 +19,8 @@ const Order = conn.define('order', {
   }
 });
 
-// Class methods
+// Class Methods:
+
 Order.findOrders = function(userId) {
   return Order.findAll({
     where: { userId },
@@ -52,6 +53,7 @@ Order.findCart = function(userId) {
 };
 
 Order.checkOut = function(userId, body) {
+  // TODO: guest does not have userId. ask guest to create an account.
   return this.findCart(userId)
     .then(order => {
       const { address, paymentInfo } = body;
@@ -76,6 +78,8 @@ Order.removeLineItem = function(orderId, id) {
   return conn.models.lineitem.destroy({ where: { id, orderId }});
 };
 
+// Instance Methods:
+
 Order.prototype.changeCartToOrder = function(address, paymentInfo) {
   // if number of items in cart is empty, return error
   if (!this.lineitems.length) return Promise.reject('Cart is empty');
@@ -87,6 +91,6 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
     isCart: false,
     status: 'CREATED' });
   return this.save();
-}
+};
 
 module.exports = Order;
