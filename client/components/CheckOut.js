@@ -22,36 +22,45 @@ class CheckOut extends Component {
   onSubmitHandler(ev) {
     ev.preventDefault()
     this.props.checkOut(this.state)
+    // change this confirmation page
+      .then(() => this.props.history.push('/account'))
   }
 
   render() {
+    const { order } = this.props
     const { address, paymentInfo } = this.state
     const { onChangeHandler, onSubmitHandler } = this
+    console.log(this.props)
 
     return (
       <div>
         <Cart />
-        <form onSubmit={ onSubmitHandler } class='panel panel-primary'>
-          <div class='panel-heading'>Check out</div>
-          <div class='panel-body'>
-            <div className='form-group'>
-              <label htmlFor='address'>Address</label>
-              <input name='address' value={ address } onChange={ onChangeHandler } className='form-control'/>
-            </div>
 
-            <div className='form-group'>
-              <label htmlFor='paymentInfo'>Payment Info</label>
-              <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler } className='form-control'/>
-            </div>
+        { order && order.lineitems.length ?
+          <form onSubmit={ onSubmitHandler } className='panel panel-primary'>
+            <div className='panel-heading'>Check out</div>
+            <div className='panel-body'>
+              <div className='form-group'>
+                <label htmlFor='address'>Address</label>
+                <input name='address' value={ address } onChange={ onChangeHandler } className='form-control'/>
+              </div>
 
-            <button className='btn btn-success'>Submit</button>
-          </div>
-        </form>
+              <div className='form-group'>
+                <label htmlFor='paymentInfo'>Payment Info</label>
+                <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler } className='form-control'/>
+              </div>
+
+              <button className='btn btn-success'>Submit</button>
+            </div>
+          </form> : null }
       </div>
     )
   }
 }
 
+const mapState = ({ orders }) => ({
+  order: orders.find(order => order.isCart)
+})
 const mapDispatch = { checkOut }
 
-export default connect(null, mapDispatch)(CheckOut)
+export default connect(mapState, mapDispatch)(CheckOut)

@@ -23,7 +23,7 @@ const Cart = ({ order, location }) => {
           <div>
             <label>Subtotal:</label> ${ total }
           </div>
-          { location && location.pathname != '/checkout' ?
+          { location && location.pathname != '/checkout' && order.lineitems.length ?
             <Link to='/checkout' className="btn btn-primary btn-sm">Proceed to Checkout</Link> : null }
         </div>
       </div>
