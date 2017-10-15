@@ -18,6 +18,9 @@ const Products = ({ products, updateCartItem }) => {
 =======
                 <h3 className="panel-heading">{ product.name }</h3>
 >>>>>>> refs/remotes/origin/master
+=======
+                <h3 className="panel-heading">{ product.name }</h3>
+>>>>>>> 7be42f11d3d97ef2b58bbf485f6f6ed93814a1f6
                 <div className="panel-body">
                   <img src={ product.photo } width="100%" height="225px"/>
                   <p>{ product.description }</p>
