@@ -23,7 +23,7 @@ export default class Root extends Component {
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
 
-        <main className="container">
+        <main className="container-fluid">
           <h1 className="headline">GRACESHOPPER</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
@@ -35,7 +35,7 @@ export default class Root extends Component {
           </div>
           <div className="col-xs-12 col-sm-4">
             <Route component={ UserAuth } />
-            <Cart />
+            <Route exact path='/' component={ Cart } />
           </div>
         </main>
       </div>
