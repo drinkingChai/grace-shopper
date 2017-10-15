@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Product } = require('../db').models;
 
 router.get('/', (req, res, next) => {
-  Product.findAllProducts()
+  Product.findProducts()
     .then(products => res.send(products))
     .catch(next)
 });
