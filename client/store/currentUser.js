@@ -29,7 +29,15 @@ export const registerUser = userData => dispatch =>
     .then(res => dispatch(loginUser(res.data)))
     .catch(err => console.log(err.message))
 
+export const updateAccount = userData => dispatch =>
+  axios.put('/api/users', userData)
+    .then(() => dispatch(checkSession()))
+    .catch(err => console.log(err.message))
 
+export const updateUserPassword = passwordData => dispatch =>
+  axios.put('/api/users/update-password', passwordData)
+    .then(() => dispatch(checkSession()))
+    .catch(err => console.log(err.message))
 
 
 const reducer = (currentUser = {}, action) => {
