@@ -27,8 +27,7 @@ const users = [
 const seed = () => {
   return conn.sync({ force: true })
     .then(() => Promise.all(products.map(product => Product.create(product))))
-    .then(() => Promise.all(users.map(user => User.create(user))))
-    .then(([ ..._users ]) => Promise.all(_users.map(user => Order.create({ userId: user.id}))))
+    .then(() => Promise.all(users.map(user => User.createUser(user))))
 };
 
 seed()

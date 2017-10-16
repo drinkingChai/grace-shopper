@@ -25,8 +25,13 @@ const User = conn.define('user', {
 });
 
 User.createUser = function(params) {
+  let user;
   return User.create(params)
-    .then(user => conn.models.order.create({ userId: user.id }))
+    .then(_user => {
+      user = _user
+      return conn.models.order.create({ userId: _user.id })
+    })
+    .then(() => user)
 }
 
 User.logIn = function(email, password, sessionCartItems) {
