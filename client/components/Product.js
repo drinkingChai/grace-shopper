@@ -28,10 +28,10 @@ const Product = ({product, currentUser}) => {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
-  const { match } = ownProps;
+
+
   return {
-    product: state.products.find(prod => prod.id == match.params.id),
+    product: state.products.find(prod => prod.id == ownProps.match.params.id),
     currentUser: state.currentUser
   }
 }
