@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { updateAccount } from '../store';
 
@@ -9,9 +10,6 @@ class UserAuth extends Component {
     this.state = {
       name: user.name || '',
       email: user.email || '',
-      oldPassword: '',
-      password1: '',
-      password2: ''
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onUpdateHandler = this.onUpdateHandler.bind(this);
@@ -28,18 +26,13 @@ class UserAuth extends Component {
 
   onUpdateHandler(ev) {
     ev.preventDefault()
-    //const { name, email, oldPassword, password1 } = this.state
-    //this.props.updatedAccount({
-      //name, email,
-      //oldPassword, password: password1
-    //})
     const { name, email } = this.state
     this.props.updateAccount({ name, email })
   }
 
   render() {
     const { user } = this.props
-    const { email, oldPassword, password1, password2, name } = this.state
+    const { email, name } = this.state
     const { onChangeHandler, onUpdateHandler } = this
 
     if (!user.userId) return <div></div>
@@ -47,26 +40,15 @@ class UserAuth extends Component {
     return (
       <form onSubmit={ onUpdateHandler } className='well'>
         <h4>Account</h4>
+
+        <div className='form-group'>
+          <Link className='btn btn-default' to='/changepassword'>Change password</Link>
+        </div>
+
         <div className="form-group">
           <label htmlFor='email'>Email</label>
           <input name='email' type='email' value={ email } onChange={ onChangeHandler } className="form-control" />
         </div>
-
-        <div className="form-group">
-          <label htmlFor='oldPassword'>Old password</label>
-          <input name='oldPassword' type='password' value={ oldPassword } onChange={ onChangeHandler } className="form-control" />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor='password1'>New password</label>
-          <input name='password1' type='password' value={ password1 } onChange={ onChangeHandler } className="form-control" />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor='password2'>Confirm password</label>
-          <input name='password2' type='password' value={ password2 } onChange={ onChangeHandler } className="form-control" />
-        </div>
-        <hr/>
 
         <div className="form-group">
           <label htmlFor='name'>Name</label>

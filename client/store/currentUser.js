@@ -37,7 +37,6 @@ export const updateAccount = userData => dispatch =>
 export const updateUserPassword = passwordData => dispatch =>
   axios.put('/api/users/update-password', passwordData)
     .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message))
 
 
 const reducer = (currentUser = {}, action) => {

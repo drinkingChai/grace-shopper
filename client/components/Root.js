@@ -10,6 +10,7 @@ import Cart from './Cart';
 import UserAuth from './UserAuth'
 import Product from './Product'
 import CheckOut from './CheckOut'
+import PasswordUpdateForm from './PasswordUpdateForm'
 
 export default class Root extends Component {
   componentDidMount () {
@@ -33,6 +34,7 @@ export default class Root extends Component {
               <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path='/login' component={ UserAuth } />
+              <Route exact path='/changepassword' component={ PasswordUpdateForm } />
               <Redirect path="/" to="/" />
             </Switch>
           </div>

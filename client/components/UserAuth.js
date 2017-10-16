@@ -21,6 +21,7 @@ class UserAuth extends Component {
     ev.preventDefault()
     const { email, password } = this.state
     this.props.loginUser(email, password)
+      .then(() => this.props.history.push('/account'))
   }
 
   onRegisterHandler(ev) {
