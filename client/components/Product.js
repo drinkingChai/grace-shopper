@@ -17,7 +17,7 @@ const Product = ({product, currentUser}) => {
       <p>Quantity Left: {product.inventoryQuantity} </p>
       <p> Reviews will be here! </p>
       { currentUser.userId ?
-        <ReviewForm />:
+        <ReviewForm product={ product} />:
         'Login to leave a review!'
       }
     </div>

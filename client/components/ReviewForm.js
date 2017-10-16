@@ -20,9 +20,7 @@ class ReviewForm extends Component {
 
   onSubmitHandler(ev) {
     ev.preventDefault();
-    console.log(this.state);
-    console.log(this.props);
-    this.props.writeReview({product: this.props.productId, user: this.props.currentUser, blurb: this.state.blurb, rating: this.state.rating})
+    this.props.writeReview({product: this.props.product.id, user: this.props.state.currentUser.id, blurb: this.state.blurb, rating: this.state.rating})
       .catch(err => console.log(err.message))
   }
   render(){
@@ -51,11 +49,12 @@ class ReviewForm extends Component {
 
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
 
-console.log('this state', state)
+
   return {
-   state
+   state,
+   product: ownProps.product
   }
 }
 

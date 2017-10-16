@@ -1,7 +1,9 @@
 import axios from 'axios'
+import { fetchOrders } from './orders'
 
-export const writeReview = (product, user, rating, blurb) =>
-  axios.post(`/api/reviews/${product.id}`, {product, user, rating, blurb} )
+export const writeReview = (reviewData) => dispatch =>
+  axios.post(`/api/reviews/${reviewData.product}`, reviewData.product, reviewData.user, reviewData.blurb, reviewData.rating )
+    .then(() => dispatch(fetchOrders()))
   .catch(err => console.log(err.message))
 
 const initialState = {}
