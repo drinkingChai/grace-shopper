@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { User, Order, LineItem } = require('../db').models
-const { loadLoginData, clearOnLogout } = require('./helpers/session-helper')
+const { loadDataOnLogin, clearOnLogout } = require('./helpers/session-helper')
 
 router.get('/', (req, res, next) => {
   res.send(req.session)
@@ -10,7 +10,7 @@ router.put('/', (req, res, next) => {
   const { email, password } = req.body
   User.logIn(email, password, req.session.cart.lineitems)
     .then(user => {
-      req.session = loadLoginData(user)
+      req.session = loadDataOnLogin(user)
       res.sendStatus(200)
     })
     .catch(() => res.sendStatus(401))

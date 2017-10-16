@@ -1,6 +1,6 @@
 const { Order, Product, LineItem } = require('../../db').models
 
-const loadLoginData = user => {
+const loadDataOnLogin = user => {
   return {
     userId: user.id,
     name: user.name,
@@ -44,6 +44,6 @@ const updateSessionCart = (cart, productId, updateData) => {
 
 module.exports = {
   updateSessionCart,
-  loadLoginData,
+  loadDataOnLogin,
   clearOnLogout
 }
