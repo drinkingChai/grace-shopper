@@ -4,7 +4,7 @@ import ReviewForm from './ReviewForm';
 
 const Product = ({product, currentUser}) => {
 
-  // const product = products.filter(product => product)
+
   console.log(product);
   if (!product) return <div>No product here!</div>
 
@@ -15,7 +15,16 @@ const Product = ({product, currentUser}) => {
       <img src = {product.photo} width="100%" height="225px"/>
       <p>Price: {product.price} </p>
       <p>Quantity Left: {product.inventoryQuantity} </p>
-      <p> Reviews will be here! </p>
+      {
+        product.reviews.map(review => {
+          return (
+            <div key={review.id}>
+              <p>{review.rating}</p>
+              <p>{review.blurb} </p>
+            </div>
+          )
+        })
+      }
       { currentUser.userId ?
         <ReviewForm product={ product} />:
         'Login to leave a review!'

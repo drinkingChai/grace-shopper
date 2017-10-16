@@ -20,11 +20,16 @@ class ReviewForm extends Component {
 
   onSubmitHandler(ev) {
     ev.preventDefault();
-    this.props.writeReview({product: this.props.product.id, user: this.props.state.currentUser.id, blurb: this.state.blurb, rating: this.state.rating})
+
+    this.props.writeReview({productId: this.props.product.id, userId: this.props.state.currentUser.id, blurb: this.state.blurb, rating: this.state.rating})
       .catch(err => console.log(err.message))
+      this.setState({
+        rating: 0,
+        blurb: ''
+      })
+
   }
   render(){
-
     const {onChangeHandler, onSubmitHandler} = this
     const { blurb } = this.state
     const rating = [...Array(6).keys()];

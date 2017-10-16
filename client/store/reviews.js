@@ -2,7 +2,7 @@ import axios from 'axios'
 import { fetchOrders } from './orders'
 
 export const writeReview = (reviewData) => dispatch =>
-  axios.post(`/api/reviews/${reviewData.product}`, reviewData.product, reviewData.user, reviewData.blurb, reviewData.rating )
+  axios.post(`/api/reviews/${reviewData.productId}`, reviewData)
     .then(() => dispatch(fetchOrders()))
   .catch(err => console.log(err.message))
 
