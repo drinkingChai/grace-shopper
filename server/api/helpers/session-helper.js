@@ -1,9 +1,16 @@
 const { Order, Product, LineItem } = require('../../db').models
 
-const createSessionCart = () => {
+const loadLoginData = user => {
+  return {
+    userId: user.id,
+    name: user.name,
+  }
+}
+
+const clearOnLogout = () => {
   const cart = JSON.parse(JSON.stringify(Order.build()))
   cart.lineitems = []
-  return cart
+  return { cart }
 }
 
 const updateSessionCart = (cart, productId, updateData) => {
@@ -36,6 +43,7 @@ const updateSessionCart = (cart, productId, updateData) => {
 }
 
 module.exports = {
-  createSessionCart,
-  updateSessionCart
+  updateSessionCart,
+  loadLoginData,
+  clearOnLogout
 }

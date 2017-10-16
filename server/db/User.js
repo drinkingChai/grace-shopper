@@ -25,13 +25,11 @@ const User = conn.define('user', {
 });
 
 User.createUser = function(params) {
-  let user;
   return User.create(params)
-    .then(_user => {
-      user = _user
-      return conn.models.order.create({ userId: _user.id })
+    .then(user => {
+      return conn.models.order.create({ userId: user.id })
+        .then(() => user)
     })
-    .then(() => user)
 }
 
 User.logIn = function(email, password, sessionCartItems) {
@@ -49,7 +47,7 @@ User.logIn = function(email, password, sessionCartItems) {
             )
           }
         })
-        .then(() => user.id)
+        .then(() => user)
     })
 }
 
