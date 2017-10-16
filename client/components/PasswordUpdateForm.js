@@ -27,7 +27,7 @@ class PasswordUpdateForm extends Component {
 
   onChangeHandler(ev) {
     const { name, value } = ev.target
-    this.setState(Object.assign(this.state, { [name]: value }))
+    this.setState(Object.assign(this.state, { [name]: value, message: '' }))
     this.checkPasswordMatch()
   }
 
