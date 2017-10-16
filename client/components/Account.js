@@ -11,7 +11,7 @@ const Account = ({ orders }) => {
 
   return (
     <div className="panel panel-default">
-      <h2 className='panel-heading'>Your Orders</h2>
+      <h4 className='panel-heading'>Your Orders</h4>
       <div className='panel-body'>
         { orders.map(order => (
           <div key={ order.id } className="panel panel-default">
