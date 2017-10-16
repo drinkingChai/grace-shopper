@@ -32,11 +32,11 @@ export default class Root extends Component {
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
+              <Route exact path='/login' component={ UserAuth } />
               <Redirect path="/" to="/" />
             </Switch>
           </div>
           <div className="col-xs-12 col-sm-4">
-            <Route component={ UserAuth } />
             <Route exact path='/' component={ Cart } />
           </div>
         </main>
