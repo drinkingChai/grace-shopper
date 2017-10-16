@@ -4,7 +4,6 @@ const loadLoginData = user => {
   return {
     userId: user.id,
     name: user.name,
-    cart: []
   }
 }
 
