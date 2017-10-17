@@ -56,7 +56,7 @@ class UserAuth extends Component {
             <label htmlFor='name'>Name</label>
             <input name='name' value={ name } onChange={ onChangeHandler } className="form-control" />
           </div>
-          <button onClick={ onRegisterHandler } className="btn btn-default">Register</button>
+          <button onClick={ onRegisterHandler } className="btn btn-default">Register and Login</button>
         </form>
       </div>
     )

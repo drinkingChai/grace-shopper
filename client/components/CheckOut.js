@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { checkOut } from '../store';
 import Cart from './Cart'
@@ -8,10 +9,12 @@ class CheckOut extends Component {
     super()
     this.state = {
       address: '',
-      paymentInfo: ''
+      paymentInfo: '',
+      email: ''
     }
     this.onChangeHandler = this.onChangeHandler.bind(this)
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
+    this.guestCheckoutHandler = this.guestCheckoutHandler.bind(this)
   }
 
   onChangeHandler(ev) {
@@ -27,10 +30,18 @@ class CheckOut extends Component {
       .catch(err => console.log(err.message))
   }
 
+  guestCheckoutHandler(ev) {
+    ev.preventDefault()
+    this.props.checkOut(this.state)
+    // change this confirmation page
+      .then(() => this.props.history.push('/'))
+      .catch(err => console.log(err.message))
+  }
+
   render() {
-    const { order } = this.props
-    const { address, paymentInfo } = this.state
-    const { onChangeHandler, onSubmitHandler } = this
+    const { currentUser, order } = this.props
+    const { address, paymentInfo, email } = this.state
+    const { onChangeHandler, onSubmitHandler, guestCheckoutHandler } = this
 
     return (
       <div>
@@ -50,7 +61,19 @@ class CheckOut extends Component {
                 <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler } className='form-control'/>
               </div>
 
-              <button className='btn btn-success'>Submit</button>
+              { currentUser.userId ?
+                  <button className='btn btn-success'>Submit Order</button> :
+                  <div>
+                    <hr/>
+                    <div className='form-group'>
+                      <label htmlFor='email'>Email</label>
+                      <input name='email' type='email' value={ email } onChange={ onChangeHandler } className='form-control'/>
+                    </div>
+
+                    <button className='btn btn-success' onClick={ guestCheckoutHandler }>Guest checkout</button>
+                    &nbsp;
+                    <Link className='btn btn-success' to='/login'>Login</Link>
+                  </div> }
             </div>
           </form> : null }
       </div>
@@ -58,7 +81,8 @@ class CheckOut extends Component {
   }
 }
 
-const mapState = ({ orders }) => ({
+const mapState = ({ currentUser, orders }) => ({
+  currentUser,
   order: orders.find(order => order.isCart)
 })
 const mapDispatch = { checkOut }
