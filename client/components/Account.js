@@ -9,6 +9,9 @@ const Account = ({ currentUser, orders }) => {
 
   return (
     <div>
+      <h2>Welcome, { currentUser.name }</h2>
+      <hr/>
+
       <div className="panel panel-default">
         <h4 className='panel-heading'>Account Details</h4>
         <div className='panel-body'>
