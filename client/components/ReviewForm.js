@@ -15,30 +15,38 @@ class ReviewForm extends Component {
 
   onChangeHandler(ev) {
     const { name, value } = ev.target;
-    this.setState(Object.assign(this.state, { [name]: value}))
+    this.setState({[name]: value});
+//    this.setState(Object.assign(this.state, { [name]: value}));
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(nextProps);
-  }
+//  componentWillReceiveProps(nextProps) {
+//    this.setState(nextProps);
+//  }
 
   onSubmitHandler(ev) {
     ev.preventDefault();
-
-    this.props.writeReview({productId: this.props.product.id, userId: this.props.state.currentUser.id, blurb: this.state.blurb, rating: this.state.rating})
-      .catch(err => console.log(err.message))
-      this.setState({
-        rating: 0,
+    
+    this.props.writeReview({
+      productId: this.props.product.id, 
+      userId: this.props.state.currentUser.id, 
+      blurb: this.state.blurb, 
+      rating: this.state.rating
+    })
+    .catch(err => console.log(err.message))
+      
+    this.setState({
+        rating: this.state.rating || 0,
         blurb: ''
-      })
+    });
 
   }
+  
   render(){
     const {onChangeHandler, onSubmitHandler} = this
     const { blurb } = this.state
     const rating = [...Array(6).keys()];
     return (
-      <div>
+      
         <div className="panel panel-primary">
           <h3 className="panel-heading"> Give a Review! </h3>
           <form onSubmit={ onSubmitHandler } className="form panel-body">
@@ -52,14 +60,13 @@ class ReviewForm extends Component {
             <button className="btn btn-success">Submit </button>
           </form>
         </div>
-      </div>
+      
     )
   }
 
 }
 
 const mapStateToProps = (state, ownProps) => {
-
 
   return {
    state,

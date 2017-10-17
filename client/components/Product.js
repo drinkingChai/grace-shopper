@@ -18,11 +18,12 @@ const Product = ({product, currentUser}) => {
       {
         product.reviews.map(review => {
           return (
-            <div key={review.id}>
-              <p>{review.rating}</p>
-              <p>{review.blurb} - {review.user.name}</p>
+            <article className="reviews" key={review.id}>
+              <p className="rating">{review.rating}/5</p>
+              <p className="byline">By {review.user.name} on {new Date().toUTCString()} </p>
+              <p className="blurb">{review.blurb}</p>
 
-            </div>
+            </article>
           )
         })
       }
