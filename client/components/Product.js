@@ -32,7 +32,7 @@ const Product = ({product, currentUser}) => {
             <article className="reviews" key={review.id}>
               <p className="rating">Rating: {review.rating}/5</p>
               <p className="byline">By {review.user.name} on {new Date().toUTCString()} </p>
-              <p className="title">Title: {review.title}</p>
+              <p className="title">{review.title}</p>
               <p className="blurb">{review.blurb}</p>
             </article>
           )
