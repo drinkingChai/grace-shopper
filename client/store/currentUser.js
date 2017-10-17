@@ -16,7 +16,6 @@ export const checkSession = () => dispatch =>
 export const loginUser = (email, password) => dispatch =>
   axios.put('/api/sessions', { email, password })
     .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message))
 
 export const logoutUser = () => dispatch =>
   axios.delete('/api/sessions')
@@ -27,9 +26,15 @@ export const logoutUser = () => dispatch =>
 export const registerUser = userData => dispatch =>
   axios.post('/api/users', userData)
     .then(res => dispatch(loginUser(res.data)))
+
+export const updateAccount = userData => dispatch =>
+  axios.put('/api/users', userData)
+    .then(() => dispatch(checkSession()))
     .catch(err => console.log(err.message))
 
-
+export const updateUserPassword = passwordData => dispatch =>
+  axios.put('/api/users/update-password', passwordData)
+    .then(() => dispatch(checkSession()))
 
 
 const reducer = (currentUser = {}, action) => {

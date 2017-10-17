@@ -51,4 +51,22 @@ User.logIn = function(email, password, sessionCartItems) {
     })
 }
 
+User.updateUser = function(userId, userData) {
+  return User.findById(userId)
+    .then(user => {
+      Object.assign(user, { ...userData })
+      return user.save()
+    })
+}
+
+User.updatePassword = function(userId, passwordData) {
+  const { oldPassword, password } = passwordData
+  return User.findById(userId)
+    .then(user => {
+      if (user.password !== oldPassword) return Promise.reject('Password error!')
+      Object.assign(user, { password })
+      return user.save()
+    })
+}
+
 module.exports = User;

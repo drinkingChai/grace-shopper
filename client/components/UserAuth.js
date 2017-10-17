@@ -21,6 +21,8 @@ class UserAuth extends Component {
     ev.preventDefault()
     const { email, password } = this.state
     this.props.loginUser(email, password)
+      .then(() => this.props.history.push('/account'))
+      .catch(err => console.log(err.message))
   }
 
   onRegisterHandler(ev) {
@@ -28,6 +30,7 @@ class UserAuth extends Component {
     const { name, email, password } = this.state
     this.props.registerUser({ name, email, password })
       .then(() => this.props.loginUser(email, password))
+      .catch(err => console.log(err.message))
   }
 
   onLogoutHandler(ev) {

@@ -3,7 +3,13 @@ const { User, Order, LineItem } = require('../db').models
 const { loadDataOnLogin, clearOnLogout } = require('./helpers/session-helper')
 
 router.get('/', (req, res, next) => {
-  res.send(req.session)
+  if (!req.session.userId) return res.send(req.session)
+
+  User.findById(req.session.userId)
+    .then(user => {
+      req.session = loadDataOnLogin(user)
+      res.send(req.session)
+    })
 })
 
 router.put('/', (req, res, next) => {
