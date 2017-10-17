@@ -7,6 +7,7 @@ class ReviewForm extends Component {
     super();
     this.state = {
       rating: 0,
+      title: '',
       blurb: ''
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -29,6 +30,7 @@ class ReviewForm extends Component {
     this.props.writeReview({
       productId: this.props.product.id, 
       userId: this.props.state.currentUser.id, 
+      title: this.state.title,
       blurb: this.state.blurb, 
       rating: this.state.rating
     })
@@ -36,25 +38,28 @@ class ReviewForm extends Component {
       
     this.setState({
         rating: this.state.rating || 0,
+        title: '',
         blurb: ''
     });
-
   }
   
   render(){
     const {onChangeHandler, onSubmitHandler} = this
-    const { blurb } = this.state
+    const { blurb, title } = this.state
     const rating = [...Array(6).keys()];
     return (
       
         <div className="panel panel-primary">
           <h3 className="panel-heading"> Give a Review! </h3>
           <form onSubmit={ onSubmitHandler } className="form panel-body">
-            <label> Rating: </label> <select className="form-control" name="rating" onChange={ onChangeHandler }>
-            {
-              rating.map(rate => <option key={`${rate}`} value={ rate }> {rate} </option>)
-            }
+            <label> Rating: </label> 
+            <select className="form-control" name="rating" onChange={ onChangeHandler }>
+              {
+                rating.map(rate => <option key={`${rate}`} value={ rate }> {rate} </option>)
+              }
             </select>
+            <label htmlFor="title"> Title </label>
+            <input className="form-control" name="title" type="text" value={ title } onChange={(event)=> this.setState({title:event.target.value})} placeholder="Title" autoFocus/>
             <label htmlFor="blurb"> Your Review </label>
             <textarea name="blurb" value={ blurb } onChange={ onChangeHandler} className="form-control" />
             <button className="btn btn-success">Submit </button>
