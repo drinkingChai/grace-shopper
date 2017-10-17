@@ -18,6 +18,10 @@ class ReviewForm extends Component {
     this.setState(Object.assign(this.state, { [name]: value}))
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps);
+  }
+
   onSubmitHandler(ev) {
     ev.preventDefault();
 
