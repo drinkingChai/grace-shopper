@@ -15,7 +15,11 @@ const Product = ({product, currentUser}) => {
       <img src = {product.photo} width="100%" height="225px"/>
       <p>Price: {product.price} </p>
       <p>Quantity Left: {product.inventoryQuantity} </p>
-      <p>Rating: </p>
+      <p>Rating: { 
+          (product.reviews
+            .map(review => review.rating)
+            .reduce((total,curr)=> total+curr)/product.reviews.length).toFixed(1)
+        }/5 out of {product.reviews.length} ratings.</p>
       {
         product.reviews.map(review => {
           return (
