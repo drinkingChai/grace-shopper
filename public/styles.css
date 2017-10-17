@@ -56,13 +56,13 @@ h4 {
   border-bottom: 1px solid grey;
   padding: 0;
   padding-left: .4em;
+  margin-bottom: 0;
 }
 
 .byline {
   margin: 0;
   padding-left: .4em;
   font-size: 80%;
-  font-family: serif;
   color: grey;
 }
 
