@@ -16,7 +16,6 @@ export const checkSession = () => dispatch =>
 export const loginUser = (email, password) => dispatch =>
   axios.put('/api/sessions', { email, password })
     .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message))
 
 export const logoutUser = () => dispatch =>
   axios.delete('/api/sessions')
@@ -27,7 +26,6 @@ export const logoutUser = () => dispatch =>
 export const registerUser = userData => dispatch =>
   axios.post('/api/users', userData)
     .then(res => dispatch(loginUser(res.data)))
-    .catch(err => console.log(err.message))
 
 export const updateAccount = userData => dispatch =>
   axios.put('/api/users', userData)
