@@ -20,7 +20,8 @@ const Product = ({product, currentUser}) => {
           return (
             <div key={review.id}>
               <p>{review.rating}</p>
-              <p>{review.blurb} </p>
+              <p>{review.blurb} - {review.user.name}</p>
+
             </div>
           )
         })
