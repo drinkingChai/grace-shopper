@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 const formatDate = (_date) => {
@@ -35,7 +36,7 @@ export default function Orders ({ orders }) {
                     {
                       order.lineitems.map(lineitem => (
                         <tr key={ lineitem.id }>
-                          <td>{ lineitem.product.name }</td>
+                          <td><Link to={ `/products/${lineitem.product.id}` }>{ lineitem.product.name }</Link></td>
                           <td>{ lineitem.quantity }</td>
                           <td>${ lineitem.quantity * lineitem.price }</td>
                         </tr>
