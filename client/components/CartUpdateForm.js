@@ -39,12 +39,20 @@ class CartUpdateForm extends Component {
           <label>Price: </label> ${ lineitem.product.price }<br />
           <label>Quantity: </label> <select className="form-control" onChange={ onChange } name="quantity">
             {
-              quantity.map(item => <option key={ `${item}x` } value={ item + 1 } attribute={ item + 1 === lineitem.quantity ? 'selected' : 'false' }>{ item + 1 }</option>)
+              quantity.map(item => (
+                <option
+                  key={ `${item}x` }
+                  value={ item + 1 }
+                  attribute={ item + 1 === lineitem.quantity ? 'selected' : 'false' }>{ item + 1 }</option>))
             }
           </select>
 
 
-          <button onClick={() => this.props.updateCartItem(lineitem.product, 0)} className="btn btn-danger btn-sm pull-right"><span className="glyphicon glyphicon-trash" /></button>
+          <button
+            onClick={() => this.props.updateCartItem(lineitem.product, 0)}
+            className="btn btn-danger btn-sm pull-right">
+              <span className="glyphicon glyphicon-trash" />
+          </button>
           <button className="btn btn-info btn-sm pull-right">Update</button>
         </form>
       </li>
