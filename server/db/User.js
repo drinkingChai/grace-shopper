@@ -1,3 +1,4 @@
+const faker = require('faker')
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
 
@@ -26,6 +27,21 @@ const User = conn.define('user', {
 
 User.createUser = function(params) {
   return User.create(params)
+    .then(user => {
+      return conn.models.order.create({ userId: user.id })
+        .then(() => user)
+    })
+}
+
+User.createGuest = function(params) {
+  let user = User.build({
+    ...params,
+    /* create random password using faker
+     * maybe a better randomizer later */
+    password: faker.internet.password()
+  })
+
+  return user.save()
     .then(user => {
       return conn.models.order.create({ userId: user.id })
         .then(() => user)
