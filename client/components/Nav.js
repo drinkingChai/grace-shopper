@@ -15,6 +15,8 @@ const Nav = ({ currentUser, logoutUser }) => {
           { currentUser.userId ?
             <li><Link to="/account">My Account</Link></li> :
             <li><Link to="/login">Log In</Link></li> }
+          { currentUser.userId && currentUser.isAdmin ?
+            <li><Link to="/admin">Admin</Link></li> : null }
           { currentUser.userId ?
             <li><Link to="/" onClick={ logoutUser }>Log out</Link></li> : null }
         </ul>

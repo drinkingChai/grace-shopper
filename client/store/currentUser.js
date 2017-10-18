@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getOrders, fetchOrders} from './orders';
+import { clearUsers } from './users'
 
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
@@ -21,6 +22,7 @@ export const logoutUser = () => dispatch =>
   axios.delete('/api/sessions')
     .then(() => dispatch(logout()))
     .then(() => dispatch(fetchOrders()))
+    .then(() => dispatch(clearUsers()))
     .catch(err => console.log(err.message))
 
 export const registerUser = userData => dispatch =>

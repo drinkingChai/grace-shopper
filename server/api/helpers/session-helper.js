@@ -3,6 +3,7 @@ const { Order, Product, LineItem } = require('../../db').models
 const loadDataOnLogin = user => {
   return {
     userId: user.id,
+    isAdmin: user.isAdmin,
     name: user.name,
     email: user.email
   }
