@@ -84,7 +84,7 @@ User.updatePassword = function(userId, passwordData) {
   return User.findById(userId)
     .then(user => {
       if (user.password !== oldPassword) return Promise.reject('Password error!')
-      Object.assign(user, { password })
+      Object.assign(user, { password, passwordChange: false })
       return user.save()
     })
 }
