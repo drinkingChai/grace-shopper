@@ -15,19 +15,9 @@ users.post('/add-user', requireAdmin, (req, res, next) => {
 })
 
 users.put('/update-user/:id', requireAdmin, (req, res, next) => {
+  /* update can be used to promote, disable and enable
+   * { isDisabled: true / false, isAdmin: true / false } */
   User.updateUser(req.params.id, req.body)
-    .then(() => res.sendStatus(200))
-    .catch(next)
-})
-
-users.put('/disable-user/:id', requireAdmin, (req, res, next) => {
-  User.updateUser(req.params.id, { isDisabled: true })
-    .then(() => res.sendStatus(200))
-    .catch(next)
-})
-
-users.put('/enable-user/:id', requireAdmin, (req, res, next) => {
-  User.updateUser(req.params.id, { isDisabled: false })
     .then(() => res.sendStatus(200))
     .catch(next)
 })
