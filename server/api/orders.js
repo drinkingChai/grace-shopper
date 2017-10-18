@@ -1,7 +1,20 @@
 const router = require('express').Router();
-const { Order } = require('../db').models;
+const { Order, LineItem } = require('../db').models;
 const { updateSessionCart } = require('./helpers/session-helper');
 const { clearOnLogout } = require('./helpers/session-helper')
+const { requireAdmin } = require('./middlewares')
+
+router.get('/all-orders', requireAdmin, (req, res, next) => {
+  Order.findAllOrders()
+    .then(orders => res.send(orders))
+    .catch(next)
+})
+
+router.put('/update-lineitem/:lineItemId', requireAdmin, (req, res, next) => {
+  LineItem.updateLineItem(req.params.lineItemId, req.body)
+    .then(() => res.sendStatus(200))
+    .catch(next)
+})
 
 router.get('/', (req, res, next) => {
   if (!req.session.userId) {
