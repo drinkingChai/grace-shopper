@@ -5,6 +5,7 @@ import { checkOut } from '../store';
 import Cart from './Cart'
 
 class CheckOut extends Component {
+  // can be presentational!
   constructor() {
     super()
     this.state = {

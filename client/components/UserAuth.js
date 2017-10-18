@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { loginUser, registerUser } from '../store';
 
 class UserAuth extends Component {
+  // can be presentational
   constructor() {
     super()
     this.state = { email: '', password: '', name: '' };

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { updateAccount } from '../store';
 
 class UserAuth extends Component {
+  // can be converted to presentational
   constructor(props) {
     super(props)
     const { user } = props
