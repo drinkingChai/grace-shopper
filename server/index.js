@@ -17,12 +17,14 @@ app.use(session({
   cookieName: 'session',
   secret: process.env.SESSIONSECRET,
   maxAge: 30 * 60 * 1000
-}))
+}));
+
 app.use((req, res, next) => {
-  req.session.cart = req.session.cart || db.models.Order.build()
-  req.session.cart.lineitems = req.session.cart.lineitems || []
-  next()
-})
+  req.session.cart = req.session.cart || db.models.Order.build();
+  req.session.cart.lineitems = req.session.cart.lineitems || [];
+  next();
+});
+
 app.use('/api', require('./api'));
 app.get('/*', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));

@@ -5,13 +5,15 @@ import currentUser from './currentUser';
 import cart from './cart'
 import products from './products'
 import orders from './orders'
+import reviews from './reviews'
 
 
 const reducer = combineReducers({
   currentUser,
   cart,
   orders,
-  products
+  products,
+  reviews
 })
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
@@ -21,3 +23,4 @@ export * from './currentUser';
 export * from './cart';
 export * from './products';
 export * from './orders';
+export * from './reviews';

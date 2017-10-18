@@ -78,6 +78,23 @@ Order.removeLineItem = function(orderId, id) {
   return conn.models.lineitem.destroy({ where: { id, orderId }});
 };
 
+Order.verifyPurchase = function(userId, productId) {
+  return Order.findAll({
+    where: { userId },
+    include: [ conn.models.lineitem ]
+  })
+    .then(orders => {
+      orders = orders.filter(order => !order.isCart)
+
+      // flatten
+      let purchases = []
+      orders.forEach(order => purchases = [ ...purchases, ...order.lineitems ])
+
+      // search
+      return purchases.find(lineitem => lineitem.productId == productId)
+    })
+}
+
 // Instance Methods:
 
 Order.prototype.changeCartToOrder = function(address, paymentInfo) {
