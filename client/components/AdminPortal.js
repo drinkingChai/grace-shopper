@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchUsers } from '../store'
+import { fetchUsers, fetchAllOrders } from '../store'
 
 import AdminNav from './AdminNav'
 import UsersAdmin from './UsersAdmin'
@@ -11,6 +11,7 @@ import OrdersAdmin from './OrdersAdmin'
 class AdminPortal extends Component {
   componentDidMount() {
     this.props.fetchUsers()
+    this.props.fetchAllOrders()
   }
 
   render() {
@@ -29,6 +30,6 @@ class AdminPortal extends Component {
   }
 }
 
-const mapDispatch = { fetchUsers }
+const mapDispatch = { fetchUsers, fetchAllOrders }
 
 export default connect(null, mapDispatch)(AdminPortal)
