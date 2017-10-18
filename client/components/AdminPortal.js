@@ -16,6 +16,9 @@ class AdminPortal extends Component {
   render() {
     return (
       <div>
+        <h3>Admin portal</h3>
+        <hr/>
+
         <AdminNav />
 
         <Route path='/admin/users' component={ UsersAdmin } />
