@@ -17,8 +17,8 @@ const products = [
 ];
 
 const users = [
-  { name: 'Wasif', email: 'wasif@gs.com', password: 'foo' },
-  { name: 'Dan', email: 'dan@gs.com', password: 'foo' },
+  { name: 'Wasif', email: 'wasif@gs.com', password: 'foo', isAdmin: true },
+  { name: 'Dan', email: 'dan@gs.com', password: 'foo', isAdmin: true },
   { name: 'Anthony', email: 'anthony@gs.com', password: 'foo' },
   { name: 'Burcu', email: 'burcu@gs.com', password: 'foo' },
   { name: 'Prof', email: 'prof@gs.com', password: 'foo' }
