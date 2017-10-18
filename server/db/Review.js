@@ -6,6 +6,9 @@ const Review = conn.define('review', {
   rating: {
     type: Sequelize.INTEGER
   },
+  title: {
+    type: Sequelize.STRING
+  },
   blurb: {
     type: Sequelize.TEXT,
     validate: {
@@ -20,23 +23,26 @@ const Review = conn.define('review', {
 Review.addReview = function(productId, userId, content) {
   return conn.models.order.verifyPurchase(userId, productId)
     .then(purchased => {
-      if (!purchased) return Promise.reject('User has not purchased this product')
-
-      return Review.create({ productId, userId, ...content })
+      if (!purchased) return Promise.reject('User has not purchased this product');
+      
+      if(!content.title){
+         content.title = `${content.blurb.slice(0, 15)}...`
+      }
+      return Review.create({ productId, userId, ...content });
     })
 }
 
 Review.updateReview = function(id, userId, content) {
   return Review.findOne({ where: { id, userId } })
     .then(review => {
-      Object.assign(review, { ...content })
-      return review.save()
+      Object.assign(review, { ...content });
+      return review.save();
     })
 }
 
 Review.deleteReview = function(id, userId) {
   return Review.findOne({ where: { id, userId } })
-    .then(review => review.destroy())
+    .then(review => review.destroy());
 }
 
 module.exports = Review;
