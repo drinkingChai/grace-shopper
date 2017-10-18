@@ -26,6 +26,10 @@ export const enableUser = userId => dispatch =>
   axios.put(`/api/users/update-user/${userId}`, { isDisabled: false })
     .then(() => dispatch(fetchUsers()))
 
+export const promptPasswordChange = userId => dispatch =>
+  axios.put(`/api/users/update-user/${userId}`, { passwordChange: true })
+    .then(() => dispatch(fetchUsers()))
+
 const reducer = (users = [], action) => {
   switch (action.type) {
     case GET_USERS:

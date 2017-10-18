@@ -29,6 +29,10 @@ const User = conn.define('user', {
   isDisabled: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  passwordChange: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 
