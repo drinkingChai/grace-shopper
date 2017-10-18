@@ -22,7 +22,10 @@ class UserAuth extends Component {
     const { email, password } = this.state
     this.props.loginUser(email, password)
       .then(() => this.props.history.push('/account'))
-      .catch(err => console.log(err.message))
+      .catch(err => {
+        if (err.response.data == 'password change required') return this.props.history.push('/changepassword')
+        console.log(err)
+      })
   }
 
   onRegisterHandler(ev) {

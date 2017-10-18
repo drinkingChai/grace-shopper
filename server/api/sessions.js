@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
       req.session = loadDataOnLogin(user)
       res.send(req.session)
     })
+    .catch(next)
 })
 
 router.put('/', (req, res, next) => {
@@ -17,9 +18,10 @@ router.put('/', (req, res, next) => {
   User.logIn(email, password, req.session.cart.lineitems)
     .then(user => {
       req.session = loadDataOnLogin(user)
+      if (user.passwordChange) return Promise.reject('password change required')
       res.sendStatus(200)
     })
-    .catch(() => res.sendStatus(401))
+    .catch(err => res.status(401).send(err))
 })
 
 router.delete('/', (req, res, next) => {

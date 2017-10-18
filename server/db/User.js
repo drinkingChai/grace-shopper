@@ -29,6 +29,10 @@ const User = conn.define('user', {
   isDisabled: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  passwordChange: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 
@@ -80,7 +84,7 @@ User.updatePassword = function(userId, passwordData) {
   return User.findById(userId)
     .then(user => {
       if (user.password !== oldPassword) return Promise.reject('Password error!')
-      Object.assign(user, { password })
+      Object.assign(user, { password, passwordChange: false })
       return user.save()
     })
 }
@@ -109,8 +113,11 @@ User.updateUser = function(userId, userData) {
 }
 
 User.deleteUser = function(userId) {
-  return User.findById(userId)
-    .then(user => user.destroy())
+  return User.findById(userId, { include: [ conn.models.order ] })
+    .then(user => {
+      if (user.orders.filter(order => !order.isCart).length) return Promise.reject('user made orders and cannot be deleted')
+      return user.destroy()
+    })
 }
 
 module.exports = User;
