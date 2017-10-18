@@ -15,22 +15,29 @@ const UsersAdmin = (props) => {
   return (
     <div>
       <h3>Users</h3>
+      <hr/>
 
-      <div>
+      <div className='row'>
         {
           users.map(user => (
-            <div key={ user.id }>
-              { user.name }
+            <div key={ user.id } className='col-md-6'>
+              <div className='thumbnail'>
+                <div className='caption'>
+                { user.name }
 
-              { user.id !== currentUser.userId ?
-                  <div>
-                    { user.isAdmin ?
-                        <button onClick={ () => demoteUser(user.id) }>Demote</button> :
-                        <button onClick={ () => promoteUser(user.id) }>Make admin</button> }
-                    { user.isDisabled ?
-                        <button onClick={ () => enableUser(user.id) }>Enable</button> :
-                        <button onClick={ () => disableUser(user.id) }>Disable</button> }
-                  </div> : null }
+                <hr/>
+                { user.id !== currentUser.userId ?
+                    <div>
+                      { user.isAdmin ?
+                          <button onClick={ () => demoteUser(user.id) } className='btn btn-danger'>Demote</button> :
+                          <button onClick={ () => promoteUser(user.id) } className='btn btn-info'>Make admin</button> }
+                          &nbsp;
+                      { user.isDisabled ?
+                          <button onClick={ () => enableUser(user.id) } className='btn btn-primary'>Enable</button> :
+                          <button onClick={ () => disableUser(user.id) } className='btn btn-primary'>Disable</button> }
+                    </div> : null }
+                </div>
+              </div>
             </div>
           ))
         }
