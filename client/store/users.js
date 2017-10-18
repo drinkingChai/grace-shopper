@@ -30,6 +30,10 @@ export const promptPasswordChange = userId => dispatch =>
   axios.put(`/api/users/update-user/${userId}`, { passwordChange: true })
     .then(() => dispatch(fetchUsers()))
 
+export const deleteUser = userId => dispatch =>
+  axios.delete(`/api/users/${userId}`)
+    .then(() => dispatch(fetchUsers()))
+
 const reducer = (users = [], action) => {
   switch (action.type) {
     case GET_USERS:

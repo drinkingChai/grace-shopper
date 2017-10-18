@@ -2,13 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   promoteUser, demoteUser,
-  enableUser, disableUser, promptPasswordChange } from '../store'
+  enableUser, disableUser,
+  deleteUser,
+  promptPasswordChange } from '../store'
 
 const UsersAdmin = (props) => {
   const {
     users, currentUser,
     promoteUser, demoteUser,
     enableUser, disableUser,
+    deleteUser,
     promptPasswordChange } = props
 
   return (
@@ -36,6 +39,8 @@ const UsersAdmin = (props) => {
                           <button onClick={ () => disableUser(user.id) } className='btn btn-primary'>Disable</button> }
                       { user.passwordChange ? null :
                           <button onClick={ () => promptPasswordChange(user.id) } className='btn btn-primary'>Password change</button> }
+                      { user.orders.filter(order => !order.isCart).length ? null :
+                          <button onClick={ () => deleteUser(user.id) } className='btn btn-primary'>Delete</button> }
                     </div> : null }
                 </div>
               </div>
@@ -51,6 +56,7 @@ const mapState = ({ users, currentUser }) => ({ users, currentUser })
 const mapDispatch = {
   promoteUser, demoteUser,
   enableUser, disableUser,
+  deleteUser,
   promptPasswordChange
 }
 

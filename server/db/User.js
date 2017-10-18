@@ -113,8 +113,11 @@ User.updateUser = function(userId, userData) {
 }
 
 User.deleteUser = function(userId) {
-  return User.findById(userId)
-    .then(user => user.destroy())
+  return User.findById(userId, { include: [ conn.models.order ] })
+    .then(user => {
+      if (user.orders.filter(order => !order.isCart).length) return Promise.reject('user made orders and cannot be deleted')
+      return user.destroy()
+    })
 }
 
 module.exports = User;
