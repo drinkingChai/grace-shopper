@@ -22,7 +22,7 @@ users.put('/update-user/:id', requireAdmin, (req, res, next) => {
     .catch(next)
 })
 
-users.delete('/delete-user/:id', requireAdmin, (req, res, next) => {
+users.delete('/:id', requireAdmin, (req, res, next) => {
   User.deleteUser(req.params.id)
     .then(() => res.sendStatus(200))
     .catch(next)
