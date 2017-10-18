@@ -62,6 +62,18 @@ Order.checkOut = function(userId, body) {
     .then(() => Order.create({ userId }))
 };
 
+Order.guestCheckOut = function(sessionCartItems, checkoutData) {
+  const User = conn.models.user
+  const { email, address, paymentInfo } = checkoutData
+  return User.findOne({ where: { email } })
+    .then(user => {
+      if (user) return user;
+      return User.createGuest({ email })
+    })
+    .then(user => User.logIn(user.email, user.password, sessionCartItems))
+    .then(user => this.checkOut(user.id, { address, paymentInfo }))
+}
+
 Order.updateCart = function(userId, productId, updateData) {
   return this.findCart(userId)
     .then(order => {

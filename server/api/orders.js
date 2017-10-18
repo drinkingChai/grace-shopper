@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Order } = require('../db').models;
 const { updateSessionCart } = require('./helpers/session-helper');
+const { clearOnLogout } = require('./helpers/session-helper')
 
 router.get('/', (req, res, next) => {
   if (!req.session.userId) {
@@ -24,12 +25,21 @@ router.get('/filter', (req, res, next) => {
 });
 
 router.put('/check-out', (req, res, next) => {
-  Order.checkOut(req.session.userId, req.body)
-    .then(newCart => {
-      req.session.cart = newCart;
-      res.sendStatus(201);
-    })
-    .catch(next);
+  if (!req.session.userId) {
+    Order.guestCheckOut(req.session.cart.lineitems, req.body)
+      .then(newCart => {
+        req.session = clearOnLogout()
+        res.sendStatus(201);
+      })
+      .catch(next);
+  } else {
+    Order.checkOut(req.session.userId, req.body)
+      .then(newCart => {
+        req.session.cart = newCart;
+        res.sendStatus(201);
+      })
+      .catch(next);
+  }
 });
 
 router.put('/products/:productId', (req, res, next) => {
