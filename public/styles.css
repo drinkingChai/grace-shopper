@@ -39,3 +39,44 @@ h4 {
   display: block;
   margin-bottom: 30px;
 }
+
+.reviews {
+  border: 1px solid grey;
+  border-radius: 4px;
+  background: white;
+  width: 100%;
+  overflow: auto;
+  word-wrap: break-word;
+  box-shadow: 2px 2px 4px grey;
+  margin: 1em 0;
+}
+
+.rating  {
+  background: #e3e3e3;
+  border-bottom: 1px solid grey;
+  padding: 0;
+  padding-left: .4em;
+  margin-bottom: 0;
+}
+
+.byline {
+  margin: 0;
+  padding-left: .4em;
+  font-size: 80%;
+  color: grey;
+}
+
+.blurb {
+  padding: .4em;
+}
+
+.title {
+  font-weight: 600;
+  padding-left: .4em;
+  margin: 0;
+  margin-top: .4em;
+}
+
+.hidden {
+  display: none;
+}

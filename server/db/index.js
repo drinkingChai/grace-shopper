@@ -16,6 +16,7 @@ LineItem.belongsTo(Product);
 
 Review.belongsTo(User);
 Review.belongsTo(Product);
+Product.hasMany(Review);
 
 const sync = () => conn.sync();
 
