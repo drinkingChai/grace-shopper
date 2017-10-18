@@ -11,6 +11,7 @@ import UserAuth from './UserAuth'
 import Product from './Product'
 import CheckOut from './CheckOut'
 import PasswordUpdateForm from './PasswordUpdateForm'
+import AdminPortal from './AdminPortal'
 
 export default class Root extends Component {
   componentDidMount () {
@@ -35,6 +36,7 @@ export default class Root extends Component {
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path='/login' component={ UserAuth } />
               <Route exact path='/changepassword' component={ PasswordUpdateForm } />
+              <Route path='/admin' component={ AdminPortal } />
               <Redirect path="/" to="/" />
             </Switch>
           </div>
