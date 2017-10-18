@@ -2,15 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   promoteUser, demoteUser,
-  enableUser, disableUser } from '../store'
+  enableUser, disableUser, promptPasswordChange } from '../store'
 
 const UsersAdmin = (props) => {
   const {
     users, currentUser,
     promoteUser, demoteUser,
-    enableUser, disableUser } = props
-
-  console.log(props)
+    enableUser, disableUser,
+    promptPasswordChange } = props
 
   return (
     <div>
@@ -35,6 +34,8 @@ const UsersAdmin = (props) => {
                       { user.isDisabled ?
                           <button onClick={ () => enableUser(user.id) } className='btn btn-primary'>Enable</button> :
                           <button onClick={ () => disableUser(user.id) } className='btn btn-primary'>Disable</button> }
+                      { user.passwordChange ? null :
+                          <button onClick={ () => promptPasswordChange(user.id) } className='btn btn-primary'>Password change</button> }
                     </div> : null }
                 </div>
               </div>
@@ -49,7 +50,8 @@ const UsersAdmin = (props) => {
 const mapState = ({ users, currentUser }) => ({ users, currentUser })
 const mapDispatch = {
   promoteUser, demoteUser,
-  enableUser, disableUser
+  enableUser, disableUser,
+  promptPasswordChange
 }
 
 export default connect(mapState, mapDispatch)(UsersAdmin)
