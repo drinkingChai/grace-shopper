@@ -16,4 +16,16 @@ const LineItem = conn.define('lineitem', {
   }
 });
 
+// class methods :
+
+// admin methods: 
+
+LineItem.updateLineItem = function(id, updateData) {
+  return this.findById(id)
+    .then(lineitem => {
+      Object.assign(lineitem, { ...updateData })
+      return lineitem.save()
+    })
+}
+
 module.exports = LineItem;
