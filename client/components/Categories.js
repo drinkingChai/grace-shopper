@@ -4,10 +4,12 @@ import Products from './Products';
 
 class SearchBar extends Component {
   render() {
-    const { searchInput } = this.props;
+    const { searchInput, handleSearch } = this.props;
+    console.log(handleSearch)
+
     return (
       <form className="col-xs-6 col-sm-3">
-        <input className="form-control" type="text" placeholder="Search..." value={ searchInput } />
+        <input value={ searchInput } onChange={(ev) => handleSearch(ev.target.value)} placeholder="Search..." type="text" className="form-control" />
       </form>
     );
   }
@@ -35,14 +37,20 @@ class FilterableProductsPanel extends Component {
     this.state = {
       searchInput: '',
       activeCategory: 0
-    }
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(searchInput) {
+    this.setState({ searchInput });
   }
 
   render() {
+    const { handleSearch } = this;
     return (
       <div>
         <div className="row">
-          <SearchBar />
+          <SearchBar { ...this.props } { ...this.state } handleSearch={ handleSearch } />
           <CategoryFilter { ...this.props } { ...this.state } />
         </div>
         <Products { ...this.props } { ...this.state } />

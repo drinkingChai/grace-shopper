@@ -11,7 +11,7 @@ const Products = ({ products, updateCartItem, categories, searchInput, activeCat
     <ul className="list-unstyled">
       {
         filteredProducts.map(product => {
-          if (product.name.indexOf(searchInput) === -1) return;
+          if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;
           return (
             <li key={ product.id } className="col-xs-12 col-sm-6">
               <div className="panel panel-default product-panel">
