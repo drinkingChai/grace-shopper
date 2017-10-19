@@ -26,8 +26,11 @@ class FilterableProductsPanel extends Component {
 
   render() {
     const { handleSearch, handleFilter } = this;
-    const { searchInput } = this.state;
-    const { categories } = this.props;
+    const { searchInput, activeCategory } = this.state;
+    const { categories, products } = this.props;
+
+    const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
+    const filteredProducts = selectedCategory.length ? selectedCategory[0].products : products;
 
     return (
       <div>
@@ -35,7 +38,7 @@ class FilterableProductsPanel extends Component {
           <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />
           <CategoryFilter categories={ categories } handleFilter={ handleFilter } />
         </div>
-        <Products { ...this.props } { ...this.state } />
+        <Products filteredProducts={ filteredProducts } searchInput={ searchInput } { ...this.props } />
       </div>
     );
   }

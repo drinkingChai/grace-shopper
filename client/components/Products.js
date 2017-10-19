@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Products = ({ products, updateCartItem, categories, searchInput, activeCategory }) => {
-  const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
-  const filteredProducts = selectedCategory.length ? selectedCategory[0].products : products;
-
+const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   return (
     <ul className="list-unstyled">
       {
         filteredProducts.map(product => {
           if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;
+
           return (
             <li key={ product.id } className="col-xs-12 col-sm-6">
               <div className="panel panel-default product-panel">
