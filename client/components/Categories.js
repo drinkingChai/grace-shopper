@@ -2,18 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Products from './Products';
 import SearchBar from './SearchBar';
-
-const CategoryFilter = ({ categories, handleFilter }) => {
-  return (
-    <form className="col-xs-6 col-sm-3">
-      <select className="form-control" onChange={(ev) => handleFilter(ev.target.value)}>
-      {
-        categories.map(category => <option key={ category.id } value={ category.id }>{ category.name }</option>)
-      }
-      </select>
-    </form>
-  );
-};
+import CategoryFilter from './CategoryFilter';
 
 class FilterableProductsPanel extends Component {
   constructor(props) {
@@ -36,11 +25,13 @@ class FilterableProductsPanel extends Component {
 
   render() {
     const { handleSearch, handleFilter } = this;
+    const { categories, products } = this.props;
+
     return (
       <div>
         <div className="row">
           <SearchBar { ...this.state } handleSearch={ handleSearch } />
-          <CategoryFilter { ...this.props } { ...this.state } handleFilter={ handleFilter } />
+          <CategoryFilter categories={ categories } handleFilter={ handleFilter } />
         </div>
         <Products { ...this.props } { ...this.state } />
       </div>
@@ -48,8 +39,8 @@ class FilterableProductsPanel extends Component {
   }
 }
 
-const mapStateToProps = ({ categories, products, handleSearch }) => {
-  return { categories, products, handleSearch };
+const mapStateToProps = ({ categories, products }) => {
+  return { categories, products };
 };
 
 export default connect(mapStateToProps)(FilterableProductsPanel);
