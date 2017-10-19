@@ -29,18 +29,17 @@ const UsersAdmin = (props) => {
 
                 <hr/>
                 { user.id !== currentUser.userId ?
-                    <div>
+                    <div className='btn-group'>
                       { user.isAdmin ?
-                          <button onClick={ () => demoteUser(user.id) } className='btn btn-danger'>Demote</button> :
+                          <button onClick={ () => demoteUser(user.id) } className='btn btn-info'>Demote</button> :
                           <button onClick={ () => promoteUser(user.id) } className='btn btn-info'>Make admin</button> }
-                          &nbsp;
                       { user.isDisabled ?
-                          <button onClick={ () => enableUser(user.id) } className='btn btn-primary'>Enable</button> :
-                          <button onClick={ () => disableUser(user.id) } className='btn btn-primary'>Disable</button> }
+                          <button onClick={ () => enableUser(user.id) } className='btn btn-warning'>Enable</button> :
+                          <button onClick={ () => disableUser(user.id) } className='btn btn-danger'>Disable</button> }
                       { user.passwordChange ? null :
-                          <button onClick={ () => promptPasswordChange(user.id) } className='btn btn-primary'>Password change</button> }
+                          <button onClick={ () => promptPasswordChange(user.id) } className='btn btn-default'>Password change</button> }
                       { user.orders.filter(order => !order.isCart).length ? null :
-                          <button onClick={ () => deleteUser(user.id) } className='btn btn-primary'>Delete</button> }
+                          <button onClick={ () => deleteUser(user.id) } className='btn btn-danger'>Delete</button> }
                     </div> : null }
                 </div>
               </div>
