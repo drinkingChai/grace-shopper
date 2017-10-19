@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getOrders, fetchOrders} from './orders';
+import { fetchAllOrders } from './allOrders'
 import { clearUsers } from './users'
 
 const LOGIN = 'LOGIN'
@@ -10,7 +11,10 @@ const logout = () => ({ type: LOGOUT })
 
 export const checkSession = () => dispatch =>
   axios.get('/api/sessions')
-    .then(res => dispatch(login(res.data)))
+    .then(res => {
+      dispatch(login(res.data))
+      if (res.data.isAdmin) return dispatch(fetchAllOrders())
+    })
     .then(() => dispatch(fetchOrders()))
     .catch(err => console.log(err.message))
 
