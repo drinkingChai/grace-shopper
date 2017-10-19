@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const formatDate = (_date) => {
-  const date = new Date(_date)
-  return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
-}
+import formatDate from './helpers/formatDate'
+import OrderStatusUpdateForm from './OrderStatusUpdateForm'
 
-export default function Order ({ order }) {
-
+const Order = ({ order, currentUser }) => {
   if (!order) return <div></div>
 
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
         <strong>Placed on:</strong> { formatDate(order.updatedAt ) }
-        <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label>
+
+        { currentUser && currentUser.isAdmin ?
+          <OrderStatusUpdateForm order={ order }/> :
+          <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label> }
       </div>
 
       <div className="panel-body">
@@ -53,3 +54,12 @@ export default function Order ({ order }) {
     </div>
   )
 };
+
+const mapState = ({ orders, allOrders, currentUser }, ownProps) => ({
+  order: currentUser.isAdmin ?
+    allOrders.find(_order => _order.id == ownProps.match.params.id) :
+    orders.find(_order => _order.id == ownProps.match.params.id),
+  currentUser
+})
+
+export default connect(mapState)(Order)

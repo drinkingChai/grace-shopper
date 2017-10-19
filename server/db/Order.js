@@ -1,14 +1,6 @@
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
 
-const validStatuses = [
-  'CREATED',
-  'PROCESSING',
-  'SHIPPED',
-  'DELIVERED',
-  'CANCELLED'
-]
-
 const Order = conn.define('order', {
   address: {
     type: Sequelize.STRING,
@@ -24,10 +16,10 @@ const Order = conn.define('order', {
   },
   status: {
     type: Sequelize.STRING,
-    set (val) {
-      if (validStatuses.includes(val)) this.setDataValue('status', val)
+    validate: {
+      is: /CREATED|PROCESSING|SHIPPED|DELIVERED|CANCELLED/g
     }
-  }
+  },
 });
 
 // Class Methods:
