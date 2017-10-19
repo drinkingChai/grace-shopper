@@ -37,12 +37,12 @@ const Products = ({ products, updateCartItem }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products
-  }
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     products: state.products
+//   }
+// };
 
 const mapDispatch = { updateCartItem };
 
-export default connect(mapStateToProps, mapDispatch)(Products);
+export default connect(null, mapDispatch)(Products);
