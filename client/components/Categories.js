@@ -8,23 +8,19 @@ const SearchBar = ({ searchInput, handleSearch }) => {
       <input value={ searchInput } onChange={(ev) => handleSearch(ev.target.value)} placeholder="Search..." type="text" className="form-control" />
     </form>
   );
-}
+};
 
-class CategoryFilter extends Component {
-  render() {
-    // console.log(this.props)
-    const { categories } = this.props;
-    return (
-      <form className="col-xs-6 col-sm-3">
-        <select className="form-control">
-        {
-          categories.map(category => <option key={ category.id } value={ category.id }>{ category.name }</option>)
-        }
-        </select>
-      </form>
-    );
-  }
-}
+const CategoryFilter = ({ categories, handleFilter }) => {
+  return (
+    <form className="col-xs-6 col-sm-3">
+      <select className="form-control" onChange={(ev) => handleFilter(ev.target.value)}>
+      {
+        categories.map(category => <option key={ category.id } value={ category.id }>{ category.name }</option>)
+      }
+      </select>
+    </form>
+  );
+};
 
 class FilterableProductsPanel extends Component {
   constructor(props) {
@@ -34,19 +30,24 @@ class FilterableProductsPanel extends Component {
       activeCategory: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
   }
 
   handleSearch(searchInput) {
     this.setState({ searchInput });
   }
 
+  handleFilter(activeCategory) {
+    this.setState({ activeCategory });
+  }
+
   render() {
-    const { handleSearch } = this;
+    const { handleSearch, handleFilter } = this;
     return (
       <div>
         <div className="row">
           <SearchBar { ...this.props } { ...this.state } handleSearch={ handleSearch } />
-          <CategoryFilter { ...this.props } { ...this.state } />
+          <CategoryFilter { ...this.props } { ...this.state } handleFilter={ handleFilter } />
         </div>
         <Products { ...this.props } { ...this.state } />
       </div>
