@@ -1,6 +1,14 @@
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
 
+const validStatuses = [
+  'CREATED',
+  'PROCESSING',
+  'SHIPPED',
+  'DELIVERED',
+  'CANCELLED'
+]
+
 const Order = conn.define('order', {
   address: {
     type: Sequelize.STRING,
@@ -15,7 +23,10 @@ const Order = conn.define('order', {
     defaultValue: true
   },
   status: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    set (val) {
+      if (validStatuses.includes(val)) this.setDataValue('status', val)
+    }
   }
 });
 
@@ -137,8 +148,13 @@ Order.findAllOrders = function() {
 // status change methods (more secure than using update)
 // TODO: write a getStatuses method, will return statuses: [ 'CREATED', 'PROCESSING' ] etc
 
-
-
+Order.changeStatus = function(orderId, status) {
+  return this.findById(orderId)
+    .then(order => {
+      Object.assign(order, { ...status })
+      return order.save()
+    })
+}
 
 // ******************* //
 
