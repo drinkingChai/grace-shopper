@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const formatDate = (_date) => {
-  const date = new Date(_date)
-  return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
-}
+import formatDate from './helpers/formatDate'
+import OrderStatusUpdateForm from './OrderStatusUpdateForm'
 
-export default function Order ({ order }) {
-
+export default function ({ order, currentUser }) {
   if (!order) return <div></div>
 
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
         <strong>Placed on:</strong> { formatDate(order.updatedAt ) }
-        <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label>
+
+        { currentUser && currentUser.isAdmin ?
+          <OrderStatusUpdateForm order={ order }/> :
+          <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label> }
       </div>
 
       <div className="panel-body">
