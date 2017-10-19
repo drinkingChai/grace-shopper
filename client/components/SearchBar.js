@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = ({ searchInput, handleSearch }) => {
   return (
-    <form className="col-xs-6 col-sm-3">
+    <form className="search-bar col-xs-6 col-sm-3">
       <input
         value={ searchInput }
         onChange={(ev) => handleSearch(ev.target.value)}

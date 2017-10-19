@@ -31,7 +31,7 @@ class FilterableProductsPanel extends Component {
 
     return (
       <div>
-        <div className="row">
+        <div className="row filter-row">
           <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />
           <CategoryFilter categories={ categories } handleFilter={ handleFilter } />
         </div>
