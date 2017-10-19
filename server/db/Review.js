@@ -29,7 +29,7 @@ Review.addReview = function(productId, userId, content) {
       if (!purchased) return Promise.reject('User has not purchased this product');
       
       if(!content.title){
-         content.title = `${content.blurb.slice(0, 15)}...`
+         content.title = `${content.blurb.slice(0, 15).trim()}...`
       }
       content.date = new Date();
       return Review.create({ productId, userId, ...content });

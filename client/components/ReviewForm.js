@@ -51,10 +51,10 @@ class ReviewForm extends Component {
       
     this.setState({
       rating: this.state.rating || 0,
-      title: '',
+      title: this.state.counter >= 50 ? '' : this.state.title,
       date: {},
-      blurb: this.state.counter >= 50 ? '' : blurb,
-      counter: 0,
+      blurb: this.state.counter >= 50 ? '' : this.state.blurb,
+      counter: this.state.counter >= 50 ? 0 : this.state.counter
     });
   }
   
@@ -77,9 +77,18 @@ class ReviewForm extends Component {
               }
             </select>
             <label htmlFor="title"> Title </label>
-            <input className="form-control" name="title" type="text" value={ title } onChange={(event)=> this.setState({title:event.target.value})} placeholder="Title" autoFocus/>
+            <input 
+              className="form-control" 
+              name="title" type="text" value={ title } 
+              onChange={(event)=> this.setState({title:event.target.value})} 
+              placeholder="Title" autoFocus
+            />
             <label htmlFor="blurb"> Your Review </label>
-            <textarea name="blurb" value={ blurb } onChange={ onChangeHandler} className="form-control blurb" />
+            <textarea 
+              name="blurb" value={ blurb } 
+              onChange={ onChangeHandler} 
+              className="form-control blurb" 
+            />
             <p className="counter">{ counter }</p>
             <button className="btn btn-success">Submit </button>
           </form>
