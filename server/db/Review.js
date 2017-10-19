@@ -13,7 +13,7 @@ const Review = conn.define('review', {
     type: Sequelize.TEXT,
     validate: {
       len: {
-        args: [10, 500],
+        args: [20, 500],
         msg: 'Review must be at least 10 characters'
       }
     }
