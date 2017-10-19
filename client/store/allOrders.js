@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchOrders } from './orders'
 
 const GET_ALL_ORDERS = 'GET_ALL_ORDERS';
 
@@ -12,6 +13,7 @@ export const fetchAllOrders = () => dispatch =>
 export const changeOrderStatus = (id, status) => dispatch =>
   axios.put(`/api/orders/change-status/${id}`, status)
     .then(() => dispatch(fetchAllOrders()))
+    .then(() => dispatch(fetchOrders()))
 
 const reducer = (allOrders = [], action) => {
   switch (action.type) {
