@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import Order from './Order'
+import OrderStatusUpdateForm from './OrderStatusUpdateForm'
 
 const formatDate = (_date) => {
   const date = new Date(_date)
@@ -38,21 +38,11 @@ const OrdersAdmin = ({ allOrders }) => {
                   <tr key={ order.id }>
                     {/* TODO: add change status button here */}
                     <td><Link to={ `/admin/orders/${order.id}` }>{ order.id }</Link></td>
+                    {/* IDEA: filter to all orders placed on that date? */}
                     <td>{ formatDate(order.createdAt) }</td>
+                    {/* IDEA: link to users and see their orders? */}
                     <td>{ order.user.name }</td>
-                    <td>
-                      <form className='form-inline'>
-                        <select className='form-control'>
-                          <option>CREATED</option>
-                          <option>PROCESSING</option>
-                          <option>SHIPPED</option>
-                          <option>DELIVERED</option>
-                          <option>CANCELLED</option>
-                        </select>
-                        &nbsp;
-                        <button className='btn btn-info'>Update</button>
-                      </form>
-                    </td>
+                    <td><OrderStatusUpdateForm order={ order }/></td>
                   </tr>
                 )
               }
