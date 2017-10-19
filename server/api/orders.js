@@ -10,8 +10,8 @@ router.get('/all-orders', requireAdmin, (req, res, next) => {
     .catch(next)
 })
 
-router.put('/update-lineitem/:lineItemId', requireAdmin, (req, res, next) => {
-  LineItem.updateLineItem(req.params.lineItemId, req.body)
+router.put('/change-status/:id', requireAdmin, (req, res, next) => {
+  Order.changeStatus(req.params.id, req.body)
     .then(() => res.sendStatus(200))
     .catch(next)
 })
