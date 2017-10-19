@@ -16,19 +16,13 @@ const { User, Product, LineItem, Order, Category } = require('./index').models;
 //   { name: 'iPhone', description: 'Apple iPhone 6s.', price: '600', inventoryQuantity: '25', photo: '../../public/images/iphone.jpg' }
 // ];
 
-// const users = [
-//   { name: 'Wasif', email: 'wasif@gs.com', password: 'foo', isAdmin: true },
-//   { name: 'Dan', email: 'dan@gs.com', password: 'foo', isAdmin: true },
-//   { name: 'Anthony', email: 'anthony@gs.com', password: 'foo' },
-//   { name: 'Burcu', email: 'burcu@gs.com', password: 'foo' },
-//   { name: 'Prof', email: 'prof@gs.com', password: 'foo' }
-// ];
-
-// const seed = () => {
-//   return conn.sync({ force: true })
-//     .then(() => Promise.all(products.map(product => Product.create(product))))
-//     .then(() => Promise.all(users.map(user => User.createUser(user))))
-// };
+const users = [
+  { name: 'Wasif', email: 'wasif@gs.com', password: 'foo', isAdmin: true },
+  { name: 'Dan', email: 'dan@gs.com', password: 'foo', isAdmin: true },
+  { name: 'Anthony', email: 'anthony@gs.com', password: 'foo' },
+  { name: 'Burcu', email: 'burcu@gs.com', password: 'foo' },
+  { name: 'Prof', email: 'prof@gs.com', password: 'foo' }
+];
 
 // const categories = [
 //   { name: 'Electronics'},
@@ -69,7 +63,7 @@ const seed = () => {
         c4.setProducts([ p1, p2, p10, p11 ])
       ])
     })
-    .then(() => Promise.all(users.map(user => User.create(user))))
+    .then(() => Promise.all(users.map(user => User.createUser(user))))
     .then(([ ..._users ]) => Promise.all(_users.map(user => Order.create({ userId: user.id}))))
 };
 
