@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import Order from './Order'
 
-const formatDate = (_date) => {
-  const date = new Date(_date)
-  return `${date.getMonth()}/${date.getDate()}/${date.getYear()}`
-}
+import Order from './Order'
 
 export default function Orders ({ orders }) {
   orders = orders.filter(order => order.id && !order.isCart)
