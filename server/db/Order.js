@@ -1,6 +1,14 @@
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
 
+const validStatuses = [
+  'CREATED',
+  'PROCESSING',
+  'SHIPPED',
+  'DELIVERED',
+  'CANCELLED'
+]
+
 const Order = conn.define('order', {
   address: {
     type: Sequelize.STRING,
@@ -15,14 +23,17 @@ const Order = conn.define('order', {
     defaultValue: true
   },
   status: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    set (val) {
+      if (validStatuses.includes(val)) this.setDataValue('status', val)
+    }
   }
 });
 
 // Class Methods:
 
 Order.findOrders = function(userId) {
-  return Order.findAll({
+  return this.findAll({
     where: { userId },
     include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }],
     order: [[ conn.models.lineitem, 'createdAt', 'ASC' ]]
@@ -30,17 +41,17 @@ Order.findOrders = function(userId) {
 };
 
 Order.findOrder = function(id) {
-  return Order.findById(id, {
+  return this.findById(id, {
     include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }]
   });
 };
 
 Order.findFiltered = function(userId, status) {
-  return Order.findAll({ where: { userId, status }});
+  return this.findAll({ where: { userId, status }});
 };
 
 Order.findCart = function(userId) {
-  return Order.findOne({
+  return this.findOne({
     where: { isCart: true, userId },
     include: [{
       model: conn.models.lineitem,
@@ -80,7 +91,6 @@ Order.updateCart = function(userId, productId, updateData) {
       let lineItem = order.lineitems && order.lineitems.find(li => li.productId === productId) ||
         conn.models.lineitem.build({ orderId: order.id, productId });
 
-      if (updateData.quantity < 1) return lineItem.destroy();
       Object.assign(lineItem, updateData);
       return lineItem.save();
     })
@@ -91,7 +101,7 @@ Order.removeLineItem = function(orderId, id) {
 };
 
 Order.verifyPurchase = function(userId, productId) {
-  return Order.findAll({
+  return this.findAll({
     where: { userId },
     include: [ conn.models.lineitem ]
   })
@@ -121,5 +131,31 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
     status: 'CREATED' });
   return this.save();
 };
+
+// admin methods:
+
+Order.findAllOrders = function() {
+  return this.findAll({
+    where: { isCart: false },
+    include: [
+      { model: conn.models.lineitem, include: [ conn.models.product ] },
+      { model: conn.models.user }
+    ],
+    order: [[ conn.models.lineitem, 'createdAt', 'ASC' ]]
+  })
+};
+
+// status change methods (more secure than using update)
+// TODO: write a getStatuses method, will return statuses: [ 'CREATED', 'PROCESSING' ] etc
+
+Order.changeStatus = function(orderId, status) {
+  return this.findById(orderId)
+    .then(order => {
+      Object.assign(order, { ...status })
+      return order.save()
+    })
+}
+
+// ******************* //
 
 module.exports = Order;

@@ -8,6 +8,7 @@ import orders from './orders'
 import reviews from './reviews'
 import users from './users'
 import categories from './categories';
+import allOrders from './allOrders'
 
 
 const reducer = combineReducers({
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   products,
   reviews,
   users,
-  categories
+  categories,
+  allOrders
 })
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
@@ -30,3 +32,4 @@ export * from './orders';
 export * from './reviews';
 export * from './users';
 export * from './categories';
+export * from './allOrders';
