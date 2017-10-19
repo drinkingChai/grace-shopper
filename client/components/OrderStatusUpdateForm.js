@@ -24,7 +24,8 @@ class OrderStatusUpdateForm extends Component {
   onSubmit(ev) {
     ev.preventDefault()
     const { order, changeOrderStatus } = this.props
-    changeOrderStatus(order.id, this.state)
+    const { statusInput } = this.state
+    changeOrderStatus(order.id, { status: statusInput })
   }
 
   render() {

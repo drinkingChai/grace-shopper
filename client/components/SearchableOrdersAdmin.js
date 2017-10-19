@@ -50,7 +50,7 @@ class SearchableOrdersAdmin extends Component {
 
         <hr/>
 
-        <OrdersAdmin orders={ ordersFiltered }/>
+        <Orders orders={ ordersFiltered }/>
       </div>
     )
   }
