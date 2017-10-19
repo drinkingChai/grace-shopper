@@ -4,7 +4,6 @@ import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from
 
 // Components
 import Nav from './Nav';
-// import Products from './Products';
 import Account from './Account';
 import Cart from './Cart';
 import UserAuth from './UserAuth'
@@ -32,7 +31,6 @@ export default class Root extends Component {
           <h1 className="headline">GRACESHOPPER</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
-              {/* <Route exact path="/" component={ Products } /> */}
               <Route exact path="/" component={ ProductsPanel } />
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
