@@ -27,7 +27,7 @@ Review.addReview = function(productId, userId, content) {
   return conn.models.order.verifyPurchase(userId, productId)
     .then(purchased => {
       if (!purchased) return Promise.reject('User has not purchased this product');
-      
+
       if(!content.title){
          content.title = `${content.blurb.slice(0, 15).trim()}...`
       }

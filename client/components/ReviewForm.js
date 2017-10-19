@@ -38,17 +38,16 @@ class ReviewForm extends Component {
     ev.preventDefault();
     
     this.handleFormRestrictions()
-
     this.props.writeReview({
-      productId: this.props.product.id, 
-      userId: this.props.state.currentUser.id, 
+      productId: this.props.product.id,
+      userId: this.props.state.currentUser.id,
       title: this.state.title,
       blurb: this.state.blurb, 
       rating: this.state.rating,
       date: this.state.date,
     })
     .catch(err => console.log(err.message))
-      
+
     this.setState({
       rating: this.state.rating || 0,
       title: this.state.counter >= 50 ? '' : this.state.title,
@@ -57,43 +56,41 @@ class ReviewForm extends Component {
       counter: this.state.counter >= 50 ? 0 : this.state.counter
     });
   }
-  
+
   render(){
     const {onChangeHandler, onSubmitHandler} = this
     const { blurb, title, date, counter, error } = this.state
     const rating = [...Array(6).keys()];
     return (
-      
-        <div className="panel panel-primary">
-          <h3 className="panel-heading"> Give a Review! </h3>
-          <form onSubmit={ onSubmitHandler } className="form panel-body">
+      <div className="panel panel-primary">
+        <h3 className="panel-heading">Write a Review</h3>
+        <form onSubmit={ onSubmitHandler } className="form panel-body">
+          {
+            error.length ? <div className='alert alert-danger'>{ error }</div> : null
+          }
+          <label> Rating: </label> 
+          <select className="form-control" name="rating" onChange={ onChangeHandler }>
             {
-              error.length ? <div className='alert alert-danger'>{ error }</div> : null
+              rating.map(rate => <option key={`${rate}`} value={ rate }> {rate} </option>)
             }
-            <label> Rating: </label> 
-            <select className="form-control" name="rating" onChange={ onChangeHandler }>
-              {
-                rating.map(rate => <option key={`${rate}`} value={ rate }> {rate} </option>)
-              }
-            </select>
-            <label htmlFor="title"> Title </label>
-            <input 
-              className="form-control" 
-              name="title" type="text" value={ title } 
-              onChange={(event)=> this.setState({title:event.target.value})} 
-              placeholder="Title" autoFocus
-            />
-            <label htmlFor="blurb"> Your Review </label>
-            <textarea 
-              name="blurb" value={ blurb } 
-              onChange={ onChangeHandler} 
-              className="form-control blurb" 
-            />
-            <p className="counter">{ counter }</p>
-            <button className="btn btn-success">Submit </button>
-          </form>
-        </div>
-      
+          </select>
+          <label htmlFor="title"> Title </label>
+          <input 
+            className="form-control" 
+            name="title" type="text" value={ title } 
+            onChange={(event)=> this.setState({title:event.target.value})} 
+            placeholder="Title" autoFocus
+          />
+          <label htmlFor="blurb"> Your Review </label>
+          <textarea 
+            name="blurb" value={ blurb } 
+            onChange={ onChangeHandler} 
+            className="form-control blurb" 
+          />
+          <p className="counter">{ counter }</p>
+          <button className="btn btn-success">Submit </button>
+        </form>
+      </div>
     )
   }
 
