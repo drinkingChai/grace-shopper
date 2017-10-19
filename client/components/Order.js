@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 
 const formatDate = (_date) => {
   const date = new Date(_date)
-  return `${date.getMonth()}/${date.getDate()}/${date.getYear()}`
+  return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
 }
 
 export default function Order ({ order }) {
+
+  if (!order) return <div></div>
 
   return (
     <div className="panel panel-default">
