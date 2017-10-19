@@ -4,6 +4,7 @@ const Product = require('./Product');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
+const Category = require('./Category');
 
 // Associations
 
@@ -18,6 +19,9 @@ Review.belongsTo(User);
 Review.belongsTo(Product);
 Product.hasMany(Review);
 
+Product.belongsToMany(Category, { as: 'categories', through: 'catalog', foreignKey: 'productId' });
+Category.belongsToMany(Product, { as: 'products', through: 'catalog', foreignKey: 'categoryId' });
+
 const sync = () => conn.sync();
 
 module.exports = {
@@ -27,6 +31,7 @@ module.exports = {
     Product,
     Order,
     LineItem,
-    Review
+    Review,
+    Category
   }
 }

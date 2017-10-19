@@ -1,13 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { updateCartItem } from '../store';
 import { Link } from 'react-router-dom';
 
-const Products = ({ products, updateCartItem }) => {
+const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   return (
     <ul className="list-unstyled">
       {
-        products.map(product => {
+        filteredProducts.map(product => {
+          if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;
+
           return (
             <li key={ product.id } className="col-xs-12 col-sm-6">
               <div className="panel panel-default product-panel">
@@ -37,12 +37,4 @@ const Products = ({ products, updateCartItem }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products
-  }
-};
-
-const mapDispatch = { updateCartItem };
-
-export default connect(mapStateToProps, mapDispatch)(Products);
+export default Products;
