@@ -9,6 +9,9 @@ const Review = conn.define('review', {
   title: {
     type: Sequelize.STRING
   },
+  date: {
+    type: Sequelize.DATE
+  },
   blurb: {
     type: Sequelize.TEXT,
     validate: {
@@ -26,8 +29,9 @@ Review.addReview = function(productId, userId, content) {
       if (!purchased) return Promise.reject('User has not purchased this product');
 
       if(!content.title){
-         content.title = `${content.blurb.slice(0, 15)}...`
+         content.title = `${content.blurb.slice(0, 15).trim()}...`
       }
+      content.date = new Date();
       return Review.create({ productId, userId, ...content });
     })
 }
@@ -35,6 +39,7 @@ Review.addReview = function(productId, userId, content) {
 Review.updateReview = function(id, userId, content) {
   return Review.findOne({ where: { id, userId } })
     .then(review => {
+      content.date = new Date();
       Object.assign(review, { ...content });
       return review.save();
     })

@@ -53,6 +53,14 @@ h4 {
   margin-bottom: 30px;
 }
 
+.counter {
+  float: right;
+}
+
+.blurb {
+  margin-bottom: .5em;
+}
+
 .reviews {
   border: 1px solid grey;
   border-radius: 4px;
