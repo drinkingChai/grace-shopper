@@ -34,6 +34,9 @@ class SearchableOrdersAdmin extends Component {
 
     return (
       <div>
+        <h3>Orders</h3>
+        <hr/>
+
         <div className='row'>
           <div className='container'>
             <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />

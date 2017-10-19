@@ -8,10 +8,6 @@ export default function ({ orders }) {
 
   return (
     <div className='panel panel-default'>
-      <div className='panel-heading'>
-        <h3>Orders</h3>
-      </div>
-
       <div className='panel-body'>
         <div className='table-responsive'>
           <table className='table'>
