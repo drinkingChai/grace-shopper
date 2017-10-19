@@ -12,12 +12,12 @@ import CheckOut from './CheckOut'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AdminPortal from './AdminPortal'
 import ProductsPanel from './FilterableProductsPanel';
+import Order from './Order';
 
 export default class Root extends Component {
   componentDidMount () {
     store.dispatch(fetchProducts());
     store.dispatch(fetchCategories());
-    //store.dispatch(fetchOrders());
     store.dispatch(checkSession());
   }
 
@@ -34,6 +34,7 @@ export default class Root extends Component {
               <Route exact path="/" component={ ProductsPanel } />
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
+              <Route exact path="/orders/:id" component = { Order } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path='/login' component={ UserAuth } />
               <Route exact path='/changepassword' component={ PasswordUpdateForm } />

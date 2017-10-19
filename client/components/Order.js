@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import formatDate from './helpers/formatDate'
 import OrderStatusUpdateForm from './OrderStatusUpdateForm'
 
-export default function ({ order, currentUser }) {
+const Order = ({ order, currentUser }) => {
   if (!order) return <div></div>
 
   return (
@@ -53,3 +54,12 @@ export default function ({ order, currentUser }) {
     </div>
   )
 };
+
+const mapState = ({ orders, allOrders, currentUser }, ownProps) => ({
+  order: currentUser.isAdmin ?
+    allOrders.find(_order => _order.id == ownProps.match.params.id) :
+    orders.find(_order => _order.id == ownProps.match.params.id),
+  currentUser
+})
+
+export default connect(mapState)(Order)
