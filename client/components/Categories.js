@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Products from './Products';
 
-class SearchBar extends Component {
-  render() {
-    const { searchInput, handleSearch } = this.props;
-    console.log(handleSearch)
-
-    return (
-      <form className="col-xs-6 col-sm-3">
-        <input value={ searchInput } onChange={(ev) => handleSearch(ev.target.value)} placeholder="Search..." type="text" className="form-control" />
-      </form>
-    );
-  }
+const SearchBar = ({ searchInput, handleSearch }) => {
+  return (
+    <form className="col-xs-6 col-sm-3">
+      <input value={ searchInput } onChange={(ev) => handleSearch(ev.target.value)} placeholder="Search..." type="text" className="form-control" />
+    </form>
+  );
 }
 
 class CategoryFilter extends Component {
