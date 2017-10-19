@@ -28,13 +28,6 @@ class AdminPortal extends Component {
         <Route path='/admin/users' component={ UsersAdmin } />
         <Route path='/admin/products' component={ ProductsAdmin } />
         <Route exact path='/admin/orders' component={ SearchableOrdersAdmin } />
-
-        {/* a bit messy, clean it up by having Order use fetch instead of filter? */}
-        <Route exact path='/admin/orders/:id' render={ (ownProps) => (
-          <Order
-            order={ allOrders.find(order => order.id == ownProps.match.params.id) }
-            currentUser={ currentUser }/>
-        )}/>
       </div>
     )
   }

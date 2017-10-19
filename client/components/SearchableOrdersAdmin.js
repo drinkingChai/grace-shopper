@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import validStatuses from './helpers/validStatuses'
-import OrdersAdmin from './OrdersAdmin'
+import Orders from './Orders'
 import SearchBar from './SearchBar'
 
 class SearchableOrdersAdmin extends Component {
