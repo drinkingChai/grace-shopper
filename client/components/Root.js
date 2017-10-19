@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import store, { checkSession, fetchProducts, fetchOrders } from '../store';
+import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from '../store';
 
 // Components
 import Nav from './Nav';
-import Products from './Products';
+// import Products from './Products';
 import Account from './Account';
 import Cart from './Cart';
 import UserAuth from './UserAuth'
@@ -12,12 +12,14 @@ import Product from './Product'
 import CheckOut from './CheckOut'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AdminPortal from './AdminPortal'
+import Categories from './Categories';
 
 export default class Root extends Component {
   componentDidMount () {
     store.dispatch(fetchProducts());
+    store.dispatch(fetchCategories());
     //store.dispatch(fetchOrders());
-    store.dispatch(checkSession())
+    store.dispatch(checkSession());
   }
 
   render () {
@@ -30,7 +32,8 @@ export default class Root extends Component {
           <h1 className="headline">GRACESHOPPER</h1>
           <div className="col-xs-12 col-sm-8">
             <Switch>
-              <Route exact path="/" component={ Products } />
+              {/* <Route exact path="/" component={ Products } /> */}
+              <Route exact path="/" component={ Categories } />
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
