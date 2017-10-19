@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeOrderStatus } from '../store'
 
+import validStatuses from './helpers/validStatuses'
+
 class OrderStatusUpdateForm extends Component {
   constructor() {
     super()
-    this.state = { status: '' }
+    this.state = { statusInput: '' }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.setState({ status: this.props.order.status })
+    this.setState({ statusInput: this.props.order.status })
   }
 
   onChange(ev) {
@@ -27,17 +29,12 @@ class OrderStatusUpdateForm extends Component {
 
   render() {
     const { onChange, onSubmit } = this
-    const { status } = this.state
+    const { statusInput } = this.state
 
-    // change to fetch statuses from server
     return (
       <form className='form-inline' onSubmit={ onSubmit }>
-        <select className='form-control' name='status' value={ status } onChange={ onChange }>
-          <option value={ 'CREATED' }>CREATED</option>
-          <option value={ 'PROCESSING' }>PROCESSING</option>
-          <option value={ 'SHIPPED' }>SHIPPED</option>
-          <option value={ 'DELIVERED' }>DELIVERED</option>
-          <option value={ 'CANCELLED' }>CANCELLED</option>
+        <select className='form-control' name='statusInput' value={ statusInput } onChange={ onChange }>
+          { validStatuses.map(status => <option key={ status } value={ status }>{ status }</option>) }
         </select>
         &nbsp;
         <button className='btn btn-info'>Update</button>
