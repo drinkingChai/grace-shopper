@@ -15,7 +15,6 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', requireAdmin, (req, res, next) => {
-  console.log('req', req.body);
   Product.createProduct(req.body)
     .then(() => res.sendStatus(202))
     .catch(next)
