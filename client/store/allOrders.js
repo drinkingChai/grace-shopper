@@ -9,6 +9,10 @@ export const fetchAllOrders = () => dispatch =>
     .then(res => dispatch(getAllOrders(res.data)))
     .catch(err => console.log(err.message))
 
+export const changeOrderStatus = (id, status) => dispatch =>
+  axios.put(`/api/orders/change-status/${id}`, status)
+    .then(() => dispatch(fetchAllOrders()))
+
 const reducer = (allOrders = [], action) => {
   switch (action.type) {
     case GET_ALL_ORDERS:
