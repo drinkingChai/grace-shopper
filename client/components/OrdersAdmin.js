@@ -18,7 +18,6 @@ const OrdersAdmin = ({ allOrders }) => {
 
       {/* TODO: add filter via redux here */}
       {/* TODO: and a search bar */}
-
       
       <div className='panel-body'>
         <div className='table-responsive'>
@@ -27,7 +26,7 @@ const OrdersAdmin = ({ allOrders }) => {
               <tr>
                 <th>Order ID</th>
                 <th>Placed on</th>
-                <th>Buyer name</th>
+                <th>Customer name</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -36,7 +35,6 @@ const OrdersAdmin = ({ allOrders }) => {
               {
                 allOrders.map(order =>
                   <tr key={ order.id }>
-                    {/* TODO: add change status button here */}
                     <td><Link to={ `/admin/orders/${order.id}` }>{ order.id }</Link></td>
                     {/* IDEA: filter to all orders placed on that date? */}
                     <td>{ formatDate(order.createdAt) }</td>
