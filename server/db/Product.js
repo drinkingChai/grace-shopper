@@ -40,4 +40,8 @@ Product.findProducts = function() {
   })
 }
 
+Product.createProduct = function(params){
+  return Product.create(params)
+}
+
 module.exports = Product;
