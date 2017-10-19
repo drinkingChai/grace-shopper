@@ -12,7 +12,7 @@ import Product from './Product'
 import CheckOut from './CheckOut'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AdminPortal from './AdminPortal'
-import Categories from './Categories';
+import ProductsPanel from './FilterableProductsPanel';
 
 export default class Root extends Component {
   componentDidMount () {
@@ -33,7 +33,7 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-8">
             <Switch>
               {/* <Route exact path="/" component={ Products } /> */}
-              <Route exact path="/" component={ Categories } />
+              <Route exact path="/" component={ ProductsPanel } />
               <Route exact path="/account" component={ Account } />
               <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />

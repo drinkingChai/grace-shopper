@@ -25,12 +25,13 @@ class FilterableProductsPanel extends Component {
 
   render() {
     const { handleSearch, handleFilter } = this;
-    const { categories, products } = this.props;
+    const { searchInput } = this.state;
+    const { categories } = this.props;
 
     return (
       <div>
         <div className="row">
-          <SearchBar { ...this.state } handleSearch={ handleSearch } />
+          <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />
           <CategoryFilter categories={ categories } handleFilter={ handleFilter } />
         </div>
         <Products { ...this.props } { ...this.state } />
