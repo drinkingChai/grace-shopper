@@ -4,9 +4,10 @@ import Products from './Products';
 
 class SearchBar extends Component {
   render() {
+    const { searchInput } = this.props;
     return (
       <form className="col-xs-6 col-sm-3">
-        <input className="form-control" type="text" placeholder="Search..." />
+        <input className="form-control" type="text" placeholder="Search..." value={ searchInput } />
       </form>
     );
   }
@@ -14,6 +15,7 @@ class SearchBar extends Component {
 
 class CategoryFilter extends Component {
   render() {
+    // console.log(this.props)
     const { categories } = this.props;
     return (
       <form className="col-xs-6 col-sm-3">
@@ -28,15 +30,22 @@ class CategoryFilter extends Component {
 }
 
 class FilterableProductsPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchInput: '',
+      activeCategory: 0
+    }
+  }
+
   render() {
-    const { categories, products } = this.props;
     return (
       <div>
         <div className="row">
           <SearchBar />
-          <CategoryFilter categories={ categories } />
+          <CategoryFilter { ...this.props } { ...this.state } />
         </div>
-        <Products products={ products } />
+        <Products { ...this.props } { ...this.state } />
       </div>
     );
   }

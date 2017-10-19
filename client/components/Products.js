@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import { updateCartItem } from '../store';
 import { Link } from 'react-router-dom';
 
-const Products = ({ products, updateCartItem }) => {
+const Products = ({ products, updateCartItem, categories, searchInput, activeCategory }) => {
+  const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
+  const filteredProducts = selectedCategory.length ? selectedCategory[0].products : products;
+
   return (
     <ul className="list-unstyled">
       {
-        products.map(product => {
+        filteredProducts.map(product => {
+          if (product.name.indexOf(searchInput) === -1) return;
           return (
             <li key={ product.id } className="col-xs-12 col-sm-6">
               <div className="panel panel-default product-panel">
