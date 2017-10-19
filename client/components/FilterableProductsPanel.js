@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { updateCartItem } from '../store';
 import Products from './Products';
 import SearchBar from './SearchBar';
 import CategoryFilter from './CategoryFilter';
@@ -44,4 +45,6 @@ const mapStateToProps = ({ categories, products }) => {
   return { categories, products };
 };
 
-export default connect(mapStateToProps)(FilterableProductsPanel);
+const mapDispatch = { updateCartItem };
+
+export default connect(mapStateToProps, mapDispatch)(FilterableProductsPanel);

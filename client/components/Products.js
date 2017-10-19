@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { updateCartItem } from '../store';
 import { Link } from 'react-router-dom';
 
 const Products = ({ products, updateCartItem, categories, searchInput, activeCategory }) => {
@@ -41,12 +39,4 @@ const Products = ({ products, updateCartItem, categories, searchInput, activeCat
   )
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     products: state.products
-//   }
-// };
-
-const mapDispatch = { updateCartItem };
-
-export default connect(null, mapDispatch)(Products);
+export default Products;
