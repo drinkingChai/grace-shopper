@@ -118,9 +118,14 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
   // call inventory reduction, then save
   return Promise.all(
     this.lineitems.map(li => (
-      conn.models.product.updateInventoryBy(li.productId, -1 * li.quantity)
+      conn.models.product.checkInventory(li.productId, -1 * li.quantity)
     ))
   )
+    .then(() => Promise.all(
+      this.lineitems.map(li => (
+        conn.models.product.updateInventoryBy(li.productId, -1 * li.quantity)
+      ))
+    ))
     .then(function() {
       // if falsy, set to empty string to use Sequelize validation error
       Object.assign(this, {
