@@ -6,7 +6,7 @@ import { fetchUsers, fetchAllOrders } from '../store'
 import AdminNav from './AdminNav'
 import UsersAdmin from './UsersAdmin'
 import ProductsAdmin from './ProductsAdmin'
-import SearchableOrdersAdmin from './SearchableOrdersAdmin'
+import FilterableOrdersAdmin from './FilterableOrdersAdmin'
 import Order from './Order'
 
 class AdminPortal extends Component {
@@ -27,7 +27,7 @@ class AdminPortal extends Component {
 
         <Route path='/admin/users' component={ UsersAdmin } />
         <Route path='/admin/products' component={ ProductsAdmin } />
-        <Route exact path='/admin/orders' component={ SearchableOrdersAdmin } />
+        <Route exact path='/admin/orders' component={ FilterableOrdersAdmin } />
       </div>
     )
   }
