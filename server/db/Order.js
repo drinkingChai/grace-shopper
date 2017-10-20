@@ -115,13 +115,21 @@ Order.prototype.changeCartToOrder = function(address, paymentInfo) {
   // if number of items in cart is empty, return error
   if (!this.lineitems.length) return Promise.reject('Cart is empty');
 
-  // if falsy, set to empty string to use Sequelize validation error
-  Object.assign(this, {
-    address: address || '',
-    paymentInfo: paymentInfo || '',
-    isCart: false,
-    status: 'CREATED' });
-  return this.save();
+  // call inventory reduction, then save
+  return Promise.all(
+    this.lineitems.map(li => (
+      conn.models.product.updateInventoryBy(li.productId, -1 * li.quantity)
+    ))
+  )
+    .then(function() {
+      // if falsy, set to empty string to use Sequelize validation error
+      Object.assign(this, {
+        address: address || '',
+        paymentInfo: paymentInfo || '',
+        isCart: false,
+        status: 'CREATED' });
+      return this.save();
+    }.bind(this))
 };
 
 // admin methods:
