@@ -40,6 +40,17 @@ Product.findProducts = function() {
   })
 }
 
+Product.updateInventoryBy = function(productId, quantity) {
+  return Product.findById(productId)
+    .then(product => {
+      const inventoryQuantity = product.inventoryQuantity + quantity
+      if (inventoryQuantity < 0) return Promise.reject(new Error('Not enough items'))
+
+      Object.assign(product, { inventoryQuantity })
+      return product.save()
+    })
+}
+
 Product.createProduct = function(params){
   return Product.create(params)
 }
