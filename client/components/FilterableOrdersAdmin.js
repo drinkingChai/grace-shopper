@@ -13,12 +13,21 @@ class SearchableOrdersAdmin extends Component {
     this.handleFilter = this.handleFilter.bind(this)
   }
 
+  componentDidMount() {
+    // very basic mini parser
+    this.setState({ statusInput: this.props.location.search.slice(1).split('=')[1] })
+  }
+
   handleSearch(searchInput) {
     this.setState({ searchInput })
   }
 
   handleFilter(ev) {
     this.setState({ statusInput: ev.target.value })
+    this.props.history.push({
+      pathname: '/admin/orders',
+      search: `?filter=${ev.target.value}`
+    })
   }
 
   render() {
