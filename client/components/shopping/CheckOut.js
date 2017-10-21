@@ -35,7 +35,6 @@ class CheckOut extends Component {
   onSubmit(ev) {
     ev.preventDefault()
     this.props.checkOut(this.state)
-      .then(() => this.props.currentUser.isAdmin ? this.props.fetchAllOrders() : null)
       .then(() => this.props.history.push('/orderconfirmation'))
       .catch(err => console.log(err.message))
   }
