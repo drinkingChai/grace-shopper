@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GET_PRODUCTS = 'GET_PRODUCTS';
-const GET_PRODUCT = 'GET_PRODUCT';
+
 
 
 const getProducts = (products) => {
@@ -30,14 +30,16 @@ export const createProd = (prodData) =>
       .catch(err => console.log(err.message))
   }
 
+  export const updateProduct = (productId, prodData) =>
+    dispatch =>
+     axios.put(`/api/products/${productId}`, prodData)
+     .then(() => dispatch(fetchProducts()))
+
 
 const reducer = (products = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products;
-    case GET_PRODUCT:
-      return [...products, action.product]
-
     default:
       return products;
   }

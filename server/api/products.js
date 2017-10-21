@@ -20,4 +20,10 @@ router.post('/', requireAdmin, (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:id', requireAdmin, (req, res, next) => {
+  Product.updateProduct(req.params.id, req.body)
+    .then(() => res.sendStatus(200))
+    .catch(next)
+})
+
 module.exports = router;

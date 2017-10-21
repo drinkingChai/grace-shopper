@@ -36,9 +36,13 @@ Product.findProducts = function() {
           attributes: ['name']
         }]
 
-    }]
+    },
+    {model: conn.models.category,
+      as: 'categories'}]
   })
 }
+
+
 
 Product.checkInventory = function(productId, quantity) {
   return Product.findById(productId)
@@ -53,6 +57,14 @@ Product.updateInventoryBy = function(productId, quantity) {
       const inventoryQuantity = product.inventoryQuantity + quantity
 
       Object.assign(product, { inventoryQuantity })
+      return product.save()
+    })
+}
+
+Product.updateProduct = function(productId, productData) {
+  return Product.findById(productId)
+    .then(product => {
+      Object.assign(product, { ...productData })
       return product.save()
     })
 }
