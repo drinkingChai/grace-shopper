@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { checkOut } from '../../store';
+import { checkOut, fetchOrders, fetchProducts } from '../../store';
 
 import queryParser from '../helpers/queryParser'
 import Cart from './Cart'
@@ -34,8 +34,11 @@ class CheckOut extends Component {
 
   onSubmit(ev) {
     ev.preventDefault()
-    this.props.checkOut(this.state)
-      .then(() => this.props.history.push('/orderconfirmation'))
+    const { checkOut, fetchOrders, fetchProducts, history } = this.props
+    checkOut(this.state)
+      .then(order => history.push(`/orderconfirm?orderId=${order.id}`))
+      .then(() => fetchOrders())
+      .then(() => fetchProducts())
       .catch(err => console.log(err.message))
   }
 
@@ -86,6 +89,6 @@ const mapState = ({ currentUser, orders }) => ({
   currentUser,
   order: orders.find(order => order.isCart)
 })
-const mapDispatch = { checkOut }
+const mapDispatch = { checkOut, fetchOrders, fetchProducts }
 
 export default connect(mapState, mapDispatch)(CheckOut)
