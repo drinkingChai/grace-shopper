@@ -60,6 +60,14 @@ User.createGuest = function(params) {
     })
 }
 
+User.convertGuestoUser = function(id, email, name, password) {
+  return this.findOne({ where: { id, email } })
+    .then(user => {
+      Object.assign(user, { name, password })
+      return user.save()
+    })
+}
+
 User.logIn = function(email, password, sessionCartItems) {
   return this.findOne({ where: { email, password, isDisabled: false } })
     .then(user => {
