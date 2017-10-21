@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCartItem } from '../store';
+import { updateCartItem } from '../../store';
 import Products from './Products';
-import SearchBar from './SearchBar';
-import CategoryFilter from './CategoryFilter';
+import SearchBar from '../SearchBar';
+import CategoryFilter from '../CategoryFilter';
 
 class FilterableProductsPanel extends Component {
   constructor(props) {

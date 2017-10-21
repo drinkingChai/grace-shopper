@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReviewForm from './ReviewForm';
-import { updateProduct } from '../store'
+import { updateProduct } from '../../store'
 
 class Product extends Component{
   constructor(props) {

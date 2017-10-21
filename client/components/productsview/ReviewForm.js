@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { writeReview } from '../store';
+import { writeReview } from '../../store';
 
 class ReviewForm extends Component {
   // can be presentational

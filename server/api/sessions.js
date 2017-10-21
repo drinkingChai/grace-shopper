@@ -13,6 +13,16 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/guest-to-user', (req, res, next) => {
+  const { email, name, password } = req.body
+  User.convertGuestoUser(req.session.guestUserId, email, name, password)
+    .then(user => {
+      req.session = loadDataOnLogin(user)
+      res.sendStatus(200)
+    })
+    .catch(err => res.status(401).send(err))
+})
+
 router.put('/', (req, res, next) => {
   const { email, password } = req.body
   User.logIn(email, password, req.session.cart.lineitems)

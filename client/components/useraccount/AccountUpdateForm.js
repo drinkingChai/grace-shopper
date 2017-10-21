@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { updateAccount } from '../store';
+import { updateAccount } from '../../store';
 
 class UserAuth extends Component {
   // can be converted to presentational

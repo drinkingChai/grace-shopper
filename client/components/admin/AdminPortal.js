@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchUsers, fetchAllOrders } from '../store'
+import { fetchUsers, fetchAllOrders } from '../../store'
 
 import AdminNav from './AdminNav'
 import UsersAdmin from './UsersAdmin'
 import ProductsAdmin from './ProductsAdmin'
 import FilterableOrdersAdmin from './FilterableOrdersAdmin'
-import Order from './Order'
+import Order from '../Order'
 
 class AdminPortal extends Component {
   componentDidMount() {

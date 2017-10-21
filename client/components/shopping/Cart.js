@@ -12,26 +12,16 @@ const Cart = ({ order, location }) => {
     <div className="panel panel-default">
       <h4 className="panel-heading">Your Cart</h4>
       <div className="panel-body">
-        {
-          order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.product.id } lineitem={ lineitem } />)
-        }
+        { order.lineitems.map(lineitem => <CartUpdateForm key={ lineitem.product.id } lineitem={ lineitem } />) }
         <hr/>
-        <div>
-          <div>
-            <label>Subtotal:</label> ${ total }
-          </div>
-          { location && location.pathname !== '/checkout' && order.lineitems.length ?
-            <Link to="/checkout" className="btn btn-primary btn-sm">Proceed to Checkout</Link> : null }
-        </div>
+        <label>Subtotal:</label> ${ total }
       </div>
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    order: state.orders.find(order => order.isCart === true)
-  }
-};
+const mapStateToProps = ({ orders }) => ({
+  order: orders.find(order => order.isCart === true)
+})
 
 export default connect(mapStateToProps)(Cart);

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import formatDate from './helpers/formatDate'
-import OrderStatusUpdateForm from './OrderStatusUpdateForm'
+import OrderStatusUpdateForm from './admin/OrderStatusUpdateForm'
 
 const Order = ({ order, currentUser }) => {
   if (!order) return <div></div>
@@ -11,7 +11,7 @@ const Order = ({ order, currentUser }) => {
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
-        <strong>Placed on:</strong> { formatDate(order.updatedAt ) }
+        <strong>Placed on:</strong> { formatDate(order.createdAt ) }
 
         { currentUser && currentUser.isAdmin ?
           <OrderStatusUpdateForm order={ order }/> :

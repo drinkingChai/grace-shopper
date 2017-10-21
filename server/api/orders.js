@@ -42,6 +42,7 @@ router.put('/check-out', (req, res, next) => {
     Order.guestCheckOut(req.session.cart.lineitems, req.body)
       .then(newCart => {
         req.session = clearOnLogout()
+        req.session.guestUserId = newCart.userId
         res.sendStatus(201);
       })
       .catch(next);
