@@ -29,7 +29,6 @@ class CartUpdateForm extends Component {
   render() {
     const { lineitem } = this.state;
     const { onChange, onSubmit } = this;
-    // const total = lineitem.product.price * lineitem.quantity;
     const quantity = [...Array(10).keys()];
 
     return (
