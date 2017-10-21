@@ -4,16 +4,17 @@ import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from
 
 // Components
 import Nav from './Nav';
-import Account from './useraccount/Account';
+import Product from './productsview/Product'
+import ProductsPanel from './productsview/FilterableProductsPanel';
 import Cart from './shopping/Cart';
+import CheckOut from './shopping/CheckOut'
+import OrderConfirmation from './shopping/OrderConfirmation';
 import UAuth from './userauth/UAuth'
+import PasswordUpdateForm from './userauth/PasswordUpdateForm'
 import CheckLogin from './userauth/CheckOutLogin'
 import RegisterUser from './userauth/RegisterUser'
-import Product from './productsview/Product'
-import CheckOut from './shopping/CheckOut'
-import PasswordUpdateForm from './userauth/PasswordUpdateForm'
+import Account from './useraccount/Account';
 import AdminPortal from './admin/AdminPortal'
-import ProductsPanel from './productsview/FilterableProductsPanel';
 import Order from './Order';
 
 export default class Root extends Component {
@@ -34,13 +35,13 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-8">
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
-              <Route exact path="/account" component={ Account } />
               <Route exact path="/orders/:id" component = { Order } />
               <Route exact path="/checkout" component={ CheckOut } />
-              <Route exact path="/cart" component={ Cart } />
+              <Route exact path="/orderconfirm" component={ OrderConfirmation } />
               <Route exact path="/check-login" component={ CheckLogin } />
               <Route exact path="/login" component={ UAuth } />
               <Route exact path="/register" component={ RegisterUser } />
+              <Route exact path="/account" component={ Account } />
               <Route exact path="/changepassword" component={ PasswordUpdateForm } />
               <Route path="/admin" component={ AdminPortal } />
             </Switch>

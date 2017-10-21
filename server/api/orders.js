@@ -40,18 +40,18 @@ router.get('/filter', (req, res, next) => {
 router.put('/check-out', (req, res, next) => {
   if (!req.session.userId) {
     Order.guestCheckOut(req.session.cart.lineitems, req.body)
-      .then(newCart => {
+      .then(order => {
         req.session = clearOnLogout()
-        req.session.guestUserId = newCart.userId
-        res.sendStatus(201);
+        req.session.guestUserId = order.userId
+        res.status(201).send(order)
+        return order
       })
+      .then(order => Order.createCart(order.userId))
       .catch(next);
   } else {
     Order.checkOut(req.session.userId, req.body)
-      .then(newCart => {
-        req.session.cart = newCart;
-        res.sendStatus(201);
-      })
+      .then(order => res.status(201).send(order))
+      .then(() => Order.createCart(req.session.userId))
       .catch(next);
   }
 });

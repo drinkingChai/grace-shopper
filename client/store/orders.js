@@ -18,6 +18,10 @@ export const fetchOrders = () => {
   }
 };
 
+export const fetchOrder = orderId => dispatch =>
+  axios.get(`/api/orders/${orderId}`)
+    .then(res => res.data)
+
 const reducer = (orders = [], action) => {
   switch (action.type) {
     case GET_ORDERS:

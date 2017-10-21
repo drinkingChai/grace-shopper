@@ -10,8 +10,7 @@ export const updateCartItem = (product, quantity) => dispatch =>
 
 export const checkOut = (checkoutData) => dispatch =>
   axios.put('/api/orders/check-out', checkoutData)
-    .then(() => dispatch(fetchOrders()))
-    .then(() => dispatch(fetchProducts()))
+    .then(res => res.data)
 
 const initialState = {}
 

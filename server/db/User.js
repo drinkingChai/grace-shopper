@@ -30,6 +30,10 @@ const User = conn.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  isGuest: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   passwordChange: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -50,7 +54,8 @@ User.createGuest = function(params) {
     /* create random password using faker
      * maybe a better randomizer later */
     password: faker.internet.password(),
-    name: 'guest'
+    name: 'guest',
+    isGueset: true
   })
 
   return user.save()
@@ -63,7 +68,7 @@ User.createGuest = function(params) {
 User.convertGuestoUser = function(id, email, name, password) {
   return this.findOne({ where: { id, email } })
     .then(user => {
-      Object.assign(user, { name, password })
+      Object.assign(user, { name, password, isGueset: false })
       return user.save()
     })
 }
