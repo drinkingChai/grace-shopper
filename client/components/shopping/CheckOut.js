@@ -37,7 +37,14 @@ class CheckOut extends Component {
     const { checkOut, fetchOrders, fetchProducts, history } = this.props
     const { guestCheckout } = this.state
     checkOut(this.state)
-      .then(order => history.push(`/orderconfirm?orderId=${order.id}&guest=${guestCheckout}&isGuest=${!order.user.isGuest ? '' : true}`))
+      .then(order => {
+        history.push({
+          pathname: 'orderconfirm',
+          search: `orderId=${order.id}&
+            guest=${!guestCheckout ? '' : true}&
+            isGuest=${!order.user.isGuest ? '' : true}`
+        })
+      })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
       .catch(err => console.log(err.message))
