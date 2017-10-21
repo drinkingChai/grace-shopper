@@ -2,13 +2,13 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
 import currentUser from './currentUser';
-import cart from './cart'
-import products from './products'
-import orders from './orders'
-import reviews from './reviews'
-import users from './users'
+import cart from './cart';
+import products from './products';
+import orders from './orders';
+import reviews from './reviews';
+import users from './users';
 import categories from './categories';
-import allOrders from './allOrders'
+import allOrders from './allOrders';
 
 
 const reducer = combineReducers({
@@ -20,7 +20,7 @@ const reducer = combineReducers({
   users,
   categories,
   allOrders
-})
+});
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
 export default store;

@@ -2,15 +2,12 @@ import axios from 'axios';
 
 const GET_PRODUCTS = 'GET_PRODUCTS';
 
-
-
 const getProducts = (products) => {
   return {
     type: GET_PRODUCTS,
     products
   }
 };
-
 
 export const fetchProducts = () => {
   return dispatch => {
@@ -27,14 +24,13 @@ export const createProd = (prodData) =>
       .then(res => res.data)
       .then(() => dispatch(fetchProducts()))
       // .then(product => dispatch(getProduct(product)))
-      .catch(err => console.log(err.message))
+      .catch(err => console.log(err.message));
   }
 
-  export const updateProduct = (productId, prodData) =>
-    dispatch =>
-     axios.put(`/api/products/${productId}`, prodData)
-     .then(() => dispatch(fetchProducts()))
-
+export const updateProduct = (productId, prodData) =>
+  dispatch =>
+   axios.put(`/api/products/${productId}`, prodData)
+   .then(() => dispatch(fetchProducts()))
 
 const reducer = (products = [], action) => {
   switch (action.type) {

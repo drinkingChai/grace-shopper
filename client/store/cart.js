@@ -13,13 +13,13 @@ export const checkOut = (checkoutData) => dispatch =>
     .then(() => dispatch(fetchOrders()))
     .then(() => dispatch(fetchProducts()))
 
-const initialState = {}
+const initialState = {};
 
 const reducer = (state= initialState, action) =>{
 
   switch (action.type){
     default:
-      return state
+      return state;
   }
 }
 

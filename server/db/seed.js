@@ -64,7 +64,7 @@ const seed = () => {
       ])
     })
     .then(() => Promise.all(users.map(user => User.createUser(user))))
-    .then(([ ..._users ]) => Promise.all(_users.map(user => Order.create({ userId: user.id}))))
+//    .then(([ ..._users ]) => Promise.all(_users.map(user => Order.create({ userId: user.id}))))
 };
 
 seed()
