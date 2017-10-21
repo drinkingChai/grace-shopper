@@ -13,8 +13,7 @@ class CartUpdateForm extends Component {
 
   onChange(ev) {
     const { lineitem } = this.state;
-    Object.assign(lineitem, { quantity: ev.target.value * 1 });
-    this.setState({ lineitem });
+    this.props.updateCartItem(lineitem.product, ev.target.value * 1);
   }
 
   onSubmit(ev) {
@@ -38,16 +37,14 @@ class CartUpdateForm extends Component {
         <form onSubmit={ onSubmit } className="form form-inline">
           <label>Item: </label> { lineitem.product.name }<br />
           <label>Price: </label> ${ lineitem.product.price }<br />
-          <label>Quantity: </label> <select className="form-control" onChange={ onChange } name="quantity">
+          <label>Quantity: </label> <select className="form-control" onChange={ onChange } value={ this.state.lineitem.quantity } >
             {
               quantity.map(item => (
-                <option
-                  key={ `${item}x` }
-                  value={ item + 1 }
-                  attribute={ item + 1 === lineitem.quantity ? 'selected' : 'false' }>{ item + 1 }</option>))
+                <option key={ `${item}x` } value={ item + 1 }>{ item + 1 }</option>
+                )
+              )
             }
           </select>
-
 
           <button
             onClick={() => this.props.updateCartItem(lineitem.product, 0)}
@@ -64,12 +61,3 @@ class CartUpdateForm extends Component {
 const mapDispatch = { updateCartItem };
 
 export default connect(null, mapDispatch)(CartUpdateForm);
-
-/*
-TODO:
-- maintain selected option after refresh
-- have only 1 update button on the cart
-*/
-
-// quantity input field:
-// <input type="number" value={ lineitem.quantity } onChange={ onChangeHandler } />
