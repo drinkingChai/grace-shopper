@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { checkOut } from '../store';
+import { checkOut } from '../../store';
 
-import queryParser from './helpers/queryParser'
+import queryParser from '../helpers/queryParser'
 import Cart from './Cart'
 
 class CheckOut extends Component {

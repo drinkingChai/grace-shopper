@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCartItem } from '../store';
+import { updateCartItem } from '../../store';
 
 class CartUpdateForm extends Component {
   // can this be presentational?

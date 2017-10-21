@@ -4,16 +4,16 @@ import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from
 
 // Components
 import Nav from './Nav';
-import Account from './Account';
-import Cart from './Cart';
+import Account from './useraccount/Account';
+import Cart from './shopping/Cart';
 import UAuth from './userauth/UAuth'
 import CheckLogin from './userauth/CheckOutLogin'
 import RegisterUser from './userauth/RegisterUser'
-import Product from './Product'
-import CheckOut from './CheckOut'
-import PasswordUpdateForm from './PasswordUpdateForm'
-import AdminPortal from './AdminPortal'
-import ProductsPanel from './FilterableProductsPanel';
+import Product from './productsview/Product'
+import CheckOut from './shopping/CheckOut'
+import PasswordUpdateForm from './userauth/PasswordUpdateForm'
+import AdminPortal from './admin/AdminPortal'
+import ProductsPanel from './productsview/FilterableProductsPanel';
 import Order from './Order';
 
 export default class Root extends Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Orders from './Orders'
+import Orders from '../Orders'
 import AccountUpdateForm from './AccountUpdateForm'
 
 const Account = ({ currentUser, orders }) => {

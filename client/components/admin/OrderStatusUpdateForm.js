@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeOrderStatus } from '../store'
+import { changeOrderStatus } from '../../store'
 
-import validStatuses from './helpers/validStatuses'
+import validStatuses from '../helpers/validStatuses'
 
 class OrderStatusUpdateForm extends Component {
   constructor() {

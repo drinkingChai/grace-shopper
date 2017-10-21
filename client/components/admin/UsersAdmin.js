@@ -4,7 +4,7 @@ import {
   promoteUser, demoteUser,
   enableUser, disableUser,
   deleteUser,
-  promptPasswordChange } from '../store'
+  promptPasswordChange } from '../../store'
 
 const UsersAdmin = (props) => {
   const {

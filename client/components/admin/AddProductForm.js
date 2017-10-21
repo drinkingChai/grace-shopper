@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProd } from '../store'
+import { createProd } from '../../store'
 
 class AddProductForm extends Component {
 
