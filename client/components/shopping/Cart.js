@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import CartUpdateForm from './CartUpdateForm';
 
-const Cart = ({ order, location }) => {
+const Cart = ({ order }) => {
   if (!order) return <div />
 
   const total = order.lineitems.reduce((total, item) => (total += item.product.price * item.quantity), 0);
@@ -27,6 +26,6 @@ const Cart = ({ order, location }) => {
 
 const mapStateToProps = ({ orders }) => ({
   order: orders.find(order => order.isCart === true)
-})
+});
 
 export default connect(mapStateToProps)(Cart);

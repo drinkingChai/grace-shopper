@@ -1,61 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { updateCartItem } from '../../store';
 
-class CartUpdateForm extends Component {
-  // can this be presentational?
-  constructor(props) {
-    super(props);
-    this.state = props;
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+const CartUpdateForm = ({ lineitem, updateCartItem }) => {
+  const quantity = [...Array(lineitem.product.inventoryQuantity).keys()];
 
-  onChange(ev) {
-    const { lineitem } = this.state;
-    this.props.updateCartItem(lineitem.product, ev.target.value * 1);
-  }
-
-  onSubmit(ev) {
-    ev.preventDefault();
-    const { lineitem } = this.state;
-    this.props.updateCartItem(lineitem.product, lineitem.quantity);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(nextProps);
-  }
-
-  render() {
-    const { lineitem } = this.state;
-    const { onChange, onSubmit } = this;
-    const quantity = [...Array(10).keys()];
-
-    return (
-      <li className="list-group-item">
-        <form onSubmit={ onSubmit } className="form form-inline">
-          <label>Item: </label> { lineitem.product.name }<br />
-          <label>Price: </label> ${ lineitem.product.price }<br />
-          <label>Quantity: </label> <select className="form-control" onChange={ onChange } value={ this.state.lineitem.quantity } >
-            {
+  return (
+    <li className="list-group-item">
+      <form className="form form-inline">
+        <label>Item: </label> { lineitem.product.name }<br />
+        <label>Price: </label> ${ lineitem.product.price }<br />
+        <label>Quantity: </label> <select
+            className="form-control"
+            onChange={(ev) => (updateCartItem(lineitem.product, ev.target.value * 1))}
+            value={ lineitem.quantity } >
+          {
+            !quantity.length ? <option>Sold Out</option> :
               quantity.map(item => (
                 <option key={ `${item}x` } value={ item + 1 }>{ item + 1 }</option>
                 )
               )
-            }
-          </select>
+          }
+        </select>
 
-          <button
-            onClick={() => this.props.updateCartItem(lineitem.product, 0)}
-            className="btn btn-danger btn-sm pull-right">
-              <span className="glyphicon glyphicon-trash" />
-          </button>
-          <button className="btn btn-info btn-sm pull-right">Update</button>
-        </form>
-      </li>
-    )
-  }
-}
+        <button
+          onClick={(ev) => {
+            ev.preventDefault();
+            updateCartItem(lineitem.product, 0);
+          }}
+          className="btn btn-danger btn-sm pull-right">
+            <span className="glyphicon glyphicon-trash" />
+        </button>
+        <button
+          className="btn btn-info btn-sm pull-right"
+          onClick={(ev) => {
+            ev.preventDefault();
+            updateCartItem(lineitem.product, lineitem.quantity);
+          }}>Update</button>
+      </form>
+    </li>
+  );
+};
 
 const mapDispatch = { updateCartItem };
 
