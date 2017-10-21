@@ -33,9 +33,13 @@ Order.findOrders = function(userId) {
 };
 
 Order.findOrder = function(id) {
-  return this.findById(id, {
-    include: [{ model: conn.models.lineitem, include: [ conn.models.product ] }]
-  });
+  return this.findOne({ 
+    where: { id, isCart: false }, 
+    include: [ 
+      { model: conn.models.lineitem, include: [ conn.models.product ] }, 
+      { model: conn.models.user, attributes: [ 'email' ] } 
+    ]  
+  })
 };
 
 Order.findFiltered = function(userId, status) {
@@ -55,6 +59,10 @@ Order.findCart = function(userId) {
     })
 };
 
+Order.createCart = function(userId) {
+  return this.create({ userId })
+}
+
 Order.checkOut = function(userId, body) {
   // TODO: guest does not have userId. ask guest to create an account.
   return this.findCart(userId)
@@ -62,7 +70,7 @@ Order.checkOut = function(userId, body) {
       const { address, paymentInfo } = body;
       return order.changeCartToOrder(address, paymentInfo);
     })
-    .then(() => Order.create({ userId }))
+    .then(order => this.findOrder(order.id))
 };
 
 Order.guestCheckOut = function(sessionCartItems, checkoutData) {
