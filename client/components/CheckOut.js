@@ -1,89 +1,83 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { checkOut, fetchAllOrders } from '../store';
+import { checkOut } from '../store';
+
+import queryParser from './helpers/queryParser'
 import Cart from './Cart'
 
 class CheckOut extends Component {
-  // can be presentational!
   constructor() {
     super()
     this.state = {
       address: '',
       paymentInfo: '',
-      email: ''
     }
-    this.onChangeHandler = this.onChangeHandler.bind(this)
-    this.onSubmitHandler = this.onSubmitHandler.bind(this)
-    this.guestCheckoutHandler = this.guestCheckoutHandler.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onChangeHandler(ev) {
+  componentDidMount() {
+    const queryMap = queryParser(this.props.location.search)
+    if (queryMap.get('guest')) this.setState({ guestCheckout: true, email: '' })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { currentUser } = nextProps
+    this.setState({ guestCheckout: !currentUser.userId ? true : false })
+  }
+
+  onChange(ev) {
     const { name, value } = ev.target
-    this.setState(Object.assign(this.state, { [name]: value }))
+    this.setState({ [name]: value })
   }
 
-  onSubmitHandler(ev) {
+  onSubmit(ev) {
     ev.preventDefault()
     this.props.checkOut(this.state)
-    // change this confirmation page
       .then(() => this.props.currentUser.isAdmin ? this.props.fetchAllOrders() : null)
-      .then(() => this.props.history.push('/account'))
-      .catch(err => console.log(err.message))
-  }
-
-  guestCheckoutHandler(ev) {
-    ev.preventDefault()
-    this.props.checkOut(this.state)
-    // change this confirmation page
-      //.then(() => this.props.history.push('/'))
-      .then(() => {
-        this.props.history.push({
-          pathname: '/login',
-          search: `?email=${this.state.email}`
-        })
-      })
+      .then(() => this.props.history.push('/orderconfirmation'))
       .catch(err => console.log(err.message))
   }
 
   render() {
     const { currentUser, order } = this.props
-    const { address, paymentInfo, email } = this.state
-    const { onChangeHandler, onSubmitHandler, guestCheckoutHandler } = this
+    const { address, paymentInfo, email, guestCheckout } = this.state
+    const { onChange, onSubmit } = this
 
     return (
       <div>
-        <Cart />
-
         { order && order.lineitems.length ?
-          <form onSubmit={ onSubmitHandler } className='panel panel-primary'>
-            <h4 className='panel-heading'>Check Out</h4>
-            <div className='panel-body'>
-              <div className='form-group'>
-                <label htmlFor='address'>Address</label>
-                <input name='address' value={ address } onChange={ onChangeHandler } className='form-control'/>
-              </div>
+            <div>
+              <Cart />
 
-              <div className='form-group'>
-                <label htmlFor='paymentInfo'>Payment Info</label>
-                <input name='paymentInfo' value={ paymentInfo } onChange={ onChangeHandler } className='form-control'/>
-              </div>
+              <form onSubmit={ onSubmit } className='panel panel-primary'>
+                <h4 className='panel-heading'>Check Out</h4>
+                <div className='panel-body'>
+                  <div className='form-group'>
+                    <label htmlFor='address'>Address</label>
+                    <input name='address' value={ address } onChange={ onChange } className='form-control'/>
+                  </div>
 
-              { currentUser.userId ?
-                  <button className='btn btn-success'>Submit Order</button> :
-                  <div>
-                    <hr/>
+                  <div className='form-group'>
+                    <label htmlFor='paymentInfo'>Payment Info</label>
+                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control'/>
+                  </div>
+
+                  { guestCheckout ?
                     <div className='form-group'>
-                      <label htmlFor='email'>Email</label>
-                      <input name='email' type='email' value={ email } onChange={ onChangeHandler } className='form-control'/>
-                    </div>
+                      <label htmlFor='email'>email</label>
+                      <input name='email' value={ email } onChange={ onChange } className='form-control'/>
+                    </div> : null }
 
-                    <button className='btn btn-success' onClick={ guestCheckoutHandler }>Guest checkout</button>
-                    &nbsp;
-                    <Link className='btn btn-success' to='/login'>Login</Link>
-                  </div> }
+                  <button className='btn btn-default'>Place order</button>
+                </div>
+              </form>
             </div>
-          </form> : null }
+            :
+            <div className='well'>
+              <h3>Your cart is empty! add some stuff!</h3>
+            </div> }
       </div>
     )
   }
@@ -93,6 +87,6 @@ const mapState = ({ currentUser, orders }) => ({
   currentUser,
   order: orders.find(order => order.isCart)
 })
-const mapDispatch = { checkOut, fetchAllOrders }
+const mapDispatch = { checkOut }
 
 export default connect(mapState, mapDispatch)(CheckOut)
