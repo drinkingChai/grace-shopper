@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from '../store';
 
 // Components
 import Nav from './Nav';
 import Account from './Account';
 import Cart from './Cart';
-import UserAuth from './UserAuth'
+import UAuth from './userauth/UAuth'
+import CheckLogin from './userauth/CheckOutLogin'
+import RegisterUser from './userauth/RegisterUser'
 import Product from './Product'
 import CheckOut from './CheckOut'
 import PasswordUpdateForm from './PasswordUpdateForm'
@@ -35,13 +37,18 @@ export default class Root extends Component {
               <Route exact path="/account" component={ Account } />
               <Route exact path="/orders/:id" component = { Order } />
               <Route exact path="/checkout" component={ CheckOut } />
-              <Route exact path="/login" component={ UserAuth } />
+              <Route exact path="/cart" component={ Cart } />
+              <Route exact path="/check-login" component={ CheckLogin } />
+              <Route exact path="/login" component={ UAuth } />
+              <Route exact path="/register" component={ RegisterUser } />
               <Route exact path="/changepassword" component={ PasswordUpdateForm } />
               <Route path="/admin" component={ AdminPortal } />
             </Switch>
           </div>
           <div className="col-xs-12 col-sm-4">
             <Route exact path="/" component={ Cart } />
+            <Route exact path='/' render={ () =>
+              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> }/>
           </div>
           <div className="col-xs-12">
             <Route exact path="/products/:id" component = { Product } />
