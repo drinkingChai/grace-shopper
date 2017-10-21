@@ -33,6 +33,10 @@ export const registerUser = userData => dispatch =>
   axios.post('/api/users', userData)
     .then(res => dispatch(loginUser(res.data)))
 
+export const registerGuest = guestData => dispatch =>
+  axios.put('/api/sessions/guest-to-user', guestData)
+    .then(res => dispatch(checkSession()))
+
 export const updateAccount = userData => dispatch =>
   axios.put('/api/users', userData)
     .then(() => dispatch(checkSession()))

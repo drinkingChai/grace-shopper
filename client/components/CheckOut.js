@@ -36,7 +36,13 @@ class CheckOut extends Component {
     ev.preventDefault()
     this.props.checkOut(this.state)
     // change this confirmation page
-      .then(() => this.props.history.push('/'))
+      //.then(() => this.props.history.push('/'))
+      .then(() => {
+        this.props.history.push({
+          pathname: '/login',
+          search: `?email=${this.state.email}`
+        })
+      })
       .catch(err => console.log(err.message))
   }
 

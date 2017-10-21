@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loginUser, registerUser } from '../store';
+import { loginUser, registerUser, registerGuest } from '../store';
+
+// better queryParser 
+const queryParser = query => 
+  new Map(
+    query.slice(1).split('&').map( 
+      item => [item.split('=')[0], item.split('=')[1]])
+  )
 
 class UserAuth extends Component {
   // can be presentational
   constructor() {
     super()
-    this.state = { email: '', password: '', name: '' };
+    this.state = { email: '', password: '', name: '', isGuest: false };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onLoginHandlher = this.onLoginHandlher.bind(this);
     this.onRegisterHandler = this.onRegisterHandler.bind(this);
+    this.onRegisterGuestHandler = this.onRegisterGuestHandler.bind(this);
+  }
+
+  componentDidMount() {
+    const { search } = this.props.location
+    const email = queryParser(search).get('email')
+    if (email) this.setState({ email: queryParser(search).get('email'), isGuest: true })
   }
 
   onChangeHandler(ev) {
@@ -36,9 +50,17 @@ class UserAuth extends Component {
       .catch(err => console.log(err.message))
   }
 
+  onRegisterGuestHandler(ev) {
+    ev.preventDefault()
+    const { name, email, password } = this.state
+    this.props.registerGuest({ name, email, password })
+      .then(() => this.props.history.push('/account'))
+      .catch(err => console.log(err.message))
+  }
+
   render() {
-    const { email, password, name } = this.state
-    const { onChangeHandler, onLoginHandlher, onRegisterHandler } = this
+    const { email, password, name, isGuest } = this.state
+    const { onChangeHandler, onLoginHandlher, onRegisterHandler, onRegisterGuestHandler } = this
 
     return (
       <div className="well">
@@ -60,13 +82,13 @@ class UserAuth extends Component {
             <label htmlFor='name'>Name</label>
             <input name='name' value={ name } onChange={ onChangeHandler } className="form-control" />
           </div>
-          <button onClick={ onRegisterHandler } className="btn btn-default">Register and Login</button>
+          <button onClick={ isGuest ? onRegisterGuestHandler : onRegisterHandler } className="btn btn-default">Register and Login</button>
         </form>
       </div>
     )
   }
 }
 
-const mapDispatch = { loginUser, registerUser }
+const mapDispatch = { loginUser, registerUser, registerGuest }
 
 export default connect(null, mapDispatch)(UserAuth)
