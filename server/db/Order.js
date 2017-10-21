@@ -37,7 +37,7 @@ Order.findOrder = function(id) {
     where: { id, isCart: false }, 
     include: [ 
       { model: conn.models.lineitem, include: [ conn.models.product ] }, 
-      { model: conn.models.user, attributes: [ 'email' ] } 
+      { model: conn.models.user, attributes: [ 'email', 'isGuest' ] } 
     ]  
   })
 };

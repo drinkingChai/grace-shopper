@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchOrder } from '../../store'
 
@@ -14,7 +15,9 @@ class OrderConfirmation extends Component {
   render() {
     if (!this.state || !this.state.order) return <div></div>
     
+    const { location } = this.props
     const { order } = this.state
+    const queryMap = queryParser(location.search)
 
     return (
       <div className='well'>
@@ -22,6 +25,15 @@ class OrderConfirmation extends Component {
         <hr/>
         <h4>Your order number is { order.id }</h4>
         <p>An email has been sent to { order.user.email }</p>
+        { queryMap.get('guest') ?
+            queryMap.get('isGuest') ?
+            <Link to={ `/register?email=${order.user.email}` } className='btn btn-default'>Register</Link> :
+            <div>
+              Account is registered, would you like to log in?
+              <br/>
+              <Link to='/login' className='btn btn-default'>Log in</Link>
+            </div> :
+            null }
       </div>
     )
   }
