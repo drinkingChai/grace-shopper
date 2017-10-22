@@ -25,6 +25,8 @@ export default class Root extends Component {
     store.dispatch(checkSession());
   }
 
+  // needs refactoring. can ProductsPanel render Cart and Checkout button?
+
   render () {
     return (
       <div>
@@ -52,8 +54,10 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-4">
             <Route exact path="/" component={ Cart } />
             <Route path="/categories" component={ Cart } />
-            <Route exact path='/' render={ () =>
-              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> }/>
+            <Route path="/categories" render={ () =>
+              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
+            <Route exact path="/" render={ () =>
+              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
           </div>
           <div className="col-xs-12">
             <Route exact path="/products/:id" component = { Product } />
