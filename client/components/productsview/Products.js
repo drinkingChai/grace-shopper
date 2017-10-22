@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { updateCartItem } from '../../store';
 
 const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   return (
@@ -37,4 +39,6 @@ const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   )
 }
 
-export default Products;
+const mapDispatch = { updateCartItem };
+
+export default connect(null, mapDispatch)(Products);
