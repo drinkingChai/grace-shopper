@@ -16,6 +16,7 @@ import RegisterUser from './userauth/RegisterUser'
 import Account from './useraccount/Account';
 import AdminPortal from './admin/AdminPortal'
 import Order from './Order';
+import ErrorMessage from './errorstatus/ErrorMessage';
 
 export default class Root extends Component {
   componentDidMount () {
@@ -27,6 +28,7 @@ export default class Root extends Component {
   render () {
     return (
       <div>
+        <ErrorMessage />
         {/* Nav wrapped in route so it can get histor, location etc.. */}
         <Route component={ Nav } />
 

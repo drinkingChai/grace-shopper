@@ -37,6 +37,7 @@ class CheckOut extends Component {
     ev.preventDefault()
     const { checkOut, fetchOrders, fetchProducts, history } = this.props
     const { guestCheckout, error } = this.state
+
     checkOut(this.state)
       .then(order => {
         history.push({

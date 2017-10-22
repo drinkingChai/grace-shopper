@@ -7,6 +7,7 @@ import AdminNav from './AdminNav'
 import UsersAdmin from './UsersAdmin'
 import ProductsAdmin from './ProductsAdmin'
 import FilterableOrdersAdmin from './FilterableOrdersAdmin'
+import CategoriesAdmin from './CategoriesAdmin'
 import Order from '../Order'
 
 class AdminPortal extends Component {
@@ -28,6 +29,7 @@ class AdminPortal extends Component {
         <Route path='/admin/users' component={ UsersAdmin } />
         <Route path='/admin/products' component={ ProductsAdmin } />
         <Route exact path='/admin/orders' component={ FilterableOrdersAdmin } />
+        <Route exact path='/admin/categories' component={ CategoriesAdmin } />
       </div>
     )
   }

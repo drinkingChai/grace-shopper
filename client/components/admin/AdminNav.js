@@ -9,6 +9,7 @@ export default function AdminNav() {
           <li><Link to='/admin/users'>Users</Link></li>
           <li><Link to='/admin/products'>Products</Link></li>
           <li><Link to='/admin/orders'>Orders</Link></li>
+          <li><Link to='/admin/categories'>Categories</Link></li>
         </ul>
       </div>
     </div>
