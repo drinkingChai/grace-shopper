@@ -48,7 +48,7 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
-      .catch(() => this.setState({ error: 'This item is no longer available.' }))
+      .catch((err) => this.setState({ error: err.message }))
   }
 
   render() {
@@ -67,12 +67,12 @@ class CheckOut extends Component {
                 <div className='panel-body'>
                   <div className='form-group'>
                     <label htmlFor='address'>Address</label>
-                    <input name='address' value={ address } onChange={ onChange } className='form-control'/>
+                    <input name='address' value={ address } onChange={ onChange } className='form-control' placeholder="* required" />
                   </div>
 
                   <div className='form-group'>
                     <label htmlFor='paymentInfo'>Payment Info</label>
-                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control'/>
+                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control' placeholder="* required" />
                   </div>
 
                   { guestCheckout ?
@@ -83,7 +83,8 @@ class CheckOut extends Component {
                   {
                     !error ? '' : <p className="alert alert-danger">{ error }</p>
                   }
-                  <button className={`${!error ? '' : 'disabled'} btn btn-success`}>Place order</button>
+
+                  <button className="btn btn-success">Place order</button>
                 </div>
               </form>
             </div>
