@@ -76,6 +76,8 @@ User.convertGuestoUser = function(id, email, name, password) {
 User.logIn = function(email, password, sessionCartItems) {
   return this.findOne({ where: { email, password, isDisabled: false } })
     .then(user => {
+      if (!user) return Promise.reject('Login error! unrecognzied username/password')
+
       return conn.models.order.findCart(user.id)
         .then(cart => {
           /* if there are items in session
