@@ -2,8 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { updateCartItem } from '../../store';
 
-const CartUpdateForm = ({ lineitem, updateCartItem }) => {
+const CartUpdateForm = ({ lineitem, updateCartItem, error }) => {
   const quantity = [...Array(lineitem.product.inventoryQuantity).keys()];
+
+  const onDelete = (ev) => {
+    ev.preventDefault();
+    updateCartItem(lineitem.product, 0);
+  };
+
+  const onUpdate = (ev) => {
+    ev.preventDefault();
+    updateCartItem(lineitem.product, lineitem.quantity);
+  };
 
   return (
     <li className="list-group-item">
@@ -23,20 +33,12 @@ const CartUpdateForm = ({ lineitem, updateCartItem }) => {
           }
         </select>
 
-        <button
-          onClick={(ev) => {
-            ev.preventDefault();
-            updateCartItem(lineitem.product, 0);
-          }}
-          className="btn btn-danger btn-sm pull-right">
+        <button onClick={ onDelete } className="btn btn-danger btn-sm pull-right">
             <span className="glyphicon glyphicon-trash" />
         </button>
         <button
           className="btn btn-info btn-sm pull-right"
-          onClick={(ev) => {
-            ev.preventDefault();
-            updateCartItem(lineitem.product, lineitem.quantity);
-          }}>Update</button>
+          onClick={ onUpdate }>Update</button>
       </form>
     </li>
   );
