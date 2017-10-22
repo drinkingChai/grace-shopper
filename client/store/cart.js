@@ -12,13 +12,13 @@ export const checkOut = (checkoutData) => dispatch =>
   axios.put('/api/orders/check-out', checkoutData)
     .then(res => res.data)
 
-const initialState = {}
+const initialState = {};
 
 const reducer = (state= initialState, action) =>{
 
   switch (action.type){
     default:
-      return state
+      return state;
   }
 }
 

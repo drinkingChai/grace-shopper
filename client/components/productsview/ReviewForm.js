@@ -37,7 +37,8 @@ class ReviewForm extends Component {
   onSubmitHandler(ev) {
     ev.preventDefault();
     
-    this.handleFormRestrictions()
+    this.handleFormRestrictions();
+    
     this.props.writeReview({
       productId: this.props.product.id,
       userId: this.props.state.currentUser.id,
@@ -46,7 +47,7 @@ class ReviewForm extends Component {
       rating: this.state.rating,
       date: this.state.date,
     })
-    .catch(err => console.log(err.message))
+    .catch(err => console.log(err.message));
 
     this.setState({
       rating: this.state.rating || 0,

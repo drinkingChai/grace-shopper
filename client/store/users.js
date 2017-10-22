@@ -3,8 +3,8 @@ import axios from 'axios';
 const GET_USERS = 'GET_USERS';
 const CLEAR_USERS = 'CLEAR_USERS';
 
-const getUsers = users => ({ type: GET_USERS, users })
-export const clearUsers = () => ({ type: CLEAR_USERS })
+const getUsers = users => ({ type: GET_USERS, users });
+export const clearUsers = () => ({ type: CLEAR_USERS });
 
 export const fetchUsers = () => dispatch =>
   axios.get('/api/users')
@@ -37,9 +37,9 @@ export const deleteUser = userId => dispatch =>
 const reducer = (users = [], action) => {
   switch (action.type) {
     case GET_USERS:
-      return action.users
+      return action.users;
     case CLEAR_USERS:
-      return []
+      return [];
     default:
       return users;
   }

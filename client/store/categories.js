@@ -18,11 +18,21 @@ export const fetchCategories = () => {
   }
 };
 
+export const createCategory = (categoryData) => dispatch => {
+  return axios.post('/api/categories', categoryData)
+    .then(res => res.data)
+    .then(() => dispatch(fetchCategories()))
+    .catch(err => console.log(err.message));
+}
+
+export const deleteCategory = categoryId => dispatch =>
+  axios.delete(`/api/categories/${categoryId}`)
+    .then(() => dispatch(fetchCategories()))
+
 const reducer = (categories = [], action) => {
   switch(action.type) {
     case GET_CATEGORIES:
       return action.categories;
-
     default:
       return categories;
   }

@@ -3,20 +3,20 @@ import {getOrders, fetchOrders} from './orders';
 import { fetchAllOrders } from './allOrders'
 import { clearUsers } from './users'
 
-const LOGIN = 'LOGIN'
-const LOGOUT = 'LOGOUT'
+const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 
-const login = user => ({ type: LOGIN, user })
-const logout = () => ({ type: LOGOUT })
+const login = user => ({ type: LOGIN, user });
+const logout = () => ({ type: LOGOUT });
 
 export const checkSession = () => dispatch =>
   axios.get('/api/sessions')
     .then(res => {
       dispatch(login(res.data))
-      if (res.data.isAdmin) return dispatch(fetchAllOrders())
+      if (res.data.isAdmin) return dispatch(fetchAllOrders());
     })
     .then(() => dispatch(fetchOrders()))
-    .catch(err => console.log(err.message))
+    .catch(err => console.log(err.message));
 
 export const loginUser = (email, password) => dispatch =>
   axios.put('/api/sessions', { email, password })
@@ -27,7 +27,7 @@ export const logoutUser = () => dispatch =>
     .then(() => dispatch(logout()))
     .then(() => dispatch(fetchOrders()))
     .then(() => dispatch(clearUsers()))
-    .catch(err => console.log(err.message))
+    .catch(err => console.log(err.message));
 
 export const registerUser = userData => dispatch =>
   axios.post('/api/users', userData)
@@ -38,19 +38,18 @@ export const registerGuest = guestData => dispatch =>
 export const updateAccount = userData => dispatch =>
   axios.put('/api/users', userData)
     .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message))
+    .catch(err => console.log(err.message));
 
 export const updateUserPassword = passwordData => dispatch =>
   axios.put('/api/users/update-password', passwordData)
     .then(() => dispatch(checkSession()))
 
-
 const reducer = (currentUser = {}, action) => {
   switch (action.type) {
     case LOGIN:
-      return action.user
+      return action.user;
     case LOGOUT:
-      return {}
+      return {};
     default:
       return currentUser;
   }

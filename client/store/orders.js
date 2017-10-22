@@ -25,8 +25,7 @@ export const fetchOrder = orderId => dispatch =>
 const reducer = (orders = [], action) => {
   switch (action.type) {
     case GET_ORDERS:
-      return action.orders
-
+      return action.orders;
     default:
       return orders;
   }
