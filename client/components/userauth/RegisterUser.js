@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { registerUser, loginUser } from '../../store';
+import { registerUser, registerGuest, loginUser, setErrorAndClear } from '../../store';
+
+import queryParser from '../helpers/queryParser'
 
 class RegisterUser extends Component {
   // can be presentational
@@ -12,7 +14,12 @@ class RegisterUser extends Component {
       password: ''
     };
     this.onChange = this.onChange.bind(this);
-    this.onLogin = this.onLogin.bind(this);
+    this.onRegister = this.onRegister.bind(this);
+  }
+
+  componentDidMount() {
+    const email = queryParser(this.props.location.search).get('email')
+    if (email) this.setState({ email, guest: true })
   }
 
   onChange(ev) {
@@ -20,21 +27,28 @@ class RegisterUser extends Component {
     this.setState({ [name]: value })
   }
 
-  onLogin(ev) {
+  onRegister(ev) {
     ev.preventDefault()
-    const { registerUser, loginUser, history } = this.props
-    const { email, password } = this.state
-    registerUser(this.state)
-      .then(() => loginUser(email, password))
-      .then(() => history.push('/account'))
+    const { registerUser, registerGuest, loginUser, setErrorAndClear, history } = this.props
+    const { email, password, guest } = this.state
+    guest ?
+      registerGuest(this.state)
+        .then(() => loginUser(email, password))
+        .then(() => history.push('/account'))
+        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
+      :
+      registerUser(this.state)
+        .then(() => loginUser(email, password))
+        .then(() => history.push('/account'))
+        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
   }
 
   render() {
     const { name, email, password } = this.state
-    const { onChange, onLogin } = this
+    const { onChange, onRegister } = this
 
     return (
-      <form onSubmit={ onLogin } className='well'>
+      <form onSubmit={ onRegister } className='well'>
         <h4>Account</h4>
         <div className="form-group">
           <label htmlFor='email'>Email</label>
@@ -57,6 +71,6 @@ class RegisterUser extends Component {
   }
 }
 
-const mapDispatch = { registerUser, loginUser }
+const mapDispatch = { registerUser, registerGuest, loginUser, setErrorAndClear }
 
 export default connect(null, mapDispatch)(RegisterUser)

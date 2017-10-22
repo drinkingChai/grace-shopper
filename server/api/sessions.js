@@ -31,7 +31,7 @@ router.put('/', (req, res, next) => {
       if (user.passwordChange) return Promise.reject('password change required')
       res.sendStatus(200)
     })
-    .catch(err => res.status(401).send(err))
+    .catch(err => res.status(401).send('Login error: incorrect email and/or password!'))
 })
 
 router.delete('/', (req, res, next) => {

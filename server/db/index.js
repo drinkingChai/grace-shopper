@@ -5,6 +5,7 @@ const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
 const Category = require('./Category');
+const Address = require('./Address');
 
 // Associations
 
@@ -18,6 +19,9 @@ LineItem.belongsTo(Product);
 Review.belongsTo(User);
 Review.belongsTo(Product);
 Product.hasMany(Review);
+
+Address.belongsTo(User);
+User.hasMany(Address);
 
 Product.belongsToMany(Category, { as: 'categories', through: 'catalog', foreignKey: 'productId' });
 Category.belongsToMany(Product, { as: 'products', through: 'catalog', foreignKey: 'categoryId' });

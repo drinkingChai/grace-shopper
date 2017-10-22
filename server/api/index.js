@@ -6,5 +6,6 @@ router.use('/users', require('./users'));
 router.use('/sessions', require('./sessions'));
 router.use('/reviews', require('./reviews'));
 router.use('/categories', require('./categories'));
+router.use('/addresses', require('./addresses'));
 
 module.exports = router;
