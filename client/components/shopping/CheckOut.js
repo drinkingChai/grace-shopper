@@ -12,6 +12,7 @@ class CheckOut extends Component {
     this.state = {
       address: '',
       paymentInfo: '',
+      error: ''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -35,7 +36,8 @@ class CheckOut extends Component {
   onSubmit(ev) {
     ev.preventDefault()
     const { checkOut, fetchOrders, fetchProducts, history } = this.props
-    const { guestCheckout } = this.state
+    const { guestCheckout, error } = this.state
+
     checkOut(this.state)
       .then(order => {
         history.push({
@@ -47,12 +49,12 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
-      .catch(err => console.log(err.message))
+      .catch((err) => this.setState({ error: err.message }))
   }
 
   render() {
     const { currentUser, order } = this.props
-    const { address, paymentInfo, email, guestCheckout } = this.state
+    const { address, paymentInfo, email, guestCheckout, error } = this.state
     const { onChange, onSubmit } = this
 
     return (
@@ -66,12 +68,12 @@ class CheckOut extends Component {
                 <div className='panel-body'>
                   <div className='form-group'>
                     <label htmlFor='address'>Address</label>
-                    <input name='address' value={ address } onChange={ onChange } className='form-control'/>
+                    <input name='address' value={ address } onChange={ onChange } className='form-control' placeholder="* required" />
                   </div>
 
                   <div className='form-group'>
                     <label htmlFor='paymentInfo'>Payment Info</label>
-                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control'/>
+                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control' placeholder="* required" />
                   </div>
 
                   { guestCheckout ?
@@ -79,8 +81,11 @@ class CheckOut extends Component {
                       <label htmlFor='email'>email</label>
                       <input name='email' value={ email } onChange={ onChange } className='form-control'/>
                     </div> : null }
+                  {
+                    !error ? '' : <p className="alert alert-danger">{ error }</p>
+                  }
 
-                  <button className='btn btn-default'>Place order</button>
+                  <button className="btn btn-success">Place order</button>
                 </div>
               </form>
             </div>
