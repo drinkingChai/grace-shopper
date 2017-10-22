@@ -39,6 +39,7 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-8">
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
+              <Route exact path="/categories" component={ ProductsPanel } />
               <Route exact path="/categories/:id" component={ ProductsPanel } />
               <Route exact path="/orders/:id" component = { Order } />
               <Route exact path="/checkout" component={ CheckOut } />
