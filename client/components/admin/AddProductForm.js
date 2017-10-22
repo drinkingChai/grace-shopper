@@ -51,7 +51,7 @@ class AddProductForm extends Component {
     return (
       <div className="panel panel-primary">
         <h3 className="panel-heading"> Add a Product </h3>
-        <form onSubmit={ onSubmitHandler } className="form panel-boy">
+        <form onSubmit={ onSubmitHandler } className="form panel-body">
 
         <label htmlFor="name"> Name </label>
         <input className="form-control" name="name" type="text" value = { name } onChange= { onChangeHandler }/>

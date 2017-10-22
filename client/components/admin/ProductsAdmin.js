@@ -27,10 +27,10 @@ class ProductsAdmin extends Component {
     return (
 
       <div>
-      {console.log(this.props.products)}
+
         <h3>Products </h3>
         <hr/>
-        <button onClick={ onSubmitHandler } className="btn btn-sucess"> Add Product </button>
+        <button onClick={ onSubmitHandler } className="btn btn-success"> Add Product </button>
         { this.state.formVisible ?
           <AddProductForm visible={this.state.formVisible}/> : ''
         }
