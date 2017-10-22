@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, NavLink } from 'react-router-dom';
-import { updateCartItem, fetchCategory } from '../../store';
+import { withRouter } from 'react-router-dom';
+import { fetchCategory } from '../../store';
 import Products from './Products';
 import SearchBar from '../SearchBar';
 import CategoryFilter from '../CategoryFilter';
@@ -10,9 +10,14 @@ class FilterableProductsPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchInput: '',
+      searchInput: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCategory, currentCategory } = this.props;
+    getCategory(currentCategory);
   }
 
   handleSearch(searchInput) {
@@ -23,8 +28,6 @@ class FilterableProductsPanel extends Component {
     const { handleSearch } = this;
     const { searchInput } = this.state;
     const { categories, products, currentCategory, handleFilter } = this.props;
-
-    console.log(this.props);
     // const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
     // const filteredProducts = selectedCategory ? selectedCategory.products : products;
 
@@ -46,6 +49,10 @@ const mapStateToProps = ({ categories, products, currentCategory }) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
+    getCategory(category) {
+      if (!category) category = ownProps.match.params.id;
+      dispatch(fetchCategory(category, ownProps.history));
+    },
     handleFilter(id) {
       dispatch(fetchCategory(id, ownProps.history));
     }
