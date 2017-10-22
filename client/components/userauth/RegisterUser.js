@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { registerUser, registerGuest, loginUser } from '../../store';
+import { registerUser, registerGuest, loginUser, setErrorAndClear } from '../../store';
 
 import queryParser from '../helpers/queryParser'
 
@@ -29,16 +29,18 @@ class RegisterUser extends Component {
 
   onRegister(ev) {
     ev.preventDefault()
-    const { registerUser, registerGuest, loginUser, history } = this.props
+    const { registerUser, registerGuest, loginUser, setErrorAndClear, history } = this.props
     const { email, password, guest } = this.state
     guest ?
       registerGuest(this.state)
         .then(() => loginUser(email, password))
         .then(() => history.push('/account'))
+        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
       :
       registerUser(this.state)
         .then(() => loginUser(email, password))
         .then(() => history.push('/account'))
+        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
   }
 
   render() {
@@ -69,6 +71,6 @@ class RegisterUser extends Component {
   }
 }
 
-const mapDispatch = { registerUser, registerGuest, loginUser }
+const mapDispatch = { registerUser, registerGuest, loginUser, setErrorAndClear }
 
 export default connect(null, mapDispatch)(RegisterUser)

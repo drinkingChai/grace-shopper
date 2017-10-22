@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { loginUser } from '../../store';
+import { loginUser, setErrorAndClear } from '../../store';
 
 class UserAuth extends Component {
   // can be presentational
@@ -24,6 +24,7 @@ class UserAuth extends Component {
       .then(() => this.props.history.goBack())
       .catch(err => {
         if (err.response.data == 'password change required') return this.props.history.push('/changepassword')
+        this.props.setErrorAndClear(err.response.data)
       })
   }
 
@@ -54,6 +55,6 @@ class UserAuth extends Component {
   }
 }
 
-const mapDispatch = { loginUser }
+const mapDispatch = { loginUser, setErrorAndClear }
 
 export default withRouter(connect(null, mapDispatch)(UserAuth))
