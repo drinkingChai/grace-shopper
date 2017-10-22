@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Address } = require('../db').models
+const { requireAdmin } = require('./middlewares')
 
 router.get('/all', requireAdmin, (req, res, next) => {
   Address.findAll()
