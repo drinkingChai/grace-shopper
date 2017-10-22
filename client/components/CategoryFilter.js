@@ -4,7 +4,7 @@ const CategoryFilter = ({ categories, handleFilter }) => {
   return (
     <form className="col-xs-6 col-sm-3">
       <select className="form-control" onChange={(ev) => handleFilter(ev.target.value)}>
-        <option key="0" value="0">All Categories</option>
+        <option key="0" value="">All Categories</option>
         {
           categories.map(category => <option key={ category.id } value={ category.id }>{ category.name }</option>)
         }
