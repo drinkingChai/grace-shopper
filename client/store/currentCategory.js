@@ -15,7 +15,7 @@ export const fetchCategory = (id, history) => {
       .then(res => res.data)
       .then(category => {
         dispatch(getCategory(category));
-        history.push(`/categories/${id}`);
+        if (history) history.push(`/categories/${id}`);
       })
   };
 };
