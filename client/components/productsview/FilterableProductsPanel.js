@@ -9,28 +9,33 @@ import CategoryFilter from '../CategoryFilter';
 class FilterableProductsPanel extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchInput: ''
-    };
+    this.state = { searchInput: '' };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
     const { getCategory, currentCategory } = this.props;
     getCategory(currentCategory);
+
+    let { search } = this.props.location;
+    if (search) {
+      search = search.slice(1).split('=')[1];
+      search = search.indexOf('%20') ? search.replace('%20', ' ') : '';
+      search = search.indexOf('-') ? search.replace('-', ' ') : '';
+      this.handleSearch(search);
+    }
   }
 
   handleSearch(searchInput) {
     this.setState({ searchInput });
+    this.props.history.push({ search: `?search=${ searchInput }` });
   }
 
   render() {
     const { handleSearch } = this;
     const { searchInput } = this.state;
-    const { categories, products, currentCategory } = this.props;
+    const { products, currentCategory } = this.props;
     const filteredProducts = currentCategory.products || products;
-    // const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
-    // const filteredProducts = selectedCategory ? selectedCategory.products : products;
 
     return (
       <div>
