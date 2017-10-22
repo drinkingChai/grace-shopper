@@ -46,14 +46,10 @@ const mapStateToProps = ({ categories, products, currentCategory }) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    updateCartItem() {
-      dispatch(updateCartItem);
-    },
     handleFilter(id) {
-      console.log(id)
       dispatch(fetchCategory(id, ownProps.history));
     }
   }
-};
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatch)(FilterableProductsPanel));
