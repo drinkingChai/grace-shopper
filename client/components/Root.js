@@ -4,7 +4,8 @@ import store, { checkSession, fetchProducts, fetchOrders, fetchCategories } from
 
 // Components
 import Nav from './Nav';
-import Product from './productsview/Product'
+import Product from './productsview/Product';
+import Products from './productsview/Products';
 import ProductsPanel from './productsview/FilterableProductsPanel';
 import Cart from './shopping/Cart';
 import CheckOut from './shopping/CheckOut'
@@ -37,6 +38,7 @@ export default class Root extends Component {
           <div className="col-xs-12 col-sm-8">
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
+              <Route path="/categories" component={ ProductsPanel } />
               <Route exact path="/orders/:id" component = { Order } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path="/orderconfirm" component={ OrderConfirmation } />
@@ -50,6 +52,7 @@ export default class Root extends Component {
           </div>
           <div className="col-xs-12 col-sm-4">
             <Route exact path="/" component={ Cart } />
+            <Route path="/categories" component={ Cart } />
             <Route exact path='/' render={ () =>
               <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> }/>
           </div>

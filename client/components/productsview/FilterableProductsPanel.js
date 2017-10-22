@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCartItem } from '../../store';
+import { withRouter, NavLink } from 'react-router-dom';
+import { updateCartItem, fetchCategory } from '../../store';
 import Products from './Products';
 import SearchBar from '../SearchBar';
 import CategoryFilter from '../CategoryFilter';
@@ -10,27 +11,22 @@ class FilterableProductsPanel extends Component {
     super(props);
     this.state = {
       searchInput: '',
-      activeCategory: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleFilter = this.handleFilter.bind(this);
   }
 
   handleSearch(searchInput) {
     this.setState({ searchInput });
   }
 
-  handleFilter(activeCategory) {
-    this.setState({ activeCategory });
-  }
-
   render() {
-    const { handleSearch, handleFilter } = this;
-    const { searchInput, activeCategory } = this.state;
-    const { categories, products } = this.props;
+    const { handleSearch } = this;
+    const { searchInput } = this.state;
+    const { categories, products, currentCategory, handleFilter } = this.props;
 
-    const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
-    const filteredProducts = selectedCategory.length ? selectedCategory[0].products : products;
+    console.log(this.props);
+    // const selectedCategory = categories.filter(cat => cat.id === activeCategory * 1);
+    // const filteredProducts = selectedCategory ? selectedCategory.products : products;
 
     return (
       <div>
@@ -38,16 +34,26 @@ class FilterableProductsPanel extends Component {
           <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />
           <CategoryFilter categories={ categories } handleFilter={ handleFilter } />
         </div>
-        <Products filteredProducts={ filteredProducts } searchInput={ searchInput } { ...this.props } />
+        <Products filteredProducts={ currentCategory.products || products } searchInput={ searchInput } { ...this.props } />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ categories, products }) => {
-  return { categories, products };
+const mapStateToProps = ({ categories, products, currentCategory }) => {
+  return { categories, products, currentCategory };
 };
 
-const mapDispatch = { updateCartItem };
+const mapDispatch = (dispatch, ownProps) => {
+  return {
+    updateCartItem() {
+      dispatch(updateCartItem);
+    },
+    handleFilter(id) {
+      console.log(id)
+      dispatch(fetchCategory(id, ownProps.history));
+    }
+  }
+};
 
-export default connect(mapStateToProps, mapDispatch)(FilterableProductsPanel);
+export default withRouter(connect(mapStateToProps, mapDispatch)(FilterableProductsPanel));
