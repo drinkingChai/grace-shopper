@@ -2,33 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReviewForm from './ReviewForm';
-import { updateProduct } from '../../store'
+import { updateProduct } from '../../store';
+import ProductEditForm from '../admin/ProductEditForm';
 
 class Product extends Component{
   constructor(props) {
     super(props);
     this.state = props.product;
     this.state.formVisible = false;
-    console.log('sate', this.state);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.editFormVisible = this.editFormVisible.bind(this);
-  }
 
-
-  onChangeHandler (ev) {
-    const { name, value } = ev.target;
-    this.setState({[name]: value});
-  }
-
-  onSubmitHandler(ev) {
-    ev.preventDefault();
-
-    this.props.updateProduct(this.state.id, {
-      name: this.state.name
-    })
-    .catch(err => console.log(err.message))
-    this.setState({formVisible: false})
   }
 
   editFormVisible(){
@@ -37,9 +20,9 @@ class Product extends Component{
 
 
   render() {
-    const product = this.state;
+    const product = this.state
     const {currentUser, categories} = this.props
-    const { onChangeHandler, onSubmitHandler, editFormVisible } = this
+    const { editFormVisible } = this
     if (!product) return <div>Product not found.</div>
 
     return (
@@ -61,21 +44,8 @@ class Product extends Component{
           { currentUser.isAdmin ?
             <div>
               <button className="btn" onClick={ editFormVisible}> Edit Product </button>
-
               { this.state.formVisible ?
-                <form onSubmit={ onSubmitHandler }>
-                  <input className="form-control" name="name" type="text" value = { product.name } onChange={onChangeHandler}/>
-                  <input className="form-control" name="description" type="text" value = { product.description } onChange={onChangeHandler}/>
-                  <input className="form-control" name="price" type="number" value = { product.price } onChange={onChangeHandler}/>
-                  <input className="form-control" name="inventoryQuantity" type="number" value = { product.inventoryQuantity } onChange={onChangeHandler}/>
-                    {/*
-                      categories.map(category =>
-                        <div><input onChange= { onChangeHandler } type="checkbox" name="categories" value={category.name}/> {category.name} </div>
-                      )
-
-                  */}
-                  <button className="btn btn-success"> Update </button>
-                </form> : ''
+                 <ProductEditForm product={ product } categories={categories} /> : ''
               }
               </div> : ''
             }
