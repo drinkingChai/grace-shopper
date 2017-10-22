@@ -50,7 +50,8 @@ const mapStateToProps = ({ categories, products, currentCategory }) => {
 const mapDispatch = (dispatch, ownProps) => {
   return {
     getCategory(category) {
-      if (!category) category = ownProps.match.params.id;
+      if (!category && !ownProps.match.params.id) return;
+      else if (!category) category = ownProps.match.params.id;
       dispatch(fetchCategory(category, ownProps.history));
     },
     handleFilter(id) {
