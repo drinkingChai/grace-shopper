@@ -20,6 +20,14 @@ export const fetchCategory = (id, history) => {
   };
 };
 
+export const updateCategory = (id, name) => {
+  return dispatch => {
+    return axios.put(`/api/categories/${id}`, name)
+      .then(res => res.data)
+      .then(category => dispatch(getCategory(category)))
+  };
+};
+
 export default function reducer(category = '', action) {
   switch(action.type) {
     case (GET_CATEGORY):

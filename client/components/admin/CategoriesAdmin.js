@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createCategory, deleteCategory, fetchCategory } from '../../store';
+import { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories } from '../../store';
 
 
 class CategoriesAdmin extends Component {
@@ -16,6 +16,7 @@ class CategoriesAdmin extends Component {
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.toggleCategoryEdit = this.toggleCategoryEdit.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
   toggleEditButton(ev){
@@ -26,7 +27,9 @@ class CategoriesAdmin extends Component {
   toggleCategoryEdit(ev) {
     ev.preventDefault();
     const { editForm } = this.state;
-    this.setState({ editForm: !editForm });
+    const { fetchCategory } = this.props;
+    this.setState({ editForm: true });
+    fetchCategory(ev.target.value);
   }
 
   handleDelete(id){
@@ -53,10 +56,16 @@ class CategoriesAdmin extends Component {
     this.setState({[name]: value});
   }
 
+  onCancel(ev) {
+   ev.preventDefault();
+   this.setState({ editForm: false });
+  }
+
   render() {
-    const { onChangeHandler, onSubmitHandler, toggleEditButton, handleDelete, toggleCategoryEdit } = this;
+    const { onChangeHandler, onSubmitHandler, toggleEditButton, handleDelete, toggleCategoryEdit, onCancel } = this;
     const { name, editForm } = this.state;
     const { categories } = this.props;
+
     return (
       <div>
         <div className="col-xs-12 col-sm-8">
@@ -88,7 +97,7 @@ class CategoriesAdmin extends Component {
                     <td> {category.id} </td>
                     <td> {category.name} </td>
                     <td>
-                      <button className="btn btn-xs btn-warning"
+                      <button value={ category.id } className="btn btn-xs btn-warning"
                         onClick={ toggleCategoryEdit }>Edit Category</button>
                     </td>
                     <td>
@@ -103,32 +112,26 @@ class CategoriesAdmin extends Component {
             </table>
         </div>
 
-        { !editForm ? null : <EditCategoryForm { ...this.props } /> }
+        { !editForm ? null : <EditCategoryForm { ...this.props } onCancel={ onCancel } /> }
       </div>
     )
   }
 }
 
-const EditCategoryForm = ({ categories, currentCategory, fetchCategory }) => {
+const EditCategoryForm = ({ currentCategory, updateCategory, onCancel }) => {
   const onChange = (ev) => {
     ev.preventDefault();
-    fetchCategory(ev.target.value);
+    updateCategory(currentCategory.id, { name: ev.target.name.value });
+    onCancel(ev);
   };
 
   return (
     <div className="col-xs-12 col-sm-4">
-      <form>
-        <h3>Edit Category</h3>
-        <select value={ currentCategory ? currentCategory.id : 0 } onChange={ onChange }>
-          <option key="0" value="">Select New Category</option>
-        {
-          categories.map(category => {
-            return (
-              <option key={ category.id } value={ category.id }>{ category.name }</option>
-            )
-          })
-        }
-        </select>
+      <form onSubmit={ onChange }>
+        <h3>Edit Category Name</h3>
+        <input name="name" className="form-control" placeholder="Enter new name" />
+        <button className="btn btn-xs btn-success" type="submit">Update</button>
+        <button className="btn btn-xs btn-default" onClick={ onCancel }>Cancel</button>
       </form>
     </div>
   )
@@ -138,7 +141,6 @@ const mapState = ({ categories, currentCategory }) => {
   return { categories, currentCategory };
 };
 
-const mapDispatch = { createCategory, deleteCategory, fetchCategory };
+const mapDispatch = { createCategory, deleteCategory, fetchCategory, updateCategory };
 
 export default connect(mapState, mapDispatch)(CategoriesAdmin);
-
