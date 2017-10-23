@@ -8,7 +8,7 @@ const Cart = ({ order }) => {
   const total = order.lineitems.reduce((total, item) => (total += item.product.price * item.quantity), 0);
 
   return (
-    <div className="panel panel-default">
+    <div className="panel panel-default cart">
       <h4 className="panel-heading">Your Cart</h4>
       <div className="panel-body">
         {

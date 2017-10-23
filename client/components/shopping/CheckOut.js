@@ -61,8 +61,6 @@ class CheckOut extends Component {
       <div>
         { order && order.lineitems.length ?
             <div>
-              <Cart />
-
               <form onSubmit={ onSubmit } className='panel panel-primary'>
                 <h4 className='panel-heading'>Check Out</h4>
                 <div className='panel-body'>
@@ -88,6 +86,7 @@ class CheckOut extends Component {
                   <button className="btn btn-success">Place order</button>
                 </div>
               </form>
+              <Cart />
             </div>
             :
             <div className='well'>
