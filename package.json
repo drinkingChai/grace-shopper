@@ -4,9 +4,9 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "postinstall": "webpack & node ./server/db/seed.js",
+    "postinstall": "webpack & node ./server/db/seed.js & node-sass scss/ -o public/",
     "start": "node server",
-    "start:dev": "webpack -w & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore client/ --ignore public/",
+    "start:dev": "webpack -w & node-sass -w scss/ -o public/ & DATABASE_URL=postgres://localhost/graceshopper SESSIONSECRET='zlenchwlo83yP)(@' nodemon server --ignore client/ --ignore public/",
     "seed": "DATABASE_URL=postgres://localhost/graceshopper node ./server/db/seed.js"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "express": "^4.16.1",
     "faker": "^4.1.0",
     "morgan": "^1.9.0",
+    "node-sass": "^4.5.3",
     "pg": "^7.3.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
