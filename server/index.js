@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('client-sessions');
 const db = require('./db');
 const passport = require('passport');
+const { User } = require('./db').models;
 
 const app = express();
 
@@ -22,6 +23,17 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.serializeUser(function(user, done){
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(userId, done){
+  User.findById(userId)
+    .then(function(user){
+      done(null, user);
+    });
+});
 
 app.use((req, res, next) => {
   req.session.cart = req.session.cart || db.models.Order.build();

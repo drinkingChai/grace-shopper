@@ -49,6 +49,22 @@ class UserAuth extends Component {
         </form>
 
         <Link to='/register'>Register</Link>
+        <div>
+            <div className="back-line">
+              <span>or</span>
+            </div>
+          </div>
+          <div>
+            <p>
+              <a
+                target="_self"
+                href="/api/auth/google"
+                className="btn btn-social btn-google">
+                <i className="fa fa-google" />
+                <span>Login with Google</span>
+              </a>
+            </p>
+          </div>
       </div>
     )
   }
