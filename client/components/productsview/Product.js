@@ -18,7 +18,6 @@ class Product extends Component{
     this.setState({formVisible: !this.state.formVisible})
   }
 
-
   render() {
     const product = this.state
     const {currentUser, categories} = this.props

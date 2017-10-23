@@ -19,6 +19,13 @@ class CategoriesAdmin extends Component {
     this.onCancel = this.onCancel.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { fetchCategories, currentCategory } = this.props;
+    if (currentCategory && nextProps.currentCategory.name !== currentCategory.name) {
+      fetchCategories();
+    }
+  }
+
   toggleEditButton(ev){
     ev.preventDefault();
     this.setState({ formVisible: !this.state.formVisible });
@@ -58,6 +65,8 @@ class CategoriesAdmin extends Component {
 
   onCancel(ev) {
    ev.preventDefault();
+   const { fetchCategory } = this.props;
+   fetchCategory(0);
    this.setState({ editForm: false });
   }
 
@@ -127,11 +136,14 @@ const EditCategoryForm = ({ currentCategory, updateCategory, onCancel }) => {
 
   return (
     <div className="col-xs-12 col-sm-4">
-      <form onSubmit={ onChange }>
-        <h3>Edit Category Name</h3>
-        <input name="name" className="form-control" placeholder="Enter new name" />
-        <button className="btn btn-xs btn-success" type="submit">Update</button>
-        <button className="btn btn-xs btn-default" onClick={ onCancel }>Cancel</button>
+      <form className="category-panel panel panel-default" onSubmit={ onChange }>
+        <h3 className="category-panel panel panel-heading">Edit Category Name</h3>
+        <div className="category-panel panel panel-body">
+          <p><strong>Category name:</strong> { currentCategory.name }</p>
+          <input name="name" className="form-control" placeholder="Enter new name" /><br />
+          <button className="btn btn-xs btn-success" type="submit">Update</button>
+          <button className="btn btn-xs btn-default" onClick={ onCancel }>Cancel</button>
+        </div>
       </form>
     </div>
   )
@@ -141,6 +153,6 @@ const mapState = ({ categories, currentCategory }) => {
   return { categories, currentCategory };
 };
 
-const mapDispatch = { createCategory, deleteCategory, fetchCategory, updateCategory };
+const mapDispatch = { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories };
 
 export default connect(mapState, mapDispatch)(CategoriesAdmin);
