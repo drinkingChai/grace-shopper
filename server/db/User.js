@@ -33,6 +33,9 @@ const User = conn.define('user', {
   passwordChange: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  googleId: {
+    type: Sequelize.STRING  
   }
 });
 

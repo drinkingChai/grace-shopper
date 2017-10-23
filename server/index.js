@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('client-sessions');
 const db = require('./db');
+const passport = require('passport');
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(session({
   secret: process.env.SESSIONSECRET,
   maxAge: 30 * 60 * 1000
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   req.session.cart = req.session.cart || db.models.Order.build();

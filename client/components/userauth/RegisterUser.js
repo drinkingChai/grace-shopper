@@ -34,25 +34,43 @@ class RegisterUser extends Component {
     const { onChange, onLogin } = this
 
     return (
-      <form onSubmit={ onLogin } className='well'>
-        <h4>Account</h4>
-        <div className="form-group">
-          <label htmlFor='email'>Email</label>
-          <input name='email' type='email' value={ email } onChange={ onChange } className="form-control" />
-        </div>
+      <div>
+        <form onSubmit={ onLogin } className='well'>
+          <h4>Account</h4>
+          <div className="form-group">
+            <label htmlFor='email'>Email</label>
+            <input name='email' type='email' value={ email } onChange={ onChange } className="form-control" />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor='name'>Name</label>
-          <input name='name' value={ name } onChange={ onChange } className="form-control" />
-        </div>
+          <div className="form-group">
+            <label htmlFor='name'>Name</label>
+            <input name='name' value={ name } onChange={ onChange } className="form-control" />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor='password'>Password</label>
-          <input name='password' type='password' value={ password } onChange={ onChange } className="form-control" />
-        </div>
+          <div className="form-group">
+            <label htmlFor='password'>Password</label>
+            <input name='password' type='password' value={ password } onChange={ onChange } className="form-control" />
+          </div>
 
-        <button className="btn btn-default">Register</button>
-      </form>
+          <button className="btn btn-default">Register</button>
+        </form>
+        <div>
+          <div className="back-line">
+            <span>OR</span>
+          </div>
+        </div>
+        <div>
+          <p>
+            <a
+              target="_self"
+              href="/api/auth/google"
+              className="btn btn-social btn-google">
+              <i className="fa fa-google" />
+              <span>{message} with Google</span>
+            </a>
+          </p>
+        </div>
+      </div>
     )
   }
 }
