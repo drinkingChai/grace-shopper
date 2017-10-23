@@ -15,8 +15,16 @@ export const fetchCategory = (id, history) => {
       .then(res => res.data)
       .then(category => {
         dispatch(getCategory(category));
-        history.push(`/categories/${id}`);
+        if (history) history.push(`/categories/${id}`);
       })
+  };
+};
+
+export const updateCategory = (id, name) => {
+  return dispatch => {
+    return axios.put(`/api/categories/${id}`, name)
+      .then(res => res.data)
+      .then(category => dispatch(getCategory(category)))
   };
 };
 
