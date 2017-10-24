@@ -36,7 +36,7 @@ export default class Root extends Component {
 
         <main className="container-fluid">
           <h1 className="headline">GRACESHOPPER</h1>
-          <div className="col-xs-12 col-sm-8">
+          {/*<div className="col-xs-12 col-sm-8">*/}
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
               <Route exact path="/categories" component={ ProductsPanel } />
@@ -50,19 +50,24 @@ export default class Root extends Component {
               <Route exact path="/account" component={ Account } />
               <Route exact path="/changepassword" component={ PasswordUpdateForm } />
               <Route path="/admin" component={ AdminPortal } />
+              <Route exact path="/products/:id" component = { Product } />
             </Switch>
-          </div>
+          {/*</div>*/}
+
+          {/*
           <div className="col-xs-12 col-sm-4">
             <Route exact path="/" component={ Cart } />
             <Route path="/categories" component={ Cart } />
             <Route path="/categories" render={ () =>
-              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
+                          <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
             <Route exact path="/" render={ () =>
-              <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
+                          <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
           </div>
           <div className="col-xs-12">
             <Route exact path="/products/:id" component = { Product } />
           </div>
+          */}
+
         </main>
       </div>
     )

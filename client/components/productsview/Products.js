@@ -5,7 +5,7 @@ import { updateCartItem } from '../../store';
 
 const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   return (
-    <ul className="list-unstyled">
+    <ul className="col-xs-12 col-sm-8 list-unstyled">
       {
         filteredProducts.map(product => {
           if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;

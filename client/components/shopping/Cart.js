@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import CartUpdateForm from './CartUpdateForm';
 
-const Cart = ({ order }) => {
+const Cart = ({ order, history }) => {
   if (!order) return <div />
 
   const total = order.lineitems.reduce((total, item) => (total += item.product.price * item.quantity), 0);
+  const { pathname } = history.location;
 
   return (
+    <div>
     <div className="panel panel-default cart">
       <h4 className="panel-heading">Your Cart</h4>
       <div className="panel-body">
@@ -19,7 +22,12 @@ const Cart = ({ order }) => {
         }
         <hr />
         <label>Subtotal:</label> ${ total }
+
+        {
+          pathname !== '/checkout' ? <Link to="/check-login"><button className="btn btn-primary btn-sm pull-right">Checkout</button></Link> : null
+        }
       </div>
+    </div>
     </div>
   )
 }
@@ -28,4 +36,4 @@ const mapStateToProps = ({ orders }) => ({
   order: orders.find(order => order.isCart === true)
 });
 
-export default connect(mapStateToProps)(Cart);
+export default withRouter(connect(mapStateToProps)(Cart));
