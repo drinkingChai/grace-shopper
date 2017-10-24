@@ -23,8 +23,11 @@ Product.hasMany(Review);
 Address.belongsTo(User);
 User.hasMany(Address);
 
-Product.belongsToMany(Category, { as: 'categories', through: 'catalog', foreignKey: 'productId' });
-Category.belongsToMany(Product, { as: 'products', through: 'catalog', foreignKey: 'categoryId' });
+// join table
+const Catalog = conn.define('catalog', { status: conn.Sequelize.DataTypes.STRING });
+
+Product.belongsToMany(Category, { through: 'Catalog' });
+Category.belongsToMany(Product, { through: 'Catalog' });
 
 const sync = () => conn.sync();
 
@@ -36,6 +39,7 @@ module.exports = {
     Order,
     LineItem,
     Review,
-    Category
+    Category,
+    Catalog
   }
 }

@@ -1,5 +1,5 @@
 const conn = require('./conn');
-const { User, Product, LineItem, Order, Category } = require('./index').models;
+const { User, Product, LineItem, Order, Category, Catalog } = require('./index').models;
 
 // const products = [
 //   { name: 'Headphones I', description: 'Very hip.', price: '300', inventoryQuantity: '50', photo: '../../public/images/headphones-1.jpg' },

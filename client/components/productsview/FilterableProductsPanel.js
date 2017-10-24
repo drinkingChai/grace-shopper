@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchCategory } from '../../store';
 import Products from './Products';
+import Cart from '../shopping/Cart';
 import SearchBar from '../SearchBar';
 import CategoryFilter from '../CategoryFilter';
 
@@ -38,12 +39,13 @@ class FilterableProductsPanel extends Component {
     const filteredProducts = currentCategory.products || products;
 
     return (
-      <div>
+      <div className="col-xs-12">
         <div className="row filter-row">
           <SearchBar searchInput={ searchInput } handleSearch={ handleSearch } />
           <CategoryFilter { ...this.props } />
         </div>
         <Products filteredProducts={ filteredProducts } searchInput={ searchInput } { ...this.props } />
+        <Cart />
       </div>
     );
   }

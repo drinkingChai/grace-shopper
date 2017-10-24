@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { checkOut, fetchOrders, fetchProducts } from '../../store';
 
@@ -49,7 +48,7 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
-      .catch((err) => this.setState({ error: err.message }))
+      .catch(err => this.setState({ error: err.message }))
   }
 
   render() {
@@ -58,11 +57,10 @@ class CheckOut extends Component {
     const { onChange, onSubmit } = this
 
     return (
-      <div>
+      <div className="col-xs-12 col-sm-8">
         { order && order.lineitems.length ?
             <div>
               <Cart />
-
               <form onSubmit={ onSubmit } className='panel panel-primary'>
                 <h4 className='panel-heading'>Check Out</h4>
                 <div className='panel-body'>
