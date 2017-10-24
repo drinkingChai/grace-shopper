@@ -1,5 +1,6 @@
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
+const Category = require('./Category');
 
 const Product = conn.define('product', {
   name: {
@@ -62,11 +63,22 @@ Product.updateInventoryBy = function(productId, quantity) {
 }
 
 Product.updateProduct = function(productId, productData) {
-  return Product.findById(productId)
-    .then(product => {
-      Object.assign(product, { ...productData })
+  let _categories;
+  return Category.findAll({
+    where:{
+      name: productData.prodCats
+    }
+  })
+  .then((categories)=> _categories = categories)
+  .then(()=> Product.findById(productId)
+  .then(product => {
+      Object.assign(product, { name: productData.name,
+                               description: productData.description,
+                               price: productData.price,
+                               inventoryQuantity: productData.inventoryQuantity })
+      product.setCategories(_categories)
       return product.save()
-    })
+    }))
 }
 
 Product.createProduct = function(params){

@@ -30,6 +30,10 @@ const User = conn.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  isGuest: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   passwordChange: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -53,7 +57,8 @@ User.createGuest = function(params) {
     /* create random password using faker
      * maybe a better randomizer later */
     password: faker.internet.password(),
-    name: 'guest'
+    name: 'guest',
+    isGueset: true
   })
 
   return user.save()
@@ -66,7 +71,7 @@ User.createGuest = function(params) {
 User.convertGuestoUser = function(id, email, name, password) {
   return this.findOne({ where: { id, email } })
     .then(user => {
-      Object.assign(user, { name, password })
+      Object.assign(user, { name, password, isGueset: false })
       return user.save()
     })
 }
@@ -74,6 +79,8 @@ User.convertGuestoUser = function(id, email, name, password) {
 User.logIn = function(email, password, sessionCartItems) {
   return this.findOne({ where: { email, password, isDisabled: false } })
     .then(user => {
+      if (!user) return Promise.reject('Login error! unrecognzied username/password')
+
       return conn.models.order.findCart(user.id)
         .then(cart => {
           /* if there are items in session

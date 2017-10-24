@@ -1,5 +1,5 @@
 const conn = require('./conn');
-const { User, Product, LineItem, Order, Category } = require('./index').models;
+const { User, Product, LineItem, Order, Category, Catalog } = require('./index').models;
 
 const users = [
   { name: 'Wasif', email: 'wasif@gs.com', password: 'foo', isAdmin: true },

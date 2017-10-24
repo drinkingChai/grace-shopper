@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { updateUserPassword } from '../../store';
+import { updateUserPassword, setErrorAndClear } from '../../store';
 
 class PasswordUpdateForm extends Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class PasswordUpdateForm extends Component {
       password1: '',
       password2: '',
       message: '',
-      error: ''
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -21,8 +20,9 @@ class PasswordUpdateForm extends Component {
 
   checkPasswordMatch() {
     const { password1, password2 } = this.state
+    const { setErrorAndClear } = this.props
     const error = password1 !== password2 ? "Passwords don't match!" : ''
-    this.setState(Object.assign(this.state, { error }))
+    setErrorAndClear(error)
   }
 
   onChangeHandler(ev) {
@@ -35,16 +35,17 @@ class PasswordUpdateForm extends Component {
     ev.preventDefault()
     // check if passwords are equal
     const { oldPassword, password1 } = this.state
-    this.props.updateUserPassword({ oldPassword, password: password1 })
-      .then(() => this.setState(Object.assign(this.state, { message: 'Password successfully updated!', error: '' })))
+    const { updateUserPassword, setErrorAndClear } = this.props
+    updateUserPassword({ oldPassword, password: password1 })
+      .then(() => this.setState(Object.assign(this.state, { message: 'Password successfully updated!' })))
       .catch(err => {
         const error = err.response.data.errors ? err.response.data.errors.map(e => e.message).join(', ') : err.response.data
-        this.setState(Object.assign(this.state, { error, message: '' }))
+        setErrorAndClear(error)
       })
   }
 
   render() {
-    const { oldPassword, password1, password2, message, error } = this.state
+    const { oldPassword, password1, password2, message } = this.state
     const { onChangeHandler, onSubmitHandler } = this
 
     return (
@@ -55,9 +56,6 @@ class PasswordUpdateForm extends Component {
               <div className="form-group">{ message }</div>
               <Link className='btn btn-default' to='/account'>Back to account</Link>
             </div> : null }
-
-        { error.length ?
-            <div className='alert alert-danger'>{ error }</div> : null }
 
         <div className="form-group">
           <label htmlFor='oldPassword'>Old password</label>
@@ -80,6 +78,6 @@ class PasswordUpdateForm extends Component {
   }
 }
 
-const mapDispatch = { updateUserPassword }
+const mapDispatch = { updateUserPassword, setErrorAndClear }
 
 export default connect(null, mapDispatch)(PasswordUpdateForm)

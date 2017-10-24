@@ -5,6 +5,7 @@ const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
 const Category = require('./Category');
+const Address = require('./Address');
 
 // Associations
 
@@ -19,8 +20,14 @@ Review.belongsTo(User);
 Review.belongsTo(Product);
 Product.hasMany(Review);
 
-Product.belongsToMany(Category, { as: 'categories', through: 'catalog', foreignKey: 'productId' });
-Category.belongsToMany(Product, { as: 'products', through: 'catalog', foreignKey: 'categoryId' });
+Address.belongsTo(User);
+User.hasMany(Address);
+
+// join table
+const Catalog = conn.define('catalog', { status: conn.Sequelize.DataTypes.STRING });
+
+Product.belongsToMany(Category, { through: 'Catalog' });
+Category.belongsToMany(Product, { through: 'Catalog' });
 
 const sync = () => conn.sync();
 
@@ -32,6 +39,7 @@ module.exports = {
     Order,
     LineItem,
     Review,
-    Category
+    Category,
+    Catalog
   }
 }

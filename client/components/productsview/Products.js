@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { updateCartItem } from '../../store';
 
 const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   return (
-    <ul className="list-unstyled">
+    <ul className="col-xs-12 col-sm-8 list-unstyled" id="products">
       {
         filteredProducts.map(product => {
           if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;
 
           return (
-            <li key={ product.id } className="col-xs-12 col-sm-6">
+            <li key={ product.id } className="col-xs-12 col-sm-10 col-md-6">
               <div className="panel panel-default product-panel">
                 <Link to ={`/products/${product.id}`}>
-                <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
+                <h2 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h2>
                 </Link>
                 <div className="panel-body">
-                  <img src={ product.photo } width="100%" height="225px"/>
+                  <img src={ product.photo } />
                   <p>{ product.description }</p>
                   <h5><label>Price:</label> ${ product.price }</h5>
                   {
@@ -37,4 +39,6 @@ const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
   )
 }
 
-export default Products;
+const mapDispatch = { updateCartItem };
+
+export default connect(null, mapDispatch)(Products);

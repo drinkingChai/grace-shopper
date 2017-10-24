@@ -9,47 +9,49 @@ const Order = ({ order, currentUser }) => {
   if (!order) return <div></div>
 
   return (
-    <div className="panel panel-default">
-      <div className="panel-heading">
-        <strong>Placed on:</strong> { formatDate(order.createdAt ) }
+    <div className="col-xs-12 col-sm-10">
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h4>Order Details</h4>
+          <strong>Placed on:</strong> { formatDate(order.createdAt ) }
 
-        { currentUser && currentUser.isAdmin ?
-          <OrderStatusUpdateForm order={ order }/> :
-          <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label> }
-      </div>
-
-      <div className="panel-body">
-        <div className='table-responsive'>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {
-                order.lineitems.map(lineitem => (
-                  <tr key={ lineitem.id }>
-                    <td><Link to={ `/products/${lineitem.product.id}` }>{ lineitem.product.name }</Link></td>
-                    <td>{ lineitem.quantity }</td>
-                    <td>${ lineitem.quantity * lineitem.price }</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+          { currentUser && currentUser.isAdmin ?
+            <OrderStatusUpdateForm order={ order } /> :
+            <label className='pull-right'><strong>Status:</strong> <kbd>{ order.status }</kbd></label> }
         </div>
-        <hr/>
-        <label>Total:</label> ${ order.lineitems.reduce((total, item)=> (total += item.product.price * item.quantity), 0) }
-      </div>
 
-      <div className='panel-footer'>
-        <label>Delivered to:</label>
-        <br/>
-        { order.address }
+        <div className="panel-body">
+          <div className='table-responsive'>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {
+                  order.lineitems.map(lineitem => (
+                    <tr key={ lineitem.id }>
+                      <td><Link to={ `/products/${lineitem.product.id}` }>{ lineitem.product.name }</Link></td>
+                      <td>{ lineitem.quantity }</td>
+                      <td>${ lineitem.quantity * lineitem.price }</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <hr/>
+          <label>Total:</label> ${ order.lineitems.reduce((total, item)=> (total += item.product.price * item.quantity), 0) }
+        </div>
+
+        <div className='panel-footer'>
+          <label>Delivery address:</label><br />
+          { order.address }
+        </div>
       </div>
     </div>
   )

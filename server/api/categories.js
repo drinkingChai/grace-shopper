@@ -35,7 +35,7 @@ router.put('/:id', (req, res, next) => {
       let updatedCat = Object.assign(category, req.body);
       return updatedCat.save();
     })
-    .then(() => res.sendStatus(202))
+    .then(category => res.status(202).send(category))
     .catch(next);
 });
 
