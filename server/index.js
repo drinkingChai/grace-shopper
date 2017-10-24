@@ -43,7 +43,9 @@ const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile,
   const googleId = profile.id;
   const name = profile.displayName;
   const email = profile.emails[0].value;
-  console.log("AM I RUNNING!")
+  
+  console.log("AM I RUNNING!");
+  
   User.find({ where: googleId })
     .then(user => user ? 
           done(null, user) :
