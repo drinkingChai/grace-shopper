@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const faker = require('faker')
 const conn = require('./conn');
 const Sequelize = conn.Sequelize;
@@ -22,6 +23,9 @@ const User = conn.define('user', {
     allowNull: false,
     validate: { notEmpty: { msg: 'Password is required.' }}
   },
+  salt: {
+    type: Sequelize.STRING
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -42,6 +46,25 @@ const User = conn.define('user', {
     type: Sequelize.STRING  
   }
 });
+
+
+User.generateSalt = function () {
+  return crypto.randomBytes(16).toString('base64')
+}
+
+User.encryptPassword = function (plainText, salt) {
+  return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex')
+}
+
+const setSaltAndPassword = user => {
+  if (user.changed('password')) {
+    user.salt = User.generateSalt()
+    user.password = User.encryptPassword(user.password, user.salt)
+  }
+}
+
+User.beforeCreate(setSaltAndPassword)
+User.beforeUpdate(setSaltAndPassword)
 
 User.createUser = function(params) {
   return User.create(params)
@@ -81,9 +104,11 @@ User.convertGuestoUser = function(id, email, name, password) {
 }
 
 User.logIn = function(email, password, sessionCartItems) {
-  return this.findOne({ where: { email, password, isDisabled: false } })
+  return this.findOne({ where: { email, isDisabled: false } })
     .then(user => {
-      if (!user) return Promise.reject('Login error! unrecognzied username/password')
+      if (!user || User.encryptPassword(password, user.salt) !== user.password) {
+        return Promise.reject('Login error! unrecognzied username/password')
+      }
 
       return conn.models.order.findCart(user.id)
         .then(cart => {
@@ -93,7 +118,7 @@ User.logIn = function(email, password, sessionCartItems) {
           if (!cart.lineitems.length) {
             return Promise.all(
               sessionCartItems.map(lineitem => (
-                conn.models.lineitem.create(Object.create({ orderId: cart.id }, lineitem ))))
+                conn.models.lineitem.create(Object.assign({ orderId: cart.id }, lineitem ))))
             )
           }
         })

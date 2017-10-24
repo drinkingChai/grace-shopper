@@ -31,7 +31,11 @@ router.put('/', (req, res, next) => {
       if (user.passwordChange) return Promise.reject('password change required')
       res.sendStatus(200)
     })
-    .catch(err => res.status(401).send(err))
+    .catch(err => {
+      console.log(err)
+      res.sendStatus(401)
+    })
+    //.catch(err => res.status(401).send(err))
 })
 
 router.delete('/', (req, res, next) => {
