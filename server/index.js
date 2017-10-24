@@ -91,9 +91,13 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 
 const { loadDataOnLogin } = require('./api/helpers/session-helper')
 app.get('/test', (req, res, next) => {
-  req.session = loadDataOnLogin(req.user)
-  delete req.user
-  res.redirect('/account')
+  const { email, password } = req.user
+  User.logIn(email, password, req.session.cart.lineitems)
+    .then(user => {
+      req.session = loadDataOnLogin(user)
+      delete req.user
+      res.redirect('/account')
+    })
 })
 
 /* ---- OAuth done ----*/
