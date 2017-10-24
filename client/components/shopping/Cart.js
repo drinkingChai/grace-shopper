@@ -10,7 +10,7 @@ const Cart = ({ order, history }) => {
   const { pathname } = history.location;
 
   return (
-    <div className="col-xs-12 col-lg-3 panel panel-default cart">
+    <div className="col-xs-12 col-sm-10 col-lg-3 panel panel-default cart">
       <h2 className="panel-heading">Your Cart</h2>
       <div className="panel-body">
         {
