@@ -9,9 +9,12 @@ class Product extends Component{
   constructor(props) {
     super(props);
     this.state = props.product;
-    this.state.formVisible = false;
     this.editFormVisible = this.editFormVisible.bind(this);
 
+  }
+
+  componentWillMount(){
+    this.setState({formVisible: false})
   }
 
   editFormVisible(){
@@ -26,9 +29,12 @@ class Product extends Component{
 
     return (
       <section>
+      {product.categories ?
+        <div>
         <div className="col-xs-12 col-sm-6">
           <img src={product.photo} width="100%" />
         </div>
+
         <div className="col-xs-12 col-sm-6">
           <h2>{ product.name }</h2>
           <h4>
@@ -44,7 +50,7 @@ class Product extends Component{
             <div>
               <button className="btn" onClick={ editFormVisible}> Edit Product </button>
               { this.state.formVisible ?
-                 <ProductEditForm product={ product } categories={categories} /> : ''
+                 <ProductEditForm product={ product } allCategories={categories} /> : ''
               }
               </div> : ''
             }
@@ -79,7 +85,7 @@ class Product extends Component{
               }
             </div>
           </div>
-        </div>
+        </div> </div> : 'Loading Product Info'}
       </section>
     );
   }

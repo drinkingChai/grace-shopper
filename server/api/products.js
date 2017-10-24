@@ -21,6 +21,7 @@ router.post('/', requireAdmin, (req, res, next) => {
 })
 
 router.put('/:id', requireAdmin, (req, res, next) => {
+  console.log('body', req.body);
   Product.updateProduct(req.params.id, req.body)
     .then(() => res.sendStatus(200))
     .catch(next)
