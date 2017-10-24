@@ -36,9 +36,7 @@ const CartUpdateForm = ({ lineitem, updateCartItem, error }) => {
         <button onClick={ onDelete } className="btn btn-danger btn-sm pull-right">
             <span className="glyphicon glyphicon-trash" />
         </button>
-        <button
-          className="btn btn-info btn-sm pull-right"
-          onClick={ onUpdate }>Update</button>
+        <button className="btn btn-info btn-sm pull-right" onClick={ onUpdate }>Update</button>
       </form>
     </li>
   );
