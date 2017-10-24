@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { checkOut, fetchOrders, fetchProducts } from '../../store';
 import { setErrorAndClear } from '../../store';
+
 import queryParser from '../helpers/queryParser'
 import Cart from './Cart'
 
@@ -33,7 +34,7 @@ class CheckOut extends Component {
 
   onSubmit(ev) {
     ev.preventDefault()
-    const { checkOut, fetchOrders, fetchProducts, history } = this.props
+    const { checkOut, fetchOrders, fetchProducts, history, setErrorAndClear } = this.props
     const { guestCheckout } = this.state
 
     checkOut(this.state)
@@ -47,11 +48,12 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
+      .catch(err => setErrorAndClear(err.message))
   }
 
   render() {
     const { currentUser, order } = this.props
-    const { address, paymentInfo, email, guestCheckout } = this.state
+    const { address, paymentInfo, email, guestCheckout, error } = this.state
     const { onChange, onSubmit } = this
 
     return (
@@ -77,6 +79,9 @@ class CheckOut extends Component {
                       <label htmlFor='email'>email</label>
                       <input name='email' value={ email } onChange={ onChange } className='form-control'/>
                     </div> : null }
+                  {
+                    !error ? '' : <p className="alert alert-danger">{ error }</p>
+                  }
 
                   <button className="btn btn-success">Place Order</button>
                 </div>

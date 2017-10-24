@@ -8,17 +8,24 @@ import ProductEditForm from '../admin/ProductEditForm';
 class Product extends Component{
   constructor(props) {
     super(props);
-    this.state = { product: props.product || null };
+    this.state = { product: props.product, formVisible: false }
+    console.log('sate', this.state);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.editFormVisible = this.editFormVisible.bind(this);
+  }
+
+  componentWillReceiveProps({ product }) {
+    this.setState({ product })
+  }
+
+  onChangeHandler (ev) {
+    const { name, value } = ev.target;
+    this.setState({[name]: value});
   }
 
   componentWillMount(){
     this.setState({formVisible: false})
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { product } = nextProps 
-    this.setState({ product })
   }
 
   editFormVisible(){

@@ -27,6 +27,7 @@ const Cart = ({ order, history }) => {
         }
       </div>
     </div>
+    </div>
   )
 }
 

@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use('/', express.static(path.join(__dirname, '..', 'node_modules')));
-
 app.use(session({
   cookieName: 'session',
   secret: process.env.SESSIONSECRET,
