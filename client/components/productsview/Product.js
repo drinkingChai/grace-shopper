@@ -11,7 +11,6 @@ class Product extends Component{
     this.state = { product: props.product, formVisible: false }
     console.log('sate', this.state);
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.editFormVisible = this.editFormVisible.bind(this);
   }
 
