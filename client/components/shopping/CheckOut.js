@@ -48,7 +48,7 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
-      .catch(err => setErrorAndClear(err.message))
+      .catch(setErrorAndClear)
   }
 
   render() {

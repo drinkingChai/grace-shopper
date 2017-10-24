@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { updateAccount } from '../../store';
+import { updateAccount, setErrorAndClear } from '../../store';
 
 class UserAuth extends Component {
   // can be converted to presentational
@@ -29,6 +29,7 @@ class UserAuth extends Component {
     ev.preventDefault()
     const { name, email } = this.state
     this.props.updateAccount({ name, email })
+    .catch(this.props.setErrorAndClear)
   }
 
   render() {
@@ -63,6 +64,6 @@ class UserAuth extends Component {
   }
 }
 
-const mapDispatch = { updateAccount }
+const mapDispatch = { updateAccount, setErrorAndClear }
 
 export default connect(null, mapDispatch)(UserAuth)

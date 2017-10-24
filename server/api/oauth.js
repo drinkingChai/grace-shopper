@@ -1,3 +1,4 @@
+const faker = require('faker')
 const router = require('express').Router()
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -19,10 +20,10 @@ passport.use(
   }, (token, refreshToken, profile, done)=> {
   
     let info = {
-        name: profile.displayName || 'bobby',
+        name: profile.displayName || 'Google User',
         email: profile.emails[0].value,
         googleId: profile.id,
-        password: 'password'
+        password: faker.internet.password()
     };
 
     User.findOne({ where: { googleId: profile.id} })

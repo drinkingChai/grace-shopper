@@ -14,7 +14,6 @@ export const fetchProducts = () => {
     return axios.get('/api/products')
       .then(res => res.data)
       .then(products => dispatch(getProducts(products)))
-      .catch(err => console.log(err.message))
   }
 };
 
@@ -23,8 +22,6 @@ export const createProd = (prodData) =>
     return axios.post('/api/products', prodData)
       .then(res => res.data)
       .then(() => dispatch(fetchProducts()))
-      // .then(product => dispatch(getProduct(product)))
-      .catch(err => console.log(err.message));
   }
 
 export const updateProduct = (productId, prodData) =>

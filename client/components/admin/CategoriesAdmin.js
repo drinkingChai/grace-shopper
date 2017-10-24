@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories } from '../../store';
+import { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories, setErrorAndClear } from '../../store';
 
 
 class CategoriesAdmin extends Component {
@@ -41,6 +41,7 @@ class CategoriesAdmin extends Component {
 
   handleDelete(id){
     this.props.deleteCategory(id)
+    .catch(this.props.setErrorAndClear)
   }
 
   onSubmitHandler(ev) {
@@ -49,7 +50,7 @@ class CategoriesAdmin extends Component {
     this.props.createCategory({
       name: this.state.name
     })
-    .catch(err => console.log(err.message))
+    .catch(this.props.setErrorAndClear)
 
     this.setState({
       name: '',
@@ -127,10 +128,11 @@ class CategoriesAdmin extends Component {
   }
 }
 
-const EditCategoryForm = ({ currentCategory, updateCategory, onCancel }) => {
+const EditCategoryForm = ({ currentCategory, updateCategory, onCancel, setErrorAndClear }) => {
   const onChange = (ev) => {
     ev.preventDefault();
-    updateCategory(currentCategory.id * 1, { name: ev.target.name.value });
+    updateCategory(currentCategory.id * 1, { name: ev.target.name.value })
+    .catch(setErrorAndClear)
     onCancel(ev);
   };
 
@@ -153,6 +155,6 @@ const mapState = ({ categories, currentCategory }) => {
   return { categories, currentCategory };
 };
 
-const mapDispatch = { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories };
+const mapDispatch = { createCategory, deleteCategory, fetchCategory, updateCategory, fetchCategories, setErrorAndClear };
 
 export default connect(mapState, mapDispatch)(CategoriesAdmin);
