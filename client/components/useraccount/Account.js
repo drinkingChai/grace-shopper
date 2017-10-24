@@ -21,12 +21,7 @@ const Account = ({ currentUser, orders }) => {
           </div>
         </div>
         <div className="col-xs-12 col-sm-8">
-          <div className="panel panel-default">
-            <h4 className="panel-heading">Orders</h4>
-            <div className="panel-body">
-              <Orders orders={ orders } />
-            </div>
-          </div>
+          <Orders orders={ orders } />
         </div>
       </div>
     </div>

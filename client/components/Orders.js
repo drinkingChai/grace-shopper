@@ -1,14 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import formatDate from './helpers/formatDate';
 
-import formatDate from './helpers/formatDate'
-
-export default function ({ orders }) {
-  orders = orders.filter(order => !order.isCart)
+const Orders = ({ orders }) => {
+  orders = orders.filter(order => !order.isCart);
 
   return (
-    <div className='panel panel-default'>
-      <div className='panel-body'>
+    <div className="panel panel-default">
+      <h4 className="panel-heading">Orders</h4>
+      <div className="panel-body">
         <div className='table-responsive'>
           <table className='table'>
             <thead>
@@ -16,19 +16,18 @@ export default function ({ orders }) {
                 <th>Order ID</th>
                 <th>Placed on</th>
                 <th>Status</th>
-                <th></th>
+                <th />
               </tr>
             </thead>
 
             <tbody>
               {
-                orders.map(order =>
-                  <tr key={ order.id }>
+                orders.map(order => (<tr key={ order.id }>
                     <td><Link to={ `/orders/${order.id}` }>{ order.id }</Link></td>
                     <td>{ formatDate(order.createdAt) }</td>
                     <td>{ order.status }</td>
                     <td><Link to={ `/orders/${order.id}` }>Details</Link></td>
-                  </tr>
+                  </tr>)
                 )
               }
             </tbody>
@@ -36,5 +35,7 @@ export default function ({ orders }) {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Orders;

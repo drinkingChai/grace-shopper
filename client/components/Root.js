@@ -44,6 +44,7 @@ export default class Root extends Component {
               <Route exact path="/login" component={ UAuth } />
               <Route exact path="/register" component={ RegisterUser } />
               <Route exact path="/account" component={ Account } />
+              <Route exact path="/orders" component={ Account } />
               <Route exact path="/changepassword" component={ PasswordUpdateForm } />
               <Route path="/admin" component={ AdminPortal } />
               <Route exact path="/products/:id" component = { Product } />
