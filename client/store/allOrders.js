@@ -8,7 +8,6 @@ const getAllOrders = allOrders => ({ type: GET_ALL_ORDERS, allOrders });
 export const fetchAllOrders = () => dispatch =>
   axios.get('/api/orders/all-orders')
     .then(res => dispatch(getAllOrders(res.data)))
-    .catch(err => console.log(err.message));
 
 export const changeOrderStatus = (id, status) => dispatch =>
   axios.put(`/api/orders/change-status/${id}`, status)

@@ -16,7 +16,6 @@ export const checkSession = () => dispatch =>
       if (res.data.isAdmin) return dispatch(fetchAllOrders());
     })
     .then(() => dispatch(fetchOrders()))
-    .catch(err => console.log(err.message));
 
 export const loginUser = (email, password) => dispatch =>
   axios.put('/api/sessions', { email, password })
@@ -27,7 +26,6 @@ export const logoutUser = () => dispatch =>
     .then(() => dispatch(logout()))
     .then(() => dispatch(fetchOrders()))
     .then(() => dispatch(clearUsers()))
-    .catch(err => console.log(err.message));
 
 export const registerUser = userData => dispatch =>
   axios.post('/api/users', userData)
@@ -38,7 +36,6 @@ export const registerGuest = guestData => dispatch =>
 export const updateAccount = userData => dispatch =>
   axios.put('/api/users', userData)
     .then(() => dispatch(checkSession()))
-    .catch(err => console.log(err.message));
 
 export const updateUserPassword = passwordData => dispatch =>
   axios.put('/api/users/update-password', passwordData)
