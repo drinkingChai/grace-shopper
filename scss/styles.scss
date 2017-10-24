@@ -1,8 +1,15 @@
+html,
 body {
   background-image: url('https://static.pexels.com/photos/139259/pexels-photo-139259.jpeg');
-  /*background-size: cover;*/
   font-family: 'Droid Sans', sans-serif;
   font-size: 14px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+header, nav, div {
+  box-sizing: border-box;
 }
 
 img {
@@ -25,6 +32,10 @@ h4 {
   font-weight: 700;
   margin: 0;
   padding-bottom: 1em;
+}
+
+#navbar {
+  height: 50px;
 }
 
 .headline {
