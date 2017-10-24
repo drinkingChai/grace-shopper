@@ -46,11 +46,10 @@ class Product extends Component{
         <div className="col-xs-12 col-sm-6">
           <h2>{ product.name }</h2>
           <br />
-          <h3><label>Category:&nbsp;</label>
-          {/* add some styling here for the categories*/}
+          <h3><label>Categories:&nbsp;</label>
            {
             product.categories.map(category =>
-              <Link to={ `/categories/${ category.id }` } key={ category.id }>{category.name}</Link>)
+              <Link to={ `/categories/${ category.id }` } key={ category.id }><p>{category.name}</p></Link>)
            }
           </h3>
           <h3 className="product-desc">{ product.description }</h3>
