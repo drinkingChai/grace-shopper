@@ -8,9 +8,10 @@ const Cart = ({ order, history }) => {
 
   const total = order.lineitems.reduce((total, item) => (total += item.product.price * item.quantity), 0);
   const { pathname } = history.location;
+  const setId = pathname == '/cart' ? 'bag' : 'cart';
 
   return (
-    <div className="col-xs-12 col-lg-3 panel panel-default cart">
+    <div className="col-xs-12 col-sm-8 col-lg-3 panel panel-default" id={ setId }>
       <h2 className="panel-heading">Your Cart</h2>
       <div className="panel-body">
         {

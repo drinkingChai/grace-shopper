@@ -57,6 +57,19 @@ h4 {
   padding-bottom: 1em;
 }
 
+#bag {
+  display: inline-block;
+  padding: 0;
+  margin-left: 20px;
+}
+
+#cart {
+  position: fixed;
+  right: 3%;
+  padding: 0;
+  max-width: 340px;
+}
+
 #guest {
   padding-left: $paddingLeft;
 }
@@ -65,6 +78,10 @@ h4 {
   height: 50px;
   margin-bottom: $marginBottom * 2;
   z-index: 20;
+}
+
+.navbar-bag {
+  display: none;
 }
 
 .menu {
@@ -94,11 +111,10 @@ h4 {
   margin: 0 30px $marginBottom * 2;
 }
 
-.cart {
-  position: fixed;
-  right: 3%;
-  padding: 0;
-  max-width: 340px;
+.cart-page {
+  position: relative;
+  display: block;
+  max-width: 100%;
 }
 
 .category-panel {
@@ -234,14 +250,31 @@ h4 {
     padding-left: 15px;
   }
 
-  .cart {
-    display: none;
+  #cart {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    margin: 1em auto;
   }
 
   // Navbar and Hamburger Menu
   #navbar {
     position: fixed;
     width: 100%;
+  }
+
+  .navbar-bag {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding-top: 20px;
+    padding-right: 20px;
+    width: 50px;
+    a {
+      color: #777;
+    }
   }
 
   .navbar-logo {

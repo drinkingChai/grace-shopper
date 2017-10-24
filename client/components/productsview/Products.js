@@ -14,7 +14,7 @@ const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
             <li key={ product.id } className="col-xs-12 col-sm-10 col-md-6">
               <div className="panel panel-default product-panel">
                 <Link to ={`/products/${product.id}`}>
-                <h2 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h2>
+                <h2 className="panel-heading">{ product.name }</h2>
                 </Link>
                 <div className="panel-body">
                   <img src={ product.photo } />

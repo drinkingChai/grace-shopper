@@ -29,6 +29,9 @@ class Nav extends Component {
             </Link>
             <Link className="navbar-brand navbar-logo" to="/">GraceShopper</Link>
           </div>
+          <div className="nav navbar-nav navbar-bag pull-right">
+            <Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" /></Link>
+          </div>
           <NavItems { ...this.props } className={ navBarClass } />
           <HamburgerMenu { ...this.props } { ...this.state } toggleMenu={ toggleMenu } />
         </div>
@@ -40,6 +43,9 @@ class Nav extends Component {
 export const NavItems = ({ currentUser, logoutUser, className }) => {
   return (
     <ul className={ className }>
+      <li id="bag-hide" className="navbar-bag">
+        <Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" /></Link>
+      </li>
       {
         currentUser.userId ?
         <li><Link to="/account">My Account</Link></li> :
