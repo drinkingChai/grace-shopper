@@ -38,22 +38,29 @@ const googleConfig = {
   callbackURL: process.env.GOOGLE_CALLBACK || secrets.GOOGLE_CALLBACK
 };
 
-//passport sends back 'done' method
+//passport sends back a 'done' method
 const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done)=> {
-  const googleId = profile.id;
-  const name = profile.displayName;
-  const email = profile.emails[0].value;
+//  const ggoogleId = profile.id;
+//  const gname = profile.displayName;
+//  const gemail = profile.emails[0].value;
   
-  console.log("AM I RUNNING!");
+  var info = {
+      name: profile.displayName || 'bobby',
+      email: profile.emails[0].value,
+      googleId: profile.id,
+      password: 'password'
+    }
   
-  User.find({ where: googleId })
+  console.log(info);
+  
+  User.find({ where: { googleId: profile.id} })
     .then(user => user ? 
           done(null, user) :
-          User.create({ name, email, googleId })
+          User.create(info)
             .then(user => done(null, user))
          )
     .catch(err=> {
-      console.log('WHERE ARE YOU', err);
+      console.log('ERROR FOR USER FIND:', err);
       done(err);
     });
 }); 
