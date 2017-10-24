@@ -10,9 +10,8 @@ const Cart = ({ order, history }) => {
   const { pathname } = history.location;
 
   return (
-    <div>
-    <div className="panel panel-default cart">
-      <h4 className="panel-heading">Your Cart</h4>
+    <div className="col-xs-12 col-sm-3 panel panel-default cart">
+      <h2 className="panel-heading">Your Cart</h2>
       <div className="panel-body">
         {
           !order.lineitems.length ? <p>No items in your cart.</p> :
@@ -27,7 +26,6 @@ const Cart = ({ order, history }) => {
           pathname !== '/checkout' ? <Link to="/check-login"><button className="btn btn-primary btn-sm pull-right">Checkout</button></Link> : null
         }
       </div>
-    </div>
     </div>
   )
 }

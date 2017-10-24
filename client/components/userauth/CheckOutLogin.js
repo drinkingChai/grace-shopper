@@ -10,7 +10,7 @@ const CheckLogin = ({ currentUser, ownProps }) => {
 
   return (
     <div className="well">
-      <div className='col-md-6'>
+      <div className="col-xs-12 col-md-6">
         <UAuth />
       </div>
       <div className='col-md-6'>

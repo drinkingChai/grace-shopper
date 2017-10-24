@@ -27,7 +27,7 @@ class Nav extends Component {
             <Link className="navbar-brand menu-icon" to="#" onClick={ toggleMenu }>
               <span className="glyphicon glyphicon-menu-hamburger" />
             </Link>
-            <Link className="navbar-brand" to="/">GraceShopper</Link>
+            <Link className="navbar-brand navbar-logo" to="/">GraceShopper</Link>
           </div>
           <NavItems { ...this.props } className={ navBarClass } />
           <HamburgerMenu { ...this.props } { ...this.state } toggleMenu={ toggleMenu } />
