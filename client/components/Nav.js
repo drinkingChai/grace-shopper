@@ -43,9 +43,6 @@ class Nav extends Component {
 export const NavItems = ({ currentUser, logoutUser, className }) => {
   return (
     <ul className={ className }>
-      <li id="bag-hide" className="navbar-bag">
-        <Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" /></Link>
-      </li>
       {
         currentUser.userId ?
         <li><Link to="/account">My Account</Link></li> :
