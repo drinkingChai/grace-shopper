@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../store';
-import HamburgerMenu from './HamburgerMenu';
 
 class Nav extends Component {
   constructor() {
@@ -18,7 +17,10 @@ class Nav extends Component {
 
   render() {
     const { toggleMenu } = this;
+    const { visible } = this.state;
     const navBarClass = 'nav navbar-nav pull-right navbar-hide';
+    const navbarOpen = visible ? 'menu open' : 'menu';
+    const hamburgerClass = 'menu-items list-unstyled';
 
     return (
       <nav className="navbar navbar-default" id="navbar">
@@ -33,7 +35,9 @@ class Nav extends Component {
             <Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" /></Link>
           </div>
           <NavItems { ...this.props } className={ navBarClass } />
-          <HamburgerMenu { ...this.props } { ...this.state } toggleMenu={ toggleMenu } />
+          <div className={ navbarOpen }>
+            <NavItems { ...this.props } className={ hamburgerClass } />
+          </div>
         </div>
       </nav>
       );
@@ -64,3 +68,6 @@ const mapState = ({ currentUser }) => ({ currentUser });
 const mapDispatch = { logoutUser };
 
 export default connect(mapState, mapDispatch)(Nav);
+
+
+// <HamburgerMenu { ...this.props } { ...this.state } toggleMenu={ toggleMenu } />
