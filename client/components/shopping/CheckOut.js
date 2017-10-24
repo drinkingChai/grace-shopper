@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { checkOut, fetchOrders, fetchProducts } from '../../store';
-
+import { setErrorAndClear } from '../../store';
 import queryParser from '../helpers/queryParser'
 import Cart from './Cart'
 
@@ -10,8 +10,7 @@ class CheckOut extends Component {
     super()
     this.state = {
       address: '',
-      paymentInfo: '',
-      error: ''
+      paymentInfo: ''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -35,7 +34,7 @@ class CheckOut extends Component {
   onSubmit(ev) {
     ev.preventDefault()
     const { checkOut, fetchOrders, fetchProducts, history } = this.props
-    const { guestCheckout, error } = this.state
+    const { guestCheckout } = this.state
 
     checkOut(this.state)
       .then(order => {
@@ -48,12 +47,11 @@ class CheckOut extends Component {
       })
       .then(() => fetchOrders())
       .then(() => fetchProducts())
-      .catch(err => this.setState({ error: err.message }))
   }
 
   render() {
     const { currentUser, order } = this.props
-    const { address, paymentInfo, email, guestCheckout, error } = this.state
+    const { address, paymentInfo, email, guestCheckout } = this.state
     const { onChange, onSubmit } = this
 
     return (
@@ -61,8 +59,8 @@ class CheckOut extends Component {
         { order && order.lineitems.length ?
             <div>
               <Cart />
-              <form onSubmit={ onSubmit } className='panel panel-primary'>
-                <h4 className='panel-heading'>Check Out</h4>
+              <form onSubmit={ onSubmit } className='panel panel-default'>
+                <h2 className='panel-heading'>Check Out</h2>
                 <div className='panel-body'>
                   <div className='form-group'>
                     <label htmlFor='address'>Address</label>
@@ -79,17 +77,14 @@ class CheckOut extends Component {
                       <label htmlFor='email'>email</label>
                       <input name='email' value={ email } onChange={ onChange } className='form-control'/>
                     </div> : null }
-                  {
-                    !error ? '' : <p className="alert alert-danger">{ error }</p>
-                  }
 
-                  <button className="btn btn-success">Place order</button>
+                  <button className="btn btn-success">Place Order</button>
                 </div>
               </form>
             </div>
             :
-            <div className='well'>
-              <h3>Your cart is empty! add some stuff!</h3>
+            <div className="well">
+              <h3>Your cart is empty!</h3>
             </div> }
       </div>
     )
@@ -100,6 +95,6 @@ const mapState = ({ currentUser, orders }) => ({
   currentUser,
   order: orders.find(order => order.isCart)
 })
-const mapDispatch = { checkOut, fetchOrders, fetchProducts }
+const mapDispatch = { checkOut, fetchOrders, fetchProducts, setErrorAndClear }
 
 export default connect(mapState, mapDispatch)(CheckOut)
