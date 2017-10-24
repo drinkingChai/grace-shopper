@@ -71,7 +71,7 @@ class CheckOut extends Component {
 
                   <div className='form-group'>
                     <label htmlFor='paymentInfo'>Payment Info</label>
-                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control' placeholder="* required" />
+                    <input name='paymentInfo' value={ paymentInfo } onChange={ onChange } className='form-control' placeholder="*" />
                   </div>
 
                   { guestCheckout ?

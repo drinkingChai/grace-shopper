@@ -46,9 +46,9 @@ class UserAuth extends Component {
             <label htmlFor="password">Password</label>
             <input name="password" type="password" value={ password } onChange={ onChange } className="form-control" />
           </div>
-          <button className="btn btn-default">Login</button> or <Link to="/register">Register</Link><a target="_self" href="/api/auth/google"><button className="btn btn-google googleLogin">Login with Google</button></a>
+          <button className="btn btn-default">Login</button> or <Link to="/register">Register</Link>
         </form>
-
+        <a target="_self" href="/api/auth/google"><button className="btn btn-google googleLogin">Login with Google</button></a>
       </div>
     );
   }
