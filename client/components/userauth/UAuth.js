@@ -35,7 +35,7 @@ class UserAuth extends Component {
     return (
       <div className="col-xs-12 col-sm-10 col-md-8">
         <form className="well" onSubmit={ onLogin }>
-          <h4>Account</h4>
+          <h3 className="subhead">Account</h3>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input name="email" type="email" value={ email } onChange={ onChange } className="form-control" />
