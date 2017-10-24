@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateProduct } from '../../store';
+import { updateProduct, updateCartItem } from '../../store';
 import ReviewForm from './ReviewForm';
 import ProductEditForm from '../admin/ProductEditForm';
 import Cart from '../shopping/Cart';
@@ -33,7 +33,7 @@ class Product extends Component{
 
   render() {
     const { product } = this.state
-    const {currentUser, categories} = this.props
+    const {currentUser, categories, updateCartItem } = this.props
     const { editFormVisible } = this
     if (!product) return <div>Product not found.</div>
 
@@ -64,9 +64,14 @@ class Product extends Component{
                 { this.state.formVisible ?
                    <ProductEditForm product={ product } allCategories={categories} /> : ''
                 }
-                </div> : ''
+                </div> :
+                <button className="btn btn-sm btn-primary"
+                  onClick={ () => updateCartItem(product, 1) }>
+                  Add to Cart <span className="glyphicon glyphicon-shopping-cart" />
+                </button>
               }
           </div>
+
           <div className="col-xs-10">
             <div>
               {
@@ -112,6 +117,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = { updateProduct }
+const mapDispatchToProps = { updateProduct, updateCartItem }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
