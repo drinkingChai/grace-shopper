@@ -35,6 +35,16 @@ class Product extends Component{
     const { product } = this.state
     const {currentUser, categories, updateCartItem } = this.props
     const { editFormVisible } = this
+    const divStyle = {
+     background: '#ff9933',
+     zIndex: '0',
+     position: 'relative',
+     top: '-1.55em',
+     left: '3.42em',
+     width: 2*1+'em',
+     height: '1em'
+    }
+    
     if (!product) return <div>Product not found.</div>
 
     return (
