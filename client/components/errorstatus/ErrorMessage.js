@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import errorParser from '../helpers/errorParser'
+
 const ErrorMessage = ({ error }) => {
   if (!error) return <span></span>
 
@@ -8,7 +10,7 @@ const ErrorMessage = ({ error }) => {
     <div className='navbar navbar-inverse navbar-fixed-top' style={{ backgroundColor: '#85144b' }}>
       <ul className='nav navbar-nav'>
         <li>
-          <a style={{ color: '#fff' }}>{ error }</a>
+          <a style={{ color: '#fff' }}>{ errorParser(error) }</a>
         </li>
       </ul>
     </div>

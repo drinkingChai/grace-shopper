@@ -38,10 +38,7 @@ class PasswordUpdateForm extends Component {
     const { updateUserPassword, setErrorAndClear } = this.props
     updateUserPassword({ oldPassword, password: password1 })
       .then(() => this.setState(Object.assign(this.state, { message: 'Password successfully updated!' })))
-      .catch(err => {
-        const error = err.response.data.errors ? err.response.data.errors.map(e => e.message).join(', ') : err.response.data
-        setErrorAndClear(error)
-      })
+      .catch(setErrorAndClear)
   }
 
   render() {

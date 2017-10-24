@@ -20,11 +20,12 @@ class UserAuth extends Component {
   onLogin(ev) {
     ev.preventDefault();
     const { email, password } = this.state;
+    const { setErrorAndClear } = this.props
     this.props.loginUser(email, password)
       .then(() => this.props.history.goBack())
       .catch(err => {
         if (err.response.data == 'password change required') return this.props.history.push('/changepassword');
-        this.props.setErrorAndClear(err.response.data);
+        setErrorAndClear(err);
       })
   }
 

@@ -35,12 +35,12 @@ class RegisterUser extends Component {
       registerGuest(this.state)
         .then(() => loginUser(email, password))
         .then(() => history.push('/account'))
-        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
+        .catch(setErrorAndClear)
       :
       registerUser(this.state)
         .then(() => loginUser(email, password))
         .then(() => history.push('/account'))
-        .catch(err => setErrorAndClear(err.response.data.errors.reduce((a, d) => (`${a} ${d.message}`), '')))
+        .catch(setErrorAndClear)
   }
 
   render() {
