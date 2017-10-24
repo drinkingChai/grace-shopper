@@ -32,7 +32,7 @@ export default class Root extends Component {
         <Route component={ Nav } />
 
         <main className="container-fluid">
-          <h1 className="headline">GRACESHOPPER</h1>
+          <h1 className="headline">RetroShopper</h1>
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
               <Route exact path="/cart" component={ Cart } />
