@@ -9,14 +9,11 @@ export const getOrders = (orders) => {
   }
 };
 
-export const fetchOrders = () => {
-  return dispatch => {
-    return axios.get('/api/orders')
-      .then(res => res.data)
-      .then(orders => dispatch(getOrders(orders)))
-      .catch(err => console.log(err.message))
-  }
-};
+export const fetchOrders = () => dispatch =>
+  axios.get('/api/orders')
+    .then(res => res.data)
+    .then(orders => dispatch(getOrders(orders)))
+    .catch(err => console.log(err.message))
 
 const reducer = (orders = [], action) => {
   switch (action.type) {

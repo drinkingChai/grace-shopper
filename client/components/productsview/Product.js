@@ -7,14 +7,16 @@ import { updateProduct } from '../../store'
 class Product extends Component{
   constructor(props) {
     super(props);
-    this.state = props.product;
-    this.state.formVisible = false;
+    this.state = { product: props.product, formVisible: false }
     console.log('sate', this.state);
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.editFormVisible = this.editFormVisible.bind(this);
   }
 
+  componentWillReceiveProps({ product }) {
+    this.setState({ product })
+  }
 
   onChangeHandler (ev) {
     const { name, value } = ev.target;
@@ -37,7 +39,7 @@ class Product extends Component{
 
 
   render() {
-    const product = this.state;
+    const { product } = this.state;
     const {currentUser, categories} = this.props
     const { onChangeHandler, onSubmitHandler, editFormVisible } = this
     if (!product) return <div>Product not found.</div>
