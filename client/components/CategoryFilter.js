@@ -6,7 +6,7 @@ const CategoryFilter = ({ currentCategory, categories, handleFilter }) => {
       <select
         className="form-control"
         onChange={(ev) => handleFilter(ev.target.value)}
-        value={ currentCategory.id }>
+        value={ currentCategory ? currentCategory.id : 0 }>
           <option key="0" value="0">All Categories</option>
           {
             categories.map(category =>

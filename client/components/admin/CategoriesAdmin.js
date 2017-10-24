@@ -130,7 +130,7 @@ class CategoriesAdmin extends Component {
 const EditCategoryForm = ({ currentCategory, updateCategory, onCancel }) => {
   const onChange = (ev) => {
     ev.preventDefault();
-    updateCategory(currentCategory.id, { name: ev.target.name.value });
+    updateCategory(currentCategory.id * 1, { name: ev.target.name.value });
     onCancel(ev);
   };
 

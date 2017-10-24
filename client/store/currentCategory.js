@@ -28,7 +28,7 @@ export const updateCategory = (id, name) => {
   };
 };
 
-export default function reducer(category = '', action) {
+export default function reducer(category = 0, action) {
   switch(action.type) {
     case (GET_CATEGORY):
       return action.category;

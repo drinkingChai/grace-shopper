@@ -16,7 +16,7 @@ class FilterableProductsPanel extends Component {
 
   componentDidMount() {
     const { getCategory, currentCategory } = this.props;
-    getCategory(currentCategory);
+    getCategory(currentCategory.id);
 
     let { search } = this.props.location;
     if (search) {
