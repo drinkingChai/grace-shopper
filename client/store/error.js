@@ -4,8 +4,8 @@ const CLEAR_ERROR_MESSAGE = 'CLEAR_ERROR_MESSAGE';
 export const setError = message => ({ type: SET_ERROR_MESSAGE, message })
 export const clearError = () => ({ type: CLEAR_ERROR_MESSAGE })
 
-export const setErrorAndClear = message => dispatch => {
-  setTimeout(() => dispatch(clearError()), 2500)
+export const setErrorAndClear = (message, timer = 3000) => dispatch => {
+  setTimeout(() => dispatch(clearError()), timer)
   dispatch(setError(message))
 }
 
