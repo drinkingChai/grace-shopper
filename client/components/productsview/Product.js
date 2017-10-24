@@ -8,10 +8,17 @@ import ProductEditForm from '../admin/ProductEditForm';
 class Product extends Component{
   constructor(props) {
     super(props);
-    this.state = props.product;
-    this.state.formVisible = false;
+    this.state = { product: props.product || null };
     this.editFormVisible = this.editFormVisible.bind(this);
+  }
 
+  componentWillMount(){
+    this.setState({formVisible: false})
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { product } = nextProps 
+    this.setState({ product })
   }
 
   editFormVisible(){
@@ -19,16 +26,18 @@ class Product extends Component{
   }
 
   render() {
-    const product = this.state
+    const { product } = this.state
     const {currentUser, categories} = this.props
     const { editFormVisible } = this
     if (!product) return <div>Product not found.</div>
 
     return (
       <section>
+        <div>
         <div className="col-xs-12 col-sm-6">
           <img src={product.photo} width="100%" />
         </div>
+
         <div className="col-xs-12 col-sm-6">
           <h2>{ product.name }</h2>
           <h4>
@@ -44,7 +53,7 @@ class Product extends Component{
             <div>
               <button className="btn" onClick={ editFormVisible}> Edit Product </button>
               { this.state.formVisible ?
-                 <ProductEditForm product={ product } categories={categories} /> : ''
+                 <ProductEditForm product={ product } allCategories={categories} /> : ''
               }
               </div> : ''
             }
@@ -79,7 +88,7 @@ class Product extends Component{
               }
             </div>
           </div>
-        </div>
+        </div> </div>
       </section>
     );
   }

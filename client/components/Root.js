@@ -38,6 +38,7 @@ export default class Root extends Component {
               <Route exact path="/categories/:id" component={ ProductsPanel } />
               <Route exact path="/products" component={ ProductsPanel } />
               <Route exact path="/orders/:id" component = { Order } />
+              <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path="/orderconfirm" component={ OrderConfirmation } />
               <Route exact path="/check-login" component={ CheckLogin } />
