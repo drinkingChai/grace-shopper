@@ -44,6 +44,10 @@ h4 {
   display: none;
 }
 
+.menu-open {
+  display: none;
+}
+
 .menu-icon {
   display: none;
 }
@@ -163,7 +167,6 @@ h4 {
     width: 200px;
     background-color: #f8f8f8;
     opacity: 0.95;
-    margin-top: 50px;
     /* move drawer off canvas */
     transform: translate(-300px, 0);
       -webkit-transform: translate(-300px, 0);
@@ -172,8 +175,9 @@ h4 {
   }
 
   .menu.open {
-    -webkit-transform: translate(0, 0);
+    left: 0;
     transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     transition: transform 0.3s ease;
   }
 

@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../store';
 import HamburgerMenu from './HamburgerMenu';
 
-const Nav = (props) => {
-  return (
-  <nav className="navbar navbar-default" id="navbar">
-    <div className="container-fluid">
-      <div className="navbar-header">
-        <Link className="navbar-brand menu-icon" to="#" onClick={ props.toggleMenu }>
-          <span className="glyphicon glyphicon-menu-hamburger" />
-        </Link>
-        <Link className="navbar-brand" to="/">GraceShopper</Link>
-      </div>
-      <NavItems { ...props } className={ 'nav navbar-nav pull-right navbar-hide' } />
-      <HamburgerMenu { ...props } />
-    </div>
-  </nav>
-  );
-};
+class Nav extends Component {
+  constructor() {
+    super();
+    this.state = { visible: false };
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
+  toggleMenu(ev) {
+    ev.preventDefault();
+    this.setState({ visible: !this.state.visible });
+  }
+
+  render() {
+    const { toggleMenu } = this;
+    const navBarClass = 'nav navbar-nav pull-right navbar-hide';
+
+    return (
+      <nav className="navbar navbar-default" id="navbar">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <Link className="navbar-brand menu-icon" to="#" onClick={ toggleMenu }>
+              <span className="glyphicon glyphicon-menu-hamburger" />
+            </Link>
+            <Link className="navbar-brand" to="/">GraceShopper</Link>
+          </div>
+          <NavItems { ...this.props } className={ navBarClass } />
+          <HamburgerMenu { ...this.props } { ...this.state } toggleMenu={ toggleMenu } />
+        </div>
+      </nav>
+      );
+  }
+}
 
 export const NavItems = ({ currentUser, logoutUser, className }) => {
   return (

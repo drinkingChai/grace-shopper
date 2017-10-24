@@ -1,32 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { logoutUser } from '../store';
 import { NavItems } from './Nav';
 
-class HamburgerMenu extends Component {
-  constructor() {
-    super();
-    this.state = { visible: false };
-    this.toggleMenu = this.toggleMenu.bind(this);
-  }
+const HamburgerMenu = (props) => {
+  const { visible } = props;
+  const navbarOpen = visible ? 'menu open' : 'menu';
+  const hamburgerClass = 'menu-items list-unstyled';
 
-  toggleMenu(ev) {
-    ev.preventDefault();
-    this.setState({ visible: !this.state.visible });
-  }
-
-  render() {
-    const { toggleMenu } = this;
-    const { visible } = this.state;
-    const { currentUser, logoutUser } = this.props;
-    const navbarOpen = visible ? 'menu open' : 'menu';
-
-    return (
-      <div className={ navbarOpen }>
-        <NavItems { ...this.props } className={ 'menu-items list-unstyled' } />
-      </div>
-    );
-  }
+  return (
+    <div className={ navbarOpen }>
+      <NavItems { ...props } className={ hamburgerClass } />
+    </div>
+  );
 }
 
 const mapState = ({ currentUser }) => ({ currentUser });
