@@ -19,7 +19,7 @@ passport.use(
   }, (token, refreshToken, profile, done)=> {
   
     let info = {
-        name: profile.displayName || 'bobby',
+        name: profile.displayName || 'Google User',
         email: profile.emails[0].value,
         googleId: profile.id,
         password: 'password'
