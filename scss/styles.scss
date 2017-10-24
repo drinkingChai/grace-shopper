@@ -1,42 +1,69 @@
+$headline-font: 'Poiret One', cursive;
+$text-font: 'Droid Sans', sans-serif;
+$marginBottom: 1em;
+$paddingLeft: 15px;
+$bold: 700;
+$fontSize: 14px;
+
 html,
 body {
   background-image: url('https://static.pexels.com/photos/139259/pexels-photo-139259.jpeg');
-  font-family: 'Droid Sans', sans-serif;
-  font-size: 14px;
+  font-family: $text-font;
+  font-size: $fontSize;
   height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
-header, nav, div {
-  box-sizing: border-box;
+main {
+  max-width: 1440px;
 }
 
 img {
   width: 100%;
-  margin-bottom: 1em;
+  margin-bottom: $marginBottom;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
 }
 
 h1 {
-  font-family: 'Poiret One', cursive;
-  font-size: 40px;
+  font-family: $headline-font;
+  font-size: 3em;
+}
+
+h2 {
+  font-family: $headline-font;
+  font-size: 1.5em;
+  font-weight: $bold;
+  text-transform: uppercase;
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 1.125em;
   margin: 0;
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 1em;
   font-weight: 700;
   margin: 0;
   padding-bottom: 1em;
 }
 
+#guest {
+  padding-left: $paddingLeft;
+}
+
 #navbar {
   height: 50px;
-  margin-bottom: 0;
+  margin-bottom: $marginBottom * 2;
   z-index: 20;
 }
 
@@ -53,23 +80,25 @@ h4 {
 }
 
 .headline {
-  margin-bottom: 30px;
+  margin-bottom: $marginBottom;
   margin-left: 0.5em;
 }
 
 .subhead {
-  margin-bottom: 1.5em;
+  margin-bottom: $marginBottom;
   font-weight: 700;
 }
 
 .filter-row {
   display: block;
-  margin: 2em 20px;
+  margin: 0 30px $marginBottom * 2;
 }
 
 .cart {
   position: fixed;
-  right: 5%;
+  right: 3%;
+  padding: 0;
+  max-width: 340px;
 }
 
 .category-panel {
@@ -142,18 +171,55 @@ h4 {
   display: none;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (min-width: 1200px) {
+  .cart {
+    right: 8%;
+    max-width: auto;
+  }
+
+  .product-panel {
+    height: 450px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .product-panel {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #products {
+    li {
+      padding-left: 0;
+    }
+  }
+
+  .headline {
+    margin: 70px auto $marginBottom;
+  }
+
+  // Filter and Search
+  .filter-row {
+    margin: 0 auto $marginBottom;
+  }
+
+  .search-bar {
+    padding-left: 15px;
+  }
+
   .cart {
     display: none;
   }
 
-  .headline {
-    margin: 70px auto 0;
-  }
-
+  // Navbar and Hamburger Menu
   #navbar {
     position: fixed;
     width: 100%;
+  }
+
+  .navbar-logo {
+    padding-left: 0;
   }
 
   .menu-icon {
@@ -192,5 +258,12 @@ h4 {
 
   .navbar-hide {
     display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .headline {
+    margin-left: 20px;
+    margin-bottom: 30px;
   }
 }
