@@ -4,10 +4,7 @@ const { Review } = require('../db').models
 router.post('/:productId', (req, res, next) => {
   Review.addReview(req.params.productId, req.session.userId, req.body)
     .then(review => res.send(review))
-    .catch(err => {
-      console.log(`HERE BE ERRORS ${err}`);
-      res.send(err);
-    });
+    .catch(err => console.log(`HERE BE ERRORS ${err}`));
 })
 
 router.put('/:id', (req, res, next) => {

@@ -54,22 +54,6 @@ class RegisterUser extends Component {
 
           <button className="btn btn-default">Register</button>
         </form>
-        <div>
-          <div className="back-line">
-            <span>OR</span>
-          </div>
-        </div>
-        <div>
-          <p>
-            <a
-              target="_self"
-              href="/api/auth/google"
-              className="btn btn-social btn-google">
-              <i className="fa fa-google" />
-              <span>{message} with Google</span>
-            </a>
-          </p>
-        </div>
       </div>
     )
   }

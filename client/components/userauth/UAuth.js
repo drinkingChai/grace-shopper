@@ -55,7 +55,7 @@ class UserAuth extends Component {
             </div>
           </div>
           <div>
-              <a target="_self" href="/api/auth/google">Login with Google</a>
+              <a target="_self" href="/auth/google">Login with Google</a>
           </div>
       </div>
     )

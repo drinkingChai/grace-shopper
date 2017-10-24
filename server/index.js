@@ -6,6 +6,9 @@ const session = require('client-sessions');
 const db = require('./db');
 const passport = require('passport');
 const { User } = require('./db').models;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const secrets = require('./secrets');
+
 
 const app = express();
 
@@ -21,19 +24,60 @@ app.use(session({
   maxAge: 30 * 60 * 1000
 }));
 
+/* ------ OAuth ------- */
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done){
+app.get('/auth/google', passport.authenticate('google', {
+	scope: 'email'
+}));
+
+const googleConfig = {
+  clientID: process.env.GOOGLE_CLIENT_ID || secrets.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || secrets.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_CALLBACK || secrets.GOOGLE_CALLBACK
+};
+
+//passport sends back 'done' method
+const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done)=> {
+  const googleId = profile.id;
+  const name = profile.displayName;
+  const email = profile.emails[0].value;
+  console.log("AM I RUNNING!")
+  User.find({ where: googleId })
+    .then(user => user ? 
+          done(null, user) :
+          User.create({ name, email, googleId })
+            .then(user => done(null, user))
+         )
+    .catch(err=> {
+      console.log('WHERE ARE YOU', err);
+      done(err);
+    });
+}); 
+
+passport.use(strategy);
+
+passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(userId, done){
-  User.findById(userId)
-    .then(function(user){
-      done(null, user);
-    });
+passport.deserializeUser(function (id, done) {
+  User.findById(id)
+  .then(function (user) {
+    done(null, user);
+  })
+  .catch(function (err) {
+    done(err);
+  });
 });
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
+/* ---- OAuth done ----*/
 
 app.use((req, res, next) => {
   req.session.cart = req.session.cart || db.models.Order.build();

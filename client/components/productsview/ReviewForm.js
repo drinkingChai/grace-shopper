@@ -17,6 +17,7 @@ class ReviewForm extends Component {
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.handleFormRestrictions = this.handleFormRestrictions.bind(this);
+    
   }
 
   onChangeHandler(ev) {
@@ -48,7 +49,7 @@ class ReviewForm extends Component {
       date: this.state.date,
     })
     .catch(err => console.log(err.message));
-
+    
     this.setState({
       rating: this.state.rating || 0,
       title: this.state.counter >= 50 ? '' : this.state.title,
@@ -62,7 +63,17 @@ class ReviewForm extends Component {
     const {onChangeHandler, onSubmitHandler} = this
     const { blurb, title, date, counter, error } = this.state
     const rating = [...Array(6).keys()];
+    const { orders } = this.props.state
+    let filteredOrder = orders.filter( order => {
+      console.log('order id', order.id);
+      console.log('product id off of this', this.props.product.id);
+      return order.status === 'CREATED' && order.id === this.props.product.id;
+    });
+    console.log('ASDFADF', this.props.state);
+    console.log('ORDERERERERE', filteredOrder)
     return (
+      orders.length === 1 ? <div></div> :
+      
       <div className="panel panel-primary">
         <h3 className="panel-heading">Write a Review</h3>
         <form onSubmit={ onSubmitHandler } className="form panel-body">
