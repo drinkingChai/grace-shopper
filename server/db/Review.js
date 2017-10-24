@@ -32,7 +32,7 @@ Review.addReview = function(productId, userId, content) {
          content.title = `${content.blurb.slice(0, 15).trim()}...`
       }
       content.date = new Date();
-      return Review.create({ productId, userId, ...content });
+      return Review.create(Object.assign({}, { productId, userId }, content));
     })
 }
 
@@ -40,7 +40,7 @@ Review.updateReview = function(id, userId, content) {
   return Review.findOne({ where: { id, userId } })
     .then(review => {
       content.date = new Date();
-      Object.assign(review, { ...content });
+      Object.assign(review, content);
       return review.save();
     })
 }

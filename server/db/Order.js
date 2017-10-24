@@ -110,7 +110,7 @@ Order.verifyPurchase = function(userId, productId) {
 
       // flatten
       let purchases = []
-      orders.forEach(order => purchases = [ ...purchases, ...order.lineitems ])
+      orders.forEach(order => purchases.push(order.lineitems))
 
       // search
       return purchases.find(lineitem => lineitem.productId == productId)
@@ -164,7 +164,7 @@ Order.findAllOrders = function() {
 Order.changeStatus = function(orderId, status) {
   return this.findById(orderId)
     .then(order => {
-      Object.assign(order, { ...status })
+      Object.assign(order, status)
       return order.save()
     })
 }
