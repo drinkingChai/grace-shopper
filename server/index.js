@@ -7,7 +7,7 @@ const db = require('./db');
 const passport = require('passport');
 const { User } = require('./db').models;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const secrets = require('./secrets');
+//const secrets = require('./secrets');
 
 
 const app = express();
@@ -85,9 +85,16 @@ passport.deserializeUser((id, done)=> {
 });
 
 app.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect: '/account',
+  successRedirect: '/test',
   failureRedirect: '/'
 }));
+
+const { loadDataOnLogin } = require('./api/helpers/session-helper')
+app.get('/test', (req, res, next) => {
+  req.session = loadDataOnLogin(req.user)
+  delete req.user
+  res.redirect('/account')
+})
 
 /* ---- OAuth done ----*/
 
