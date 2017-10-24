@@ -6,9 +6,9 @@ const { User } = require('../../db').models;
 module.exports = router;
 
 const googleConfig = {
-  clientID: process.env.GOOGLE_CLIENT_ID || '68973371542-57pafacf42tacirqoakn7mhf0e3du6nj.apps.googleusercontent.com',
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'ty_hCuM_Hd_xSjQXqX0ZRB7f',
-  callbackURL: process.env.GOOGLE_CALLBACK || '/'
+  clientID: process.env.GOOGLE_CLIENT_ID || require('./secrets').GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || require('./secrets').GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_CALLBACK || require('./secrets').GOOGLE_CALLBACK
 };
 
 //passport sends back 'done' method
