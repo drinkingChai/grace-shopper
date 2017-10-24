@@ -11,10 +11,10 @@ const Products = ({ filteredProducts, updateCartItem, searchInput }) => {
           if (product.name.toLowerCase().indexOf(searchInput.toLowerCase()) === -1) return;
 
           return (
-            <li key={ product.id } className="col-xs-12 col-sm-6">
+            <li key={ product.id } className="col-xs-12 col-sm-10 col-md-6">
               <div className="panel panel-default product-panel">
                 <Link to ={`/products/${product.id}`}>
-                <h3 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h3>
+                <h2 className="panel-heading" style={{ margin: 0 }}>{ product.name }</h2>
                 </Link>
                 <div className="panel-body">
                   <img src={ product.photo } />

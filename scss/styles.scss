@@ -16,6 +16,10 @@ body {
   width: 100%;
 }
 
+main {
+  max-width: 1440px;
+}
+
 img {
   width: 100%;
   margin-bottom: $marginBottom;
@@ -92,8 +96,9 @@ h4 {
 
 .cart {
   position: fixed;
-  right: 5%;
+  right: 3%;
   padding: 0;
+  max-width: 340px;
 }
 
 .category-panel {
@@ -166,15 +171,28 @@ h4 {
   display: none;
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (min-width: 1200px) {
+  .cart {
+    right: 8%;
+    max-width: auto;
+  }
+
+  .product-panel {
+    height: 450px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .product-panel {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
   #products {
     li {
       padding-left: 0;
     }
-  }
-
-  .product-panel {
-    height: auto;
   }
 
   .headline {
