@@ -14,7 +14,6 @@ export const fetchCategories = () => {
     axios.get('/api/categories')
       .then(res => res.data)
       .then(categories => dispatch(getCategories(categories)))
-      .catch(err => console.log(err.message));
   }
 };
 
@@ -22,7 +21,6 @@ export const createCategory = (categoryData) => dispatch => {
   return axios.post('/api/categories', categoryData)
     .then(res => res.data)
     .then(() => dispatch(fetchCategories()))
-    .catch(err => console.log(err.message));
 }
 
 export const deleteCategory = categoryId => dispatch =>

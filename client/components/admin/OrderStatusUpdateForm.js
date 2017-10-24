@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeOrderStatus } from '../../store'
+import { changeOrderStatus, setErrorAndClear } from '../../store'
 
 import validStatuses from '../helpers/validStatuses'
 
@@ -23,9 +23,10 @@ class OrderStatusUpdateForm extends Component {
 
   onSubmit(ev) {
     ev.preventDefault()
-    const { order, changeOrderStatus } = this.props
+    const { order, changeOrderStatus, setErrorAndClear } = this.props
     const { statusInput } = this.state
     changeOrderStatus(order.id, { status: statusInput })
+    .catch(setErrorAndClear)
   }
 
   render() {
@@ -44,6 +45,6 @@ class OrderStatusUpdateForm extends Component {
   }
 }
 
-const mapDispatch = { changeOrderStatus }
+const mapDispatch = { changeOrderStatus, setErrorAndClear }
 
 export default connect(null, mapDispatch)(OrderStatusUpdateForm)

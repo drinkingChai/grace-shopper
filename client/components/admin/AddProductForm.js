@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProd } from '../../store'
+import { createProd, setErrorAndClear } from '../../store'
 
 class AddProductForm extends Component {
 
@@ -33,7 +33,7 @@ class AddProductForm extends Component {
       inventoryQuantity: this.state.inventoryQuantity,
       photo: this.state.photo
     })
-    .catch(err => console.log(err.message))
+    .catch(this.props.setErrorAndClear)
 
     this.setState({
       name: '',
@@ -84,7 +84,7 @@ const mapState = (state) =>{
   }
 }
 
-const mapDispatch = { createProd }
+const mapDispatch = { createProd, setErrorAndClear }
 
 
 export default connect(mapState, mapDispatch)(AddProductForm)
