@@ -19,7 +19,7 @@ Address.createOne = function(userId, addressData) {
 Address.updateOne = function(id, userId, addressData) {
   return this.findOne({ where: { id, userId } })
     .then(address => {
-      Object.assign(address, { ...addressData })
+      Object.assign(address, addressData)
       return address.save()
     })
 }

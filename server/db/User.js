@@ -52,14 +52,18 @@ User.createUser = function(params) {
 }
 
 User.createGuest = function(params) {
-  let user = User.build({
-    ...params,
+  let user = User.build(
+    Object.assign({
+      password: faker.internet.password(),
+      name: 'guest',
+      isGueset: true
+    },
+    params
     /* create random password using faker
      * maybe a better randomizer later */
-    password: faker.internet.password(),
-    name: 'guest',
-    isGueset: true
-  })
+    )
+    
+  )
 
   return user.save()
     .then(user => {
@@ -89,7 +93,7 @@ User.logIn = function(email, password, sessionCartItems) {
           if (!cart.lineitems.length) {
             return Promise.all(
               sessionCartItems.map(lineitem => (
-                conn.models.lineitem.create({ orderId: cart.id, ...lineitem })))
+                conn.models.lineitem.create(Object.create({ orderId: cart.id }, lineitem ))))
             )
           }
         })
@@ -125,7 +129,7 @@ User.findUsers = function() {
 User.updateUser = function(userId, userData) {
   return User.findById(userId)
     .then(user => {
-      Object.assign(user, { ...userData })
+      Object.assign(user, userData)
       return user.save()
     })
 }
