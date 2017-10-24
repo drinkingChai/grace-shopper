@@ -32,57 +32,60 @@ app.get('/auth/google', passport.authenticate('google', {
 	scope: 'email'
 }));
 
-const googleConfig = {
-  clientID: process.env.GOOGLE_CLIENT_ID || secrets.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || secrets.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.GOOGLE_CALLBACK || secrets.GOOGLE_CALLBACK
-};
+//const googleConfig = {
+//  clientID: process.env.GOOGLE_CLIENT_ID || secrets.GOOGLE_CLIENT_ID,
+//  clientSecret: process.env.GOOGLE_CLIENT_SECRET || secrets.GOOGLE_CLIENT_SECRET,
+//  callbackURL: process.env.GOOGLE_CALLBACK || secrets.GOOGLE_CALLBACK
+//};
 
 //passport sends back a 'done' method
-const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done)=> {
-//  const ggoogleId = profile.id;
-//  const gname = profile.displayName;
-//  const gemail = profile.emails[0].value;
+passport.use(
+  new GoogleStrategy({
+    clientID: "68973371542-57pafacf42tacirqoakn7mhf0e3du6nj.apps.googleusercontent.com",
+    clientSecret: "ty_hCuM_Hd_xSjQXqX0ZRB7f",
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  }, (token, refreshToken, profile, done)=> {
   
-  var info = {
-      name: profile.displayName || 'bobby',
-      email: profile.emails[0].value,
-      googleId: profile.id,
-      password: 'password'
-    }
-  
-  console.log(info);
-  
-  User.find({ where: { googleId: profile.id} })
-    .then(user => user ? 
-          done(null, user) :
-          User.create(info)
-            .then(user => done(null, user))
-         )
-    .catch(err=> {
-      console.log('ERROR FOR USER FIND:', err);
-      done(err);
-    });
-}); 
+      let info = {
+          name: profile.displayName || 'bobby',
+          email: profile.emails[0].value,
+          googleId: profile.id,
+          password: 'password'
+      };
 
-passport.use(strategy);
+      console.log(info, info.name);
+      
+      User.findOne({ where: { googleId: profile.id} })
+        .then(user => {
+            if(user){
+              done(null, user);
+            } else {
+              User.createUser(info)
+                .then(user => done(null, user))
+                .catch(err => {
+                  console.log('Error on user create:', err)
+                  done(err);
+              })
+            }
+      })
+        .catch(err=> {
+          console.log('ERROR FOR USER FIND:', err);
+          return done(err);
+        });
+    })
+)
 
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
 
-passport.deserializeUser(function (id, done) {
+passport.serializeUser((user, done)=> done(null, user.id));
+
+passport.deserializeUser((id, done)=> {
   User.findById(id)
-  .then(function (user) {
-    done(null, user);
-  })
-  .catch(function (err) {
-    done(err);
-  });
+    .then(user => done(null, user))
+    .catch(done);
 });
 
 app.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect: '/',
+  successRedirect: '/account',
   failureRedirect: '/'
 }));
 
