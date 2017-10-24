@@ -16,6 +16,7 @@ import Account from './useraccount/Account';
 import AdminPortal from './admin/AdminPortal'
 import Order from './Order';
 import ErrorMessage from './errorstatus/ErrorMessage';
+import Cart from './shopping/Cart';
 
 export default class Root extends Component {
   componentDidMount () {
@@ -34,6 +35,7 @@ export default class Root extends Component {
           <h1 className="headline">GRACESHOPPER</h1>
             <Switch>
               <Route exact path="/" component={ ProductsPanel } />
+              <Route exact path="/cart" component={ Cart } />
               <Route exact path="/categories" component={ ProductsPanel } />
               <Route exact path="/categories/:id" component={ ProductsPanel } />
               <Route exact path="/products" component={ ProductsPanel } />
