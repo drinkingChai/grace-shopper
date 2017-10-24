@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReviewForm from './ReviewForm';
-import { updateProduct } from '../../store';
 import ProductEditForm from '../admin/ProductEditForm';
 
 class Product extends Component{
@@ -109,6 +108,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = { updateProduct }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps)(Product);
