@@ -29,7 +29,7 @@ class Nav extends Component {
             <Link className="navbar-brand menu-icon" to="#" onClick={ toggleMenu }>
               <span className="glyphicon glyphicon-menu-hamburger" />
             </Link>
-            <Link className="navbar-brand navbar-logo" to="/">GraceShopper</Link>
+            <Link className="navbar-brand navbar-logo" to="/">RetroShopper</Link>
           </div>
           <div className="nav navbar-nav navbar-bag pull-right">
             <Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" /></Link>
