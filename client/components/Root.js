@@ -42,6 +42,7 @@ export default class Root extends Component {
               <Route exact path="/categories" component={ ProductsPanel } />
               <Route exact path="/categories/:id" component={ ProductsPanel } />
               <Route exact path="/orders/:id" component = { Order } />
+              <Route exact path="/products/:id" component = { Product } />
               <Route exact path="/checkout" component={ CheckOut } />
               <Route exact path="/orderconfirm" component={ OrderConfirmation } />
               <Route exact path="/check-login" component={ CheckLogin } />
@@ -61,7 +62,6 @@ export default class Root extends Component {
               <Link to="/check-login" className="btn btn-primary btn-sm">Checkout</Link> } />
           </div>
           <div className="col-xs-12">
-            <Route exact path="/products/:id" component = { Product } />
           </div>
         </main>
       </div>
