@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logoutUser } from '../store'
+import { logoutUser } from '../store';
 
 const Nav = ({ currentUser, logoutUser }) => {
   return (
     <nav className="navbar navbar-default">
-      <div className='container-fluid'>
+      <div className="container-fluid">
         <div className="navbar-header">
           <Link className="navbar-brand" to="/">GraceShopper</Link>
         </div>
         <ul className="nav navbar-nav pull-right">
-          <li><Link to="#">Search <span className="glyphicon glyphicon-search" /></Link></li>
           { currentUser.userId ?
             <li><Link to="/account">My Account</Link></li> :
             <li><Link to="/login">Log In</Link></li> }
@@ -25,7 +24,7 @@ const Nav = ({ currentUser, logoutUser }) => {
   )
 }
 
-const mapState = ({ currentUser }) => ({ currentUser })
-const mapDispatch = { logoutUser }
+const mapState = ({ currentUser }) => ({ currentUser });
+const mapDispatch = { logoutUser };
 
 export default connect(mapState, mapDispatch)(Nav);
