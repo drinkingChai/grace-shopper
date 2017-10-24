@@ -2,21 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../store';
+import HamburgerMenu from './HamburgerMenu';
 
 const Nav = (props) => {
   return (
-    <nav className="navbar navbar-default" id="navbar">
-      <div className="container-fluid">
-        <div className="navbar-header">
-          <Link className="navbar-brand" to="/">GraceShopper</Link>
-        </div>
-        <NavItems { ...props } className={ 'nav navbar-nav pull-right' } />
+  <nav className="navbar navbar-default" id="navbar">
+    <div className="container-fluid">
+      <div className="navbar-header">
+        <Link className="navbar-brand menu-icon" to="#" onClick={ props.toggleMenu }>
+          <span className="glyphicon glyphicon-menu-hamburger" />
+        </Link>
+        <Link className="navbar-brand" to="/">GraceShopper</Link>
       </div>
-    </nav>
+      <NavItems { ...props } className={ 'nav navbar-nav pull-right navbar-hide' } />
+      <HamburgerMenu { ...props } />
+    </div>
+  </nav>
   );
 };
 
-const NavItems = ({ currentUser, logoutUser, className }) => {
+export const NavItems = ({ currentUser, logoutUser, className }) => {
   return (
     <ul className={ className }>
       {
