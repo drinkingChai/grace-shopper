@@ -23,7 +23,7 @@ passport.use(
         name: profile.displayName || 'Google User',
         email: profile.emails[0].value,
         googleId: profile.id,
-        password: faker.internet.password()
+        password: 'temp'
     };
 
     User.findOne({ where: { googleId: profile.id} })
@@ -52,7 +52,7 @@ router.get('/google/callback', passport.authenticate('google', {
 
 router.get('/success', (req, res, next) => {
   const { email, password } = req.user
-  User.logIn(email, password, req.session.cart.lineitems)
+  User.logIn(email, 'temp', req.session.cart.lineitems)
     .then(user => {
       req.session = loadDataOnLogin(user)
       delete req.user
