@@ -16,7 +16,7 @@ passport.use(
   new GoogleStrategy({
     clientID: "272013755870-phnqd16q4bptjo6gt46rcrvae16dqcrc.apps.googleusercontent.com",
     clientSecret: "a2GH4fRrVR0OMDYJOKRTwHfi",
-    callbackURL: "http://localhost:3000/api/auth/google/callback"
+    callbackURL: "https://boiling-lowlands-96195.herokuapp.com/api/auth/google/callback"
   }, (token, refreshToken, profile, done)=> {
   
     let info = {
