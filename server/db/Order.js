@@ -110,7 +110,7 @@ Order.verifyPurchase = function(userId, productId) {
 
       // flatten
       let purchases = []
-      orders.forEach(order => purchases.push(order.lineitems))
+      orders.forEach(order => purchases.push(JSON.parse(JSON.stringify(order.lineitems))[0]))
 
       // search
       return purchases.find(lineitem => lineitem.productId == productId)
